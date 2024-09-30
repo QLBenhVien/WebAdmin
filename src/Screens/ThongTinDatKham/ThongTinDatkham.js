@@ -25,6 +25,11 @@ const Sidebar = () => {
 };
 
 const ThongTinDatKham = () => {
+    const navigate = useNavigate();
+
+    const navigateTo = (path) => {
+        navigate(path);
+    };
     return (
         <div style={styles.homePage}>
             <div style={styles.content}>
@@ -48,22 +53,28 @@ const ThongTinDatKham = () => {
                             </div>
                         </div>
                         <div style={styles.InfoContainer}>
+                            <h2 style={styles.sectionTitle}>Thông tin bệnh nhân</h2>
                             <div style={styles.infoSection}>
-                                <h2 style={styles.sectionTitle}>Thông tin bệnh nhân</h2>
-                                <p><strong>Mã bệnh nhân:</strong> BN01</p>
-                                <p><strong>Họ và Tên:</strong> Nguyễn Thị Kim Liên</p>
-                                <p><strong>Tuổi:</strong>24</p>
-                                <p><strong>Địa chỉ:</strong> Nguyễn Thái Sơn, Phường 5, Gò Vấp</p>
-                                <p><strong>SDT:</strong> 0987967497</p>
-                                <p><strong>Giới tính:</strong>Nữ</p>
-                                <p><strong>Tên bác sĩ:</strong> Nguyễn Văn A</p>
-                                <p><strong>Ngày hẹn:</strong> 19/09/2024</p>
-                                <p><strong>Ca hẹn:</strong> ca 2</p>
-                                <p><strong>Triệu chứng:</strong> sốt cao</p>
+                                <div style={styles.column}>
+                                    <p style={styles.paragraph}><strong>Giới tính:</strong> Nữ</p>
+                                    <p style={styles.paragraph}><strong>Tên bác sĩ:</strong> Nguyễn Văn A</p>
+                                    <p style={styles.paragraph}><strong>Ngày hẹn:</strong> 19/09/2024</p>
+                                    <p style={styles.paragraph}><strong>Ca hẹn:</strong> ca 2</p>
+                                    <p style={styles.paragraph}><strong>Triệu chứng:</strong> sốt cao</p>
+                                </div>
+                                <div style={styles.column}>
+                                    <p style={styles.paragraph}><strong>Mã bệnh nhân:</strong> BN01</p>
+                                    <p style={styles.paragraph}><strong>Họ và Tên:</strong> Nguyễn Thị Kim Liên</p>
+                                    <p style={styles.paragraph}><strong>Tuổi:</strong> 24</p>
+                                    <p style={styles.paragraph}><strong>Địa chỉ:</strong> Nguyễn Thái Sơn, Phường 5, Gò Vấp</p>
+                                    <p style={styles.paragraph}><strong>SDT:</strong> 0987967497</p>
+                                </div>
                             </div>
                         </div>
-                        <button style={styles.backButton}>Trở lại</button>
-                        <button style={styles.duyetButton}> Duyệt</button>
+                        <div style={styles.buttonContainer}>
+                            <button style={styles.backButton} onClick={() => navigateTo('/quanlydatkham')}>Trở lại</button>
+                            <button style={styles.duyetButton}> Duyệt</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,34 +199,68 @@ const styles = {
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.1)',
         marginBottom: '20px',
+        display: 'flex',
+        flexDirection: 'column',
     },
     infoSection: {
+        display: 'flex',
+        flexWrap: 'wrap',  // Cho phép các cột xuống dòng khi không đủ chỗ
+        justifyContent: 'space-between',  // Chia đều các cột trong hàng
         marginBottom: '30px',
+    },
+    column: {
+        flex: '1',  // Để các cột co giãn theo kích thước container
+        minWidth: '250px',  // Đặt chiều rộng tối thiểu để tránh cột quá nhỏ
+        boxSizing: 'border-box',  // Bao gồm padding và border trong kích thước phần tử
+        padding: '10px',  // Thêm padding để có khoảng cách giữa nội dung
+        display: 'flex',  // Sử dụng Flexbox trong mỗi cột
+        flexDirection: 'column',  // Sắp xếp các thẻ <p> theo chiều dọc
+        justifyContent: 'space-between',  // Chia đều khoảng cách giữa các thẻ <p>
+        marginBottom: '10px',
+        width:'100%',
+    },
+    paragraph: {
+        margin: '5px 0',  // Đặt khoảng cách giữa các thẻ <p>
+        wordWrap: 'break-word',  // Đảm bảo nội dung không tràn ra ngoài bằng cách xuống dòng
+        flexGrow: '1',  // Cho phép thẻ <p> co giãn
+        alignItems: 'flex-end',  // Căn chỉnh các thẻ <p> về bên phải
+        
     },
     sectionTitle: {
         fontSize: '18px',
         fontWeight: 'bold',
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     backButton: {
         padding: '10px 20px',
         backgroundColor: '#22668E',
         color: '#ffffff',
         border: 'none',
-        borderRadius: '5px',
+        borderRadius: '50px',
         cursor: 'pointer',
         marginRight: '10px',
         fontWeight: 'bold',
-        fontSize: '16px',     
+        fontSize: '16px',
+        justifycontent: 'center',
+        alignItems: 'center',
+        display: 'flex',
     },
     duyetButton: {
         padding: '10px 20px',
         backgroundColor: '#22668E',
+        justifycontent: 'center',
+        alignItems: 'center',
         color: '#ffffff',
         border: 'none',
-        borderRadius: '5px',
+        borderRadius: '50px',
         cursor: 'pointer',
-        fontWeight: 'bold',   
-        fontSize: '16px',     
+        fontWeight: 'bold',
+        fontSize: '16px',
+        display: 'flex',
     },
 };
 export default ThongTinDatKham;
