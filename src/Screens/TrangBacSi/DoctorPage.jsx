@@ -1,29 +1,7 @@
-import React from 'react';
+import React, { useState } from "react";
 import logo from '../../images/logo.png';
-import { useNavigate } from 'react-router-dom';
-
-// Sidebar component
-const Sidebar = () => {
-    const navigate = useNavigate();
-
-    const navigateTo = (path) => {
-        navigate(path);
-    };
-
-    return (
-        <div style={styles.sidebar}>
-            <div style={styles.sidebarHeader}>
-                <img src={logo} alt="Logo" style={styles.logo} />
-                <span style={styles.sidebarTitle}>Phòng khám UCM</span>
-            </div>
-            <ul style={styles.sidebarList}>
-                <li style={{ ...styles.sidebarItem, backgroundColor: '#FFFFFF', color: '#000000' }} onClick={() => navigateTo('/home')}>Trang chủ</li>
-                <li style={styles.sidebarItem} onClick={() => navigateTo('/medical-records')}>Hồ sơ bệnh án</li>
-                <li style={styles.sidebarItem} onClick={() => navigateTo('/prescription')}>Phiếu chỉ định</li>
-            </ul>
-        </div>
-    );
-};
+import { useNavigate, useLocation } from 'react-router-dom';
+import './Doctor.css';
 
 // InfoCard component
 const InfoCard = ({ title, content, icon }) => {
@@ -96,27 +74,15 @@ const DoctorPage = () => {
     }, []);
 
     return (
-        <div style={styles.homePage}>
-            <div style={styles.content}>
-                <Sidebar />
-                <div style={styles.mainContent}>
-                    <div style={styles.navbar}>
-                        <div style={styles.userInfo}>
-                            <div style={styles.userAvatar}></div>
-                            <div style={styles.userName}>
-                                BS. Nguyễn Văn A
-                            </div>
-                        </div>
-                    </div>
-                    <div style={styles.pageContainer}>
-                        <div style={styles.pageHeader}>
-                            <div style={styles.pageTitleLeft}>
-                                TRANG CHỦ
-                            </div>
-                            <div style={styles.pageTitleRight}>
-                                Trang chủ / Trang chủ
-                            </div>
-                        </div>
+        <div className="outer">
+                    <div className="patient-header">
+        <div className="patient-header-title">TRANG CHỦ</div>
+        <div className="patient-header-breadcrumb">
+          <span><strong>Trang chủ / </strong></span>
+          <span className="patient-breadcrumb-secondary">Trang chủ </span>
+        </div>
+      </div>
+                        <div className="container2">
                         <div style={styles.contentRow}>
                             <ProfileCard profile={profile} />
                             <div style={styles.infoCardsColumn}>
@@ -125,10 +91,8 @@ const DoctorPage = () => {
                             </div>
                         </div>
                         <Schedule schedule={schedule} />
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </div>
+                        </div>
     );
 };
 
