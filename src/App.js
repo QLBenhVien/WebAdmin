@@ -10,7 +10,7 @@ import QuanLyDatKham from './Screens/QuanLyDatKham/QuanLyDatKham';
 import ThongTinDatKham from './Screens/ThongTinDatKham/ThongTinDatkham';
 import LapPhieuKhamBenh from './Screens/LapPhieuKhamBenh/LapPhieuKhamBenh';
 
-
+// abc
 
 const App = () => {
     return (
