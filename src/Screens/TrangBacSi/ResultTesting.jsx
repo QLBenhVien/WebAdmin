@@ -1,17 +1,17 @@
 import React from "react";
 import "./Doctor.css";
 
-const InfoMedicalRecords = () => {
+const ResultTesting = () => {
   return (
     <div className="outer">
       <div className="patient-header">
-        <div className="patient-header-title">THÔNG TIN HỒ SƠ BỆNH ÁN</div>
+        <div className="patient-header-title">KẾT QUẢ XÉT NGHIỆM</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Hồ sơ bệnh án / </strong>
+            <strong>Gửi yêu cầu xét nghiệm / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
-            Xem hồ sơ bệnh án{" "}
+            Kết quả xét nghiệm{" "}
           </span>
         </div>
       </div>
@@ -42,37 +42,33 @@ const InfoMedicalRecords = () => {
       </div>
       <div className="container3">
         <div style={styles.infoSection}>
-          <h2 style={styles.sectionTitle}>Danh sách bệnh án</h2>
+          <h2 style={styles.sectionTitle}>Kết quả xét nghiệm</h2>
           {/* Danh sách bệnh án sẽ được thêm vào đây */}
           <table style={styles.table}>
             <thead>
               <tr>
                 <th style={styles.th}>STT</th>
-                <th style={styles.th}>Mã HS</th>
-                <th style={styles.th}>Tên bệnh nhân</th>
-                <th style={styles.th}>Tên bệnh</th>
-                <th style={styles.th}>Ngày khám</th>
-                <th style={styles.th}>Chi tiết</th>
+                <th style={styles.th}>Tên xét nghiệm</th>
+                <th style={styles.th}>Kết quả</th>
+                <th style={styles.th}>Đơn vị</th>
+                <th style={styles.th}>Trị số tham chiếu</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td style={styles.td}>1</td>
-                <td style={styles.td}>0000000</td>
-                <td style={styles.td}>Nguyễn Văn A</td>
-                <td style={styles.td}>Đau bụng</td>
-                <td style={styles.td}>25/9/2024</td>
-                <td style={styles.td}>
-                  <div className="patient-table-cell chi-tiet">
-                    <a href="/medicalRecordsDetail2" className="link-xem">
-                      Xem
-                    </a>
-                  </div>
-                </td>
+                <td style={styles.td}>Cholesteron toàn phần</td>
+                <td style={styles.td}>6.01</td>
+                <td style={styles.td}>Viên</td>
+                <td style={styles.td}>3,6 - 5,4</td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="patient-list-search-filter2">
+        <div className="patient-search-buttonn">Xuất phiếu</div>
+        <div className="patient-search-buttonn">Đóng</div>
       </div>
     </div>
   );
@@ -225,4 +221,4 @@ const styles = {
   },
 };
 
-export default InfoMedicalRecords;
+export default ResultTesting;

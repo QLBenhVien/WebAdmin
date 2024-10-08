@@ -19,6 +19,8 @@ import Header from './Screens/TrangBacSi/Header';
 import ExaminationForm from './Screens/TrangBacSi/ExaminationForm';
 import Referrals from './Screens/TrangBacSi/Referrals';
 import MedicalRecord from './Screens/TrangBacSi/MedicalRecord';
+import ResultTesting from './Screens/TrangBacSi/ResultTesting';
+import Prescribe from './Screens/TrangBacSi/Prescribe';
 
 const SidebarWrapper = () => {
     const location = useLocation(); 
@@ -33,7 +35,9 @@ const SidebarWrapper = () => {
         '/medicalRecordsDetail2',
         '/infoMedicalRecordsDetail',
         '/referrals',
-        '/examinationForm'
+        '/examinationForm',
+        '/resultTesting',
+        '/prescribe'
     ];
 
     // Kiểm tra nếu đường dẫn hiện tại có trong danh sách trên
@@ -52,6 +56,8 @@ const App = () => {
         <Router>
             <SidebarWrapper /> 
             <Routes>
+                <Route path="/prescribe" element={<Prescribe />} />
+                <Route path="/resultTesting" element={<ResultTesting />} />
                 <Route path="/lapphieukhambenh" element={<LapPhieuKhamBenh />} />
                 <Route path="/thongtindatkham" element={<ThongTinDatKham />} />
                 <Route path="/quanlydatkham" element={<QuanLyDatKham />} />

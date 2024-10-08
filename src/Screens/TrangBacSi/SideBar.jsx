@@ -1,7 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 // import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-import './Doctor.css'; // Nhập CSS cho Sidebar
+import "./Doctor.css"; // Nhập CSS cho Sidebar
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
@@ -28,32 +28,32 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-buttons">
         <button
-          className={`sidebar-button ${isActive('/home') ? 'active' : ''}`}
-          onClick={() => handleNavigation('/home')}
+          className={`sidebar-button ${isActive("/home") ? "active" : ""}`}
+          onClick={() => handleNavigation("/home")}
         >
           Trang chủ
         </button>
         <button
-          className={`sidebar-button ${isActive('/medicalRecord') ? 'active' : ''}`}
-          onClick={() => handleNavigation('/medicalRecord')}
+          className={`sidebar-button ${isActive("/medicalRecord") ? "active" : ""}`}
+          onClick={() => handleNavigation("/medicalRecord")}
         >
           Hồ sơ bệnh án
         </button>
         <button
-          className={`sidebar-button ${isActive('/referrals') ? 'active' : ''}`}
-          onClick={() => handleNavigation('/referrals')}
+          className={`sidebar-button ${isActive("/referrals") ? "active" : ""}`}
+          onClick={() => handleNavigation("/referrals")}
         >
           Gửi yêu cầu xét nghiệm
         </button>
         <button
-          className={`sidebar-button ${isActive('/examinationForm') ? 'active' : ''}`}
-          onClick={() => handleNavigation('/examinationForm')}
+          className={`sidebar-button ${isActive("/examinationForm") ? "active" : ""}`}
+          onClick={() => handleNavigation("/examinationForm")}
         >
-          Phiếu chỉ định
+          Phiếu khám bệnh
         </button>
         <button
-          className={`sidebar-button ${isActive('/patientList') ? 'active' : ''}`}
-          onClick={() => handleNavigation('/patientList')}
+          className={`sidebar-button ${isActive("/patientList") ? "active" : ""}`}
+          onClick={() => handleNavigation("/patientList")}
         >
           Danh sách bệnh nhân
         </button>

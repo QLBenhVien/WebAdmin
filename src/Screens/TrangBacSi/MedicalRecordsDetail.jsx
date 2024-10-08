@@ -1,34 +1,34 @@
 import React, { useContext } from "react";
-  // import { Context } from "../main";
-import './Doctor.css'; 
+// import { Context } from "../main";
+import "./Doctor.css";
 
 const MedicalRecordsDetails = () => {
   const data = [
     {
       stt: 1,
-      name: 'Panadol Extra',
-      unit: 'Viên',
+      name: "Panadol Extra",
+      unit: "Viên",
       quantity: 30,
-      dosage: 'Uống, Sáng 2 viên, Chiều 2 viên'
+      dosage: "Uống, Sáng 2 viên, Chiều 2 viên",
     },
     {
       stt: 2,
-      name: 'Aspirin',
-      unit: 'Viên',
+      name: "Aspirin",
+      unit: "Viên",
       quantity: 20,
-      dosage: 'Uống, Sáng 1 viên, Chiều 1 viên'
-    }
+      dosage: "Uống, Sáng 1 viên, Chiều 1 viên",
+    },
   ];
 
   // Chuyển đổi thành một biến để lấy dữ liệu bệnh nhân
   const patientData = {
-    name: 'Nguyễn Văn A',
+    name: "Nguyễn Văn A",
     age: 24,
-    gender: 'Nữ',
-    patientCode: '10392',
-    doctorName: 'Bác sĩ Nguyễn',
-    address: 'Ấp 2, Tắc Vân, TP. Cà Mau',
-    diagnosis: 'Thấp không ảnh hưởng đến tim',
+    gender: "Nữ",
+    patientCode: "10392",
+    doctorName: "Bác sĩ Nguyễn",
+    address: "Ấp 2, Tắc Vân, TP. Cà Mau",
+    diagnosis: "Thấp không ảnh hưởng đến tim",
   };
 
   // const { isAuthenticated, admin } = useContext(Context);
@@ -38,8 +38,12 @@ const MedicalRecordsDetails = () => {
       <div className="patient-header">
         <div className="patient-header-title">CHI TIẾT BỆNH ÁN</div>
         <div className="patient-header-breadcrumb">
-          <span><strong>Danh sách bệnh nhân / </strong></span>
-          <span className="patient-breadcrumb-secondary">Chi tiết bệnh án </span>
+          <span>
+            <strong>Danh sách bệnh nhân / </strong>
+          </span>
+          <span className="patient-breadcrumb-secondary">
+            Chi tiết bệnh án{" "}
+          </span>
         </div>
       </div>
 
@@ -65,11 +69,19 @@ const MedicalRecordsDetails = () => {
             <span className="gender-highlight">{patientData.gender}</span>
           </div>
 
-          <div className="patient-code patient-code-custom">Mã BN: {patientData.patientCode}</div>
-          <div className="doctor-name doctor-name-custom">Tên bác sĩ: {patientData.doctorName}</div>
-          <div className="patient-address address-custom">Địa chỉ: {patientData.address}</div>
+          <div className="patient-code patient-code-custom">
+            Mã BN: {patientData.patientCode}
+          </div>
+          <div className="doctor-name doctor-name-custom">
+            Tên bác sĩ: {patientData.doctorName}
+          </div>
+          <div className="patient-address address-custom">
+            Địa chỉ: {patientData.address}
+          </div>
 
-          <div className="medication-title medication-title-custom">Thuốc đã kê:</div>
+          <div className="medication-title medication-title-custom">
+            Thuốc đã kê:
+          </div>
           <table className="medication-table">
             <thead>
               <tr className="medication-header">

@@ -1,18 +1,39 @@
 import React from "react";
 import "./Doctor.css";
 
-const InfoMedicalRecords = () => {
+const Prescribe = () => {
+  const data = [
+    {
+      stt: 1,
+      name: "Panadol Extra",
+      unit: "Viên",
+      quantity: 30,
+      dosage: "Uống, Sáng 2 viên, Chiều 2 viên",
+    },
+    {
+      stt: 2,
+      name: "Aspirin",
+      unit: "Viên",
+      quantity: 20,
+      dosage: "Uống, Sáng 1 viên, Chiều 1 viên",
+    },
+    {
+      stt: 3,
+      name: "Aspirin",
+      unit: "Viên",
+      quantity: 20,
+      dosage: "Uống, Sáng 1 viên, Chiều 1 viên",
+    },
+  ];
   return (
     <div className="outer">
       <div className="patient-header">
-        <div className="patient-header-title">THÔNG TIN HỒ SƠ BỆNH ÁN</div>
+        <div className="patient-header-title">PHIẾU KHÁM BỆNH</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Hồ sơ bệnh án / </strong>
+            <strong>Phiếu khám bệnh / </strong>
           </span>
-          <span className="patient-breadcrumb-secondary">
-            Xem hồ sơ bệnh án{" "}
-          </span>
+          <span className="patient-breadcrumb-secondary">Phiếu khám bệnh </span>
         </div>
       </div>
       <div className="container3">
@@ -41,38 +62,62 @@ const InfoMedicalRecords = () => {
         </div>
       </div>
       <div className="container3">
+        <div style={styles.formGroup}>
+          <div style={styles.label}>Triệu chứng</div>
+          <div style={styles.inputContainer}>
+            <div style={{ flex: 1 }} />
+            <input type="text" style={styles.inputField} />
+          </div>
+        </div>
+
+        <div style={styles.formGroup}>
+          <div style={styles.label}>Chuẩn đoán</div>
+          <div style={styles.inputContainer}>
+            <div style={{ flex: 1 }} />
+            <input type="text" style={styles.inputField} />
+          </div>
+        </div>
+
+        <div style={styles.formGroup}>
+          <div style={styles.label}>Lời dặn của bác sĩ</div>
+          <div style={styles.inputContainer}>
+            <div style={{ flex: 1 }} />
+            <input type="text" style={styles.inputField} />
+          </div>
+        </div>
+
         <div style={styles.infoSection}>
-          <h2 style={styles.sectionTitle}>Danh sách bệnh án</h2>
+          <h2 style={styles.sectionTitle}>Kê thuốc</h2>
           {/* Danh sách bệnh án sẽ được thêm vào đây */}
-          <table style={styles.table}>
+          <table className="medication-table2">
             <thead>
-              <tr>
-                <th style={styles.th}>STT</th>
-                <th style={styles.th}>Mã HS</th>
-                <th style={styles.th}>Tên bệnh nhân</th>
-                <th style={styles.th}>Tên bệnh</th>
-                <th style={styles.th}>Ngày khám</th>
-                <th style={styles.th}>Chi tiết</th>
+              <tr className="medication-header">
+                <th>STT</th>
+                <th>Tên thuốc / Hàm lượng</th>
+                <th>ĐVT</th>
+                <th>Số lượng</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td style={styles.td}>1</td>
-                <td style={styles.td}>0000000</td>
-                <td style={styles.td}>Nguyễn Văn A</td>
-                <td style={styles.td}>Đau bụng</td>
-                <td style={styles.td}>25/9/2024</td>
-                <td style={styles.td}>
-                  <div className="patient-table-cell chi-tiet">
-                    <a href="/medicalRecordsDetail2" className="link-xem">
-                      Xem
-                    </a>
-                  </div>
-                </td>
-              </tr>
+              {data.map((item) => (
+                <React.Fragment key={item.stt}>
+                  <tr className="medication-row">
+                    <td>{item.stt}</td>
+                    <td>{item.name}</td>
+                    <td>{item.unit}</td>
+                    <td>{item.quantity}</td>
+                  </tr>
+                  <tr className="medication-dosage-row">
+                    <td colSpan="4">{item.dosage}</td>
+                  </tr>
+                </React.Fragment>
+              ))}
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="patient-list-search-filter2">
+        <div className="patient-search-buttonn">Lưu</div>
       </div>
     </div>
   );
@@ -199,7 +244,7 @@ const styles = {
     marginBottom: "20px",
   },
   infoSection: {
-    margin: "20px",
+    margin: "30px",
   },
   sectionTitle: {
     padding: "10px",
@@ -223,6 +268,40 @@ const styles = {
     padding: "10px",
     borderBottom: "1px solid #ddd",
   },
+  formGroup: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+    marginLeft: "30px",
+    paddingTop: "10px",
+  },
+  label: {
+    marginBottom: "5px",
+    color: "black",
+    fontSize: 20,
+    fontFamily: "Roboto",
+    fontWeight: "700",
+    lineHeight: "30px",
+  },
+  inputContainer: {
+    display: "flex",
+    alignItems: "center",
+    background: "white",
+    borderRadius: 7,
+    border: "1px solid black",
+    padding: "4px 13px",
+    width: 723,
+    height: 47,
+  },
+  inputField: {
+    width: "100%",
+    height: "100%",
+    border: "none",
+    outline: "none",
+    fontSize: "16px",
+    fontFamily: "Roboto",
+  },
 };
 
-export default InfoMedicalRecords;
+export default Prescribe;
