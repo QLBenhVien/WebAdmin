@@ -12,37 +12,34 @@ import Popup from '../../components/controls/Popup';
 import Notification from '../../components/controls/Notification';
 import Controls from '../../components/controls/Control';
 import EmployeeDetails from './EmployeeDetails'; // Nhập component EmployeeDetails
+import { reactivateEmployee } from '../../services/employeeService';
 
-// Custom CSS
 const useStyles = makeStyles((theme) => ({
     pageContent: {
         margin: theme.spacing(5),
         padding: theme.spacing(3),
     },
     newButton: {
-        marginLeft: theme.spacing(4), // Đẩy nút sang bên phải
-        
+        marginLeft: theme.spacing(4),
     },
     searchInput: {
         width: '80%',
-        marginRight:'30px'
+        marginRight: '30px'
     },
     actionButton: {
-        margin: '0 5px', // Căn giữa khoảng cách giữa các nút
+        margin: '0 5px',
     },
 }));
 
-// Khai báo các cột trong bảng nhân viên
 const headCells = [
     { id: 'fullName', label: "Tên nhân viên" },
     { id: 'email', label: "Email" },
     { id: 'mobile', label: "Số điện thoại" },
     { id: 'department', label: "Chức vụ" },
     { id: 'condition', label: "Trạng thái" },
-
     { id: 'actions', label: 'Hành động', disableSorting: true },
 ];
-// Hàm lấy danh sách trạng thái
+
 export const getCondition = () => ([
     { id: '1', title: 'Đang hoạt động' },
     { id: '2', title: 'Đã vô hiệu hóa' },
@@ -55,7 +52,7 @@ export default function Employees() {
     const [openPopup, setOpenPopup] = useState(false);
     const [openDetailsPopup, setOpenDetailsPopup] = useState(false); // Popup cho thông tin chi tiết
     const [recordForEdit, setRecordForEdit] = useState(null);
-    const [selectedEmployee, setSelectedEmployee] = useState(null); // State để lưu nhân viên được chọn
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
 
     const {
@@ -100,31 +97,37 @@ export default function Employees() {
         setOpenPopup(true);
     };
 
-    const onDelete = (id) => {
-        if (window.confirm('Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không?')) {
-            const result = employeeService.disableEmployee(id); // Gọi hàm cập nhật trạng thái
-            if (result) {
-                setRecords(employeeService.getAllEmployees()); // Cập nhật lại danh sách nhân viên sau khi thay đổi
-                setNotify({
-                    isOpen: true,
-                    message: 'Vô hiệu hóa thành công',
-                    type: 'error'
-                });
-            } else {
-                setNotify({
-                    isOpen: true,
-                    message: 'Không tìm thấy nhân viên.',
-                    type: 'error'
-                });
+    const toggleAccountStatus = (employee) => {
+        if (employee.condition === 1) {
+            if (window.confirm('Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không?')) {
+                const result = employeeService.disableEmployee(employee.id); // Vô hiệu hóa
+                if (result) {
+                    setRecords(employeeService.getAllEmployees());
+                    setNotify({
+                        isOpen: true,
+                        message: 'Vô hiệu hóa thành công',
+                        type: 'error'
+                    });
+                }
+            }
+        } else if (employee.condition === 2) {
+            if (window.confirm('Bạn có chắc chắn muốn kích hoạt lại tài khoản này không?')) {
+                const result = reactivateEmployee(employee.id); // Kích hoạt lại
+                if (result) {
+                    setRecords(employeeService.getAllEmployees());
+                    setNotify({
+                        isOpen: true,
+                        message: 'Kích hoạt tài khoản thành công',
+                        type: 'success'
+                    });
+                }
             }
         }
     };
     
-    
-
     const handleVisibilityClick = (item) => {
-        setSelectedEmployee(item); // Cập nhật nhân viên đã chọn
-        setOpenDetailsPopup(true); // Mở popup hiển thị thông tin chi tiết
+        setSelectedEmployee(item);
+        setOpenDetailsPopup(true);
     };
 
     return (
@@ -157,7 +160,7 @@ export default function Employees() {
                         onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
                     />
                 </Toolbar>
-                
+
                 <TblContainer>
                     <TblHead />
                     <TableBody>
@@ -169,14 +172,13 @@ export default function Employees() {
                                     <TableCell>{item.mobile}</TableCell>
                                     <TableCell>{item.department}</TableCell>
                                     <TableCell>
-                                        <span style={{ 
-                                            color: item.condition === 1 ? '#22668E' : 'red', // Đặt màu cho trạng thái
-                                            fontWeight: 'bold' 
+                                        <span style={{
+                                            color: item.condition === 1 ? '#22668E' : 'red',
+                                            fontWeight: 'bold'
                                         }}>
-                                        {item.condition === 1 ? 'Đang hoạt động' : 'Đã vô hiệu hóa'}
+                                            {item.condition === 1 ? 'Đang hoạt động' : 'Đã vô hiệu hóa'}
                                         </span>
                                     </TableCell>
-
 
                                     <TableCell>
                                         <Controls.ActionButton
@@ -189,7 +191,7 @@ export default function Employees() {
                                         <Controls.ActionButton
                                             color='secondary'
                                             className={classes.actionButton}
-                                            onClick={() => { handleVisibilityClick(item); }} // Chọn nhân viên để hiển thị thông tin
+                                            onClick={() => { handleVisibilityClick(item); }}
                                         >
                                             <Visibility fontSize='small' />
                                         </Controls.ActionButton>
@@ -222,12 +224,12 @@ export default function Employees() {
                     <EmployeeDetails employee={selectedEmployee} />
                 )}
                 <Controls.Button
-                    text="Vô hiệu hóa tài Khoản"
-                    color="secondary"
+                    text={selectedEmployee?.condition === 1 ? "Vô hiệu hóa tài Khoản" : "Kích hoạt lại tài Khoản"}
+                    color={selectedEmployee?.condition === 1 ? "secondary" : "primary"}
                     style={{ float: 'right' }}
                     onClick={() => { 
-                        onDelete(selectedEmployee.id); 
-                        setOpenDetailsPopup(false); // Đóng popup sau khi xóa
+                        toggleAccountStatus(selectedEmployee); 
+                        setOpenDetailsPopup(false); 
                         setSelectedEmployee(null); 
                     }} 
                 />
