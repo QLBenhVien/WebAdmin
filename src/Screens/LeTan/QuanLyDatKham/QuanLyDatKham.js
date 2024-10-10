@@ -1,24 +1,53 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Barcode from "react-barcode";
 
 // QuanLyDatKham component
 const QuanLyDatKham = () => {
   const navigate = useNavigate();
 
-  const [datkhams, setDatkhams] = useState([
-    {
-      MaBN: "12",
-      TenBN: "phamngocduy",
-      NgayDat: "12-12-12",
-      TrangThai: "true",
-    },
-    {
-      MaBN: "12",
-      TenBN: "lanh",
-      NgayDat: "12-122-12",
-      TrangThai: "false",
-    },
-  ]);
+  //fix hien thi ngay
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    return date.toLocaleDateString("vi-VN"); // Định dạng cho Việt Nam: DD/MM/YYYY
+  };
+
+  const [datkhams, setDatkhams] = useState([""]);
+
+  const fetchdata = async () => {
+    try {
+      // Gọi API và lấy dữ liệu từ response
+      const res = await axios.get(
+        "http://localhost:8080/receptionist/getAlldatkham"
+      );
+      console.log(res);
+
+      // Cập nhật datkhams bằng dữ liệu từ res.data.Datkham
+      setDatkhams(res.data.data.Datkham);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const token = localStorage.getItem("token");
+  const handleCancel = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/receptionist/cancelappointment",
+        {
+          id: id,
+        }
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
 
   const navigateTo = (path) => {
     navigate(path);
@@ -60,20 +89,11 @@ const QuanLyDatKham = () => {
                   {datkhams.map((datkham, index) => (
                     <tr key={index}>
                       <td style={styles.td}>{index + 1}</td>
-                      <td style={styles.td}>{datkham.MaBN}</td>
+                      <td style={styles.td}>{datkham.idBn}</td>
                       <td style={styles.td}>{datkham.TenBN}</td>
-                      <td style={styles.td}>{datkham.NgayDat}</td>
+                      <td style={styles.td}>{formatDate(datkham.NgayDat)}</td>
                       <td style={styles.td}>
-                        {datkham.TrangThai === "true" ? (
-                          <a
-                            style={{
-                              color: "red",
-                              fontWeight: "700",
-                            }}
-                          >
-                            Chưa Duyệt
-                          </a>
-                        ) : (
+                        {datkham.TrangThai === true ? (
                           <a
                             style={{
                               color: "green",
@@ -82,16 +102,34 @@ const QuanLyDatKham = () => {
                           >
                             Đã Duyệt
                           </a>
+                        ) : (
+                          <a
+                            style={{
+                              color: "red",
+                              fontWeight: "700",
+                            }}
+                          >
+                            Chưa Duyệt
+                          </a>
                         )}
                       </td>
                       <td style={styles.td}>
                         <button
                           style={styles.actionButton}
-                          onClick={() => navigateTo("/chitietphieukham")}
+                          onClick={() => {
+                            console.log(`/chitietphieukham/${datkham.id}`);
+                            navigateTo(`/chitietphieukham/${datkham.id}`);
+                          }}
                         >
                           Xem
                         </button>{" "}
-                        | <button style={styles.actionButton}>Chỉnh sửa</button>
+                        |{" "}
+                        <button
+                          style={styles.actionButton}
+                          onClick={() => handleCancel(datkham.id)}
+                        >
+                          Xóa
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -104,6 +142,8 @@ const QuanLyDatKham = () => {
     </div>
   );
 };
+
+// Styles giữ nguyên như bạn đã viết
 
 // Styles
 const styles = {
