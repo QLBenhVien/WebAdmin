@@ -5,6 +5,7 @@ import QuanLyDatKham from "./QuanLyDatKham/QuanLyDatKham";
 import NavLeTan from "../../components/NavLeTan";
 import LapPhieuKhamBenh from "./LapPhieuKhamBenh/LapPhieuKhamBenh";
 import ThongTinDatKham from "./ThongTinDatKham/ThongTinDatkham";
+import DanhSachBenhNhan from "./DanhSachBenhNhan/DanhSachBenhNhan";
 const LeTanRoles = () => {
   return (
     <div
@@ -27,6 +28,7 @@ const LeTanRoles = () => {
         </div>
         <Routes>
           <Route path="/Letan" element={<LetanPage />} />
+          <Route path="/danhsachbenhnhan" element={<DanhSachBenhNhan/>} />
           <Route path="/qlDatkham" element={<QuanLyDatKham />} />
           <Route path="/lapphieukhambenh" element={<LapPhieuKhamBenh />} />
           <Route path="/chitietphieukham" element={<ThongTinDatKham />} />
