@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// DanhSachBenhNhan component
-const DanhSachBenhNhan = () => {
+// DanhSachHoaDon component
+const DanhSachHoaDon = () => {
     const navigate = useNavigate();
 
     const [xemdatkhams, setxemdatkhams] = useState([
         {
-            MaBN: "BN01",
+            MaBA: "1",
             TenBN: "nguyen van A",
-            NgayKham: "12-12-12",
+            NgayKham: "12-2-2024",
             TinhTrang: "false",
         },
         {
-            MaBN: "12",
+            MaBA: "12",
             TenBN: "lanh",
-            NgayKham: "12-122-12",
+            NgayKham: "29-02-2023",
             TinhTrang: "true",
         },
     ]);
@@ -30,9 +30,9 @@ const DanhSachBenhNhan = () => {
                 <div style={styles.mainContent}>
                     <div style={styles.pageContainer}>
                         <div style={styles.pageHeader}>
-                            <div style={styles.pageTitleLeft}>DANH SÁCH BỆNH NHÂN</div>
+                            <div style={styles.pageTitleLeft}>DANH SÁCH HOÁ ĐƠN</div>
                             <div style={styles.pageTitleRight}>
-                                Danh sách bênh nhân / Danh sách bệnh nhân
+                                Danh sách hoá đơn / Danh sách hoá đơn
                             </div>
                         </div>
                         <div style={styles.whiteContainer}>
@@ -49,7 +49,7 @@ const DanhSachBenhNhan = () => {
                                 <thead>
                                     <tr>
                                         <th style={styles.th}>STT</th>
-                                        <th style={styles.th}>Mã BN</th>
+                                        <th style={styles.th}>Mã BA</th>
                                         <th style={styles.th}>Tên bệnh nhân</th>
                                         <th style={styles.th}>Ngày khám</th>
                                         <th style={styles.th}>Tình trạng</th>
@@ -60,7 +60,7 @@ const DanhSachBenhNhan = () => {
                                     {xemdatkhams.map((xemdatkham, index) => (
                                         <tr key={index}>
                                             <td style={styles.td}>{index + 1}</td>
-                                            <td style={styles.td}>{xemdatkham.MaBN}</td>
+                                            <td style={styles.td}>{xemdatkham.MaBA}</td>
                                             <td style={styles.td}>{xemdatkham.TenBN}</td>
                                             <td style={styles.td}>{xemdatkham.NgayKham}</td>
                                             <td style={styles.td}>
@@ -71,7 +71,7 @@ const DanhSachBenhNhan = () => {
                                                             fontWeight: "700",
                                                         }}
                                                     >
-                                                        Chưa Khám
+                                                        Đã thanh toán
                                                     </a>
                                                 ) : (
                                                     <a
@@ -80,14 +80,14 @@ const DanhSachBenhNhan = () => {
                                                             fontWeight: "700",
                                                         }}
                                                     >
-                                                        Đã khám
+                                                        Chưa thanh toán
                                                     </a>
                                                 )}
                                             </td>
                                             <td style={styles.td}>
                                                 <button
                                                     style={styles.actionButton}
-                                                    onClick={() => navigateTo("/chitietbenhnhan")}
+                                                    onClick={() => navigateTo("/chitietbenhan")}
                                                 >
                                                     Xem
                                                 </button>{" "}
@@ -223,4 +223,4 @@ const styles = {
     },
 };
 
-export default DanhSachBenhNhan;
+export default DanhSachHoaDon;
