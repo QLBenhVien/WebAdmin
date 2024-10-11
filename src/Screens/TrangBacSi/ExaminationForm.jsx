@@ -92,51 +92,14 @@ const ExaminationForm = () => {
                 )}
               </div>
             </div>
-            <div className="patient-search-button" onClick={toggleQueryInfo}>
-              TRA CỨU
+            <div className="patient-filter-button2">
+              <img src="Search.png" alt="Doctor" />
+              <input
+                placeholder="Nhập tên bệnh nhân"
+                style={{ border: "none", outline: "none" }}
+              />
             </div>
           </div>
-          {showQueryInfo && (
-            <div className="info-container">
-              <div className="info-card">
-                <div className="info-header">
-                  <h2 className="header-title">TRA CỨU THÔNG TIN BỆNH NHÂN</h2>
-                </div>
-                <div className="search-section">
-                  <div className="search-row">
-                    <div className="patient-name">Họ và tên bệnh nhân:</div>
-                    <div className="search-input">
-                      <input
-                        type="text"
-                        placeholder="Nhập họ tên"
-                        className="text-input"
-                      />
-                    </div>
-                  </div>
-                  <div className="search-row">
-                    <div className="visit-date">Ngày khám bệnh:</div>
-                    <div className="date-picker">
-                      <input type="date" className="date-input pointer" />
-                    </div>
-                  </div>
-                </div>
-                <div className="button-container">
-                  <button
-                    className="button cancel-button"
-                    onClick={handleCancel}
-                  >
-                    HỦY
-                  </button>
-                  <button
-                    className="button lookup-button"
-                    onClick={handleSearch}
-                  >
-                    TRA CỨU
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           <div className="patient-table">
             <div className="patient-table-header">

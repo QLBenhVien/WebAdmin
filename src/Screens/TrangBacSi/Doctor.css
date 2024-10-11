@@ -305,6 +305,18 @@ body {
     border-radius: 10px; /* Bo góc cho nút lọc */
     border: 1px solid #000000; /* Viền cho nút lọc */
   }
+
+  .patient-filter-button2 {
+    display: flex; /* Sử dụng flexbox cho "Ngày khám gần nhất" */
+    align-items: center; /* Căn giữa hình ảnh và văn bản theo chiều dọc */
+    margin-right: 20px; /* Khoảng cách bên phải cho "Ngày khám gần nhất" */
+    background-color: #ffffff; /* Màu nền cho nút lọc */
+    padding: 5px 10px; /* Khoảng cách bên trong cho nút lọc */
+    border-radius: 10px; /* Bo góc cho nút lọc */
+    border: 1px solid #000000; /* Viền cho nút lọc */
+    margin-left: 950px;
+    position: absolute;
+  }
   
   .patient-filter-button img {
     margin-left: 5px; /* Khoảng cách bên trái cho hình ảnh */
@@ -316,7 +328,8 @@ body {
     border: none; /* Không có viền */
     border-radius: 3px; /* Bo góc cho nút tra cứu */
     cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
-    margin-left: 740px;
+    margin-left: 1070px;
+    position: absolute;
   }
   .patient-search-buttonn {
     padding: 5px 10px; /* Khoảng cách bên trong cho nút tra cứu */
