@@ -326,4 +326,3 @@ const styles = {
 };
 
 export default DoctorPage;
-    

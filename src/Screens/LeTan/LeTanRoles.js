@@ -5,6 +5,7 @@ import QuanLyDatKham from "./QuanLyDatKham/QuanLyDatKham";
 import NavLeTan from "../../components/NavLeTan";
 import LapPhieuKhamBenh from "./LapPhieuKhamBenh/LapPhieuKhamBenh";
 import ThongTinDatKham from "./ThongTinDatKham/ThongTinDatkham";
+import Header from "../TrangBacSi/Header";
 const LeTanRoles = () => {
   return (
     <div
@@ -19,12 +20,7 @@ const LeTanRoles = () => {
       </div>
 
       <div style={{ flex: "7" }}>
-        <div style={styles.navbar}>
-          <div style={styles.userInfo}>
-            <div style={styles.userAvatar}></div>
-            <div style={styles.userName}>BS. Nguyễn Văn A</div>
-          </div>
-        </div>
+        <Header />
         <Routes>
           <Route path="/Letan" element={<LetanPage />} />
           <Route path="/qlDatkham" element={<QuanLyDatKham />} />
