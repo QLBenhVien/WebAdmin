@@ -176,11 +176,9 @@ body {
   height: auto;
 }
 .container3 {
-  margin-left: 281px; /* Tương tự như phần header */
-  margin-right: 0px;
   background-color: #ffffff;
-  margin-bottom: 10px; /* Thêm khoảng cách dưới */
-  height: 350x;
+  /* margin-bottom: 10px; Thêm khoảng cách dưới */
+  height: auto;
 }
 /* Container cho toàn bộ nội dung */
 .patient-container {
@@ -214,7 +212,7 @@ body {
 
 .patient-header-breadcrumb span {
   color: black;
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
 }
@@ -239,7 +237,7 @@ body {
   flex: 0.6; /* Chiều rộng mỗi ô bằng nhau */
   text-align: left;
   color: black;
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   padding: 7px; /* Thêm khoảng cách đều nhau */
@@ -258,7 +256,7 @@ body {
   flex: 1; /* Chiều rộng mỗi ô bằng nhau */
   text-align: left;
   color: black;
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   padding: 10px; /* Thêm khoảng cách đều nhau */
@@ -302,8 +300,9 @@ body {
   padding: 5px 10px; /* Khoảng cách bên trong cho nút lọc */
   border-radius: 10px; /* Bo góc cho nút lọc */
   border: 1px solid #000000; /* Viền cho nút lọc */
-  margin-left: 950px;
+  margin-left: 20rem;
   position: absolute;
+  width: 45%;
 }
 
 .patient-filter-button img {
@@ -316,7 +315,7 @@ body {
   border: none; /* Không có viền */
   border-radius: 3px; /* Bo góc cho nút tra cứu */
   cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
-  margin-left: 1070px;
+  margin-left: 60rem;
   position: absolute;
 }
 .patient-search-buttonn {
@@ -604,7 +603,7 @@ body {
   position: relative;
 }
 .medication-table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   position: relative;
   top: 360px;

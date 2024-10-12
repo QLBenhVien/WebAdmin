@@ -35,11 +35,11 @@ const DoctorRoles = () => {
         backgroundColor: "#f0f8ff",
       }}
     >
-      <div style={{ flex: "3" }}>
+      <div style={{ flex: "2" }}>
         <NavBacSi />
       </div>
 
-      <div style={{ flex: "7" }}>
+      <div style={{ flex: "8" }}>
         <Header />
         <Routes>
           <Route path="/prescribe" element={<Prescribe />} />
