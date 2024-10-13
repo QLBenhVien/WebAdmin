@@ -4,20 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const MedicalRecord = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showQueryInfo, setShowQueryInfo] = useState(false);
   const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-  };
-
-  const toggleQueryInfo = () => {
-    setShowQueryInfo(!showQueryInfo);
-  };
-
-  const handleCancel = () => {
-    setShowQueryInfo(false);
   };
 
   const handleSortChange = (option) => {
@@ -25,30 +17,71 @@ const MedicalRecord = () => {
     setDropdownOpen(false);
   };
 
-  const handleSearch = () => {
-    navigate("/");
-  };
-
   const patientData = [
     {
       id: 1,
       maHs: "0000000",
       tenBenhNhan: "Nguyễn Văn A",
-      ngayKham: "03/09/2024",
+      ngayKham: "2024-09-03", 
     },
     {
       id: 2,
       maHs: "0000001",
       tenBenhNhan: "Trần Thị B",
-      ngayKham: "04/09/2024",
+      ngayKham: "2024-09-04",
     },
     {
       id: 3,
       maHs: "0000002",
       tenBenhNhan: "Lê Văn C",
-      ngayKham: "05/09/2024",
+      ngayKham: "2024-09-05",
     },
   ];
+
+  const filteredPatients = patientData
+    .filter((patient) =>
+      patient.tenBenhNhan.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOption === "Ngày khám gần nhất") {
+        return new Date(b.ngayKham) - new Date(a.ngayKham); 
+      } else {
+        return new Date(a.ngayKham) - new Date(b.ngayKham); 
+      }
+    });
+
+  const PatientTable = () => {
+    return (
+      <div className="patient-table">
+        <div className="patient-table-header">
+          <div className="patient-header-cell stt">STT</div>
+          <div className="patient-header-cell ma-hs">Mã HS</div>
+          <div className="patient-header-cell ten-benh-nhan">Tên bệnh nhân</div>
+          <div className="patient-header-cell ngay-kham">Ngày tạo</div>
+          <div className="patient-header-cell chi-tiet">Chi tiết</div>
+        </div>
+        <div className="patient-table">
+          {filteredPatients.map((patient, index) => (
+            <div className="patient-table-row" key={patient.id}>
+              <div className="patient-table-cell stt">{index + 1}</div>
+              <div className="patient-table-cell ma-hs">{patient.maHs}</div>
+              <div className="patient-table-cell ten-benh-nhan">
+                {patient.tenBenhNhan}
+              </div>
+              <div className="patient-table-cell ngay-kham">
+                {patient.ngayKham}
+              </div>
+              <div className="patient-table-cell chi-tiet">
+                <a href="/infoMedicalRecordsDetail" className="link-xem">
+                  Xem
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="outer">
@@ -59,7 +92,7 @@ const MedicalRecord = () => {
             <strong>Hồ sơ bệnh án / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
-            Danh sách hồ sơ bệnh án{" "}
+            Danh sách hồ sơ bệnh án
           </span>
         </div>
       </div>
@@ -99,40 +132,12 @@ const MedicalRecord = () => {
               <input
                 placeholder="Nhập tên bệnh nhân"
                 style={{ border: "none", outline: "none" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           </div>
-
-          <div className="patient-table">
-            <div className="patient-table-header">
-              <div className="patient-header-cell stt">STT</div>
-              <div className="patient-header-cell ma-hs">Mã HS</div>
-              <div className="patient-header-cell ten-benh-nhan">
-                Tên bệnh nhân
-              </div>
-              <div className="patient-header-cell ngay-kham">Ngày tạo</div>
-              <div className="patient-header-cell chi-tiet">Chi tiết</div>
-            </div>
-            <div className="patient-table">
-              {patientData.map((patient) => (
-                <div className="patient-table-row" key={patient.id}>
-                  <div className="patient-table-cell stt">{patient.id}</div>
-                  <div className="patient-table-cell ma-hs">{patient.maHs}</div>
-                  <div className="patient-table-cell ten-benh-nhan">
-                    {patient.tenBenhNhan}
-                  </div>
-                  <div className="patient-table-cell ngay-kham">
-                    {patient.ngayKham}
-                  </div>
-                  <div className="patient-table-cell chi-tiet">
-                    <a href="/medicalRecordsDetail" className="link-xem">
-                      Xem
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <PatientTable />
         </div>
       </div>
     </div>

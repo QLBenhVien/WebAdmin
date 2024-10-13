@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import "./Doctor.css";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = () => {
-    console.log("Đăng xuất");
+    navigate("/");
   };
 
   const toggleDropdown = () => {

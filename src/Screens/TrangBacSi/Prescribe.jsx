@@ -1,30 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Doctor.css";
+import { useNavigate } from "react-router-dom";
 
 const Prescribe = () => {
-  const data = [
-    {
-      stt: 1,
-      name: "Panadol Extra",
-      unit: "Viên",
-      quantity: 30,
-      dosage: "Uống, Sáng 2 viên, Chiều 2 viên",
-    },
-    {
-      stt: 2,
-      name: "Aspirin",
-      unit: "Viên",
-      quantity: 20,
-      dosage: "Uống, Sáng 1 viên, Chiều 1 viên",
-    },
-    {
-      stt: 3,
-      name: "Aspirin",
-      unit: "Viên",
-      quantity: 20,
-      dosage: "Uống, Sáng 1 viên, Chiều 1 viên",
-    },
-  ];
+  const navigate = useNavigate();
+  const [status, setStatus] = useState("chưa khám");
+  const [data, setData] = useState([
+    { stt: 1, name: "", unit: "", quantity: "", dosage: "" },
+  ]);
+
+  const handleInputChange = (index, field, value) => {
+    const updatedData = [...data];
+    updatedData[index][field] = value;
+    setData(updatedData);
+  };
+
+  const handleAddRow = () => {
+    const newRow = {
+      stt: data.length + 1,
+      name: "",
+      unit: "",
+      quantity: "",
+      dosage: "",
+    };
+    setData([...data, newRow]);
+  };
+
+  const handleSave = () => {
+    const confirmSave = window.confirm("Bạn có muốn lưu lại những thay đổi không?");
+    
+    if (confirmSave) {
+      console.log("Data saved:", data);
+      alert("Dữ liệu đã được lưu thành công!");
+      navigate("/examinationForm");
+    } else {
+      
+    }
+  };
+
   return (
     <div className="outer">
       <div className="patient-header">
@@ -33,9 +46,10 @@ const Prescribe = () => {
           <span>
             <strong>Phiếu khám bệnh / </strong>
           </span>
-          <span className="patient-breadcrumb-secondary">Phiếu khám bệnh </span>
+          <span className="patient-breadcrumb-secondary">Phiếu khám bệnh</span>
         </div>
       </div>
+
       <div className="container3">
         <div style={styles.InfoContainer}>
           <div style={styles.infoSection}>
@@ -61,11 +75,11 @@ const Prescribe = () => {
           </div>
         </div>
       </div>
+
       <div className="container3">
         <div style={styles.formGroup}>
           <div style={styles.label}>Triệu chứng</div>
           <div style={styles.inputContainer}>
-            <div style={{ flex: 1 }} />
             <input type="text" style={styles.inputField} />
           </div>
         </div>
@@ -73,7 +87,6 @@ const Prescribe = () => {
         <div style={styles.formGroup}>
           <div style={styles.label}>Chuẩn đoán</div>
           <div style={styles.inputContainer}>
-            <div style={{ flex: 1 }} />
             <input type="text" style={styles.inputField} />
           </div>
         </div>
@@ -81,14 +94,13 @@ const Prescribe = () => {
         <div style={styles.formGroup}>
           <div style={styles.label}>Lời dặn của bác sĩ</div>
           <div style={styles.inputContainer}>
-            <div style={{ flex: 1 }} />
             <input type="text" style={styles.inputField} />
           </div>
         </div>
 
         <div style={styles.infoSection}>
           <h2 style={styles.sectionTitle}>Kê thuốc</h2>
-          {/* Danh sách bệnh án sẽ được thêm vào đây */}
+
           <table className="medication-table2">
             <thead>
               <tr className="medication-header">
@@ -96,28 +108,60 @@ const Prescribe = () => {
                 <th>Tên thuốc / Hàm lượng</th>
                 <th>ĐVT</th>
                 <th>Số lượng</th>
+                <th>Liều dùng</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
+              {data.map((item, index) => (
                 <React.Fragment key={item.stt}>
                   <tr className="medication-row">
                     <td>{item.stt}</td>
-                    <td>{item.name}</td>
-                    <td>{item.unit}</td>
-                    <td>{item.quantity}</td>
-                  </tr>
-                  <tr className="medication-dosage-row">
-                    <td colSpan="4">{item.dosage}</td>
+                    <td>
+                      <input
+                        type="text"
+                        value={item.name}
+                        style={{ border: "none", outline: "none" }}
+                        onChange={(e) => handleInputChange(index, "name", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={item.unit}
+                        style={{ border: "none", outline: "none" }}
+                        onChange={(e) => handleInputChange(index, "unit", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={item.quantity}
+                        style={{ border: "none", outline: "none" }}
+                        onChange={(e) => handleInputChange(index, "quantity", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={item.dosage}
+                        style={{ border: "none", outline: "none" }}
+                        onChange={(e) => handleInputChange(index, "dosage", e.target.value)}
+                      />
+                    </td>
                   </tr>
                 </React.Fragment>
               ))}
             </tbody>
           </table>
+
+          <button onClick={handleAddRow} className="add-row-button">
+            Thêm hàng
+          </button>
         </div>
       </div>
+
       <div className="patient-list-search-filter2">
-        <div className="patient-search-buttonn">Lưu</div>
+        <div onClick={handleSave} className="patient-search-buttonn">Lưu</div>
       </div>
     </div>
   );
@@ -125,117 +169,6 @@ const Prescribe = () => {
 
 // Styles
 const styles = {
-  homePage: {
-    position: "relative",
-    width: "100vw",
-    height: "100vh",
-    background: "#E4F5FF",
-    display: "flex",
-    flexDirection: "column",
-  },
-  navbar: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: "10px 20px",
-    backgroundColor: "#FFFFFF",
-    borderBottom: "1px solid #DDD",
-  },
-  userInfo: {
-    display: "flex",
-    alignItems: "center",
-  },
-  userAvatar: {
-    width: "60px",
-    height: "60px",
-    background: "#D9D9D9",
-    borderRadius: "50%",
-    marginRight: "20px",
-  },
-  userName: {
-    fontSize: "20px",
-    fontWeight: "bold",
-  },
-  content: {
-    display: "flex",
-    flex: 1,
-  },
-  sidebar: {
-    width: "300px",
-    backgroundColor: "#22668E",
-    padding: "20px",
-    color: "white",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  sidebarHeader: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "20px",
-    padding: "20px",
-    backgroundColor: "white",
-    borderRadius: "10px",
-  },
-  logo: {
-    width: "40px",
-    height: "40px",
-    marginRight: "10px",
-  },
-  sidebarTitle: {
-    fontSize: "20px",
-    fontWeight: "bold",
-    color: "#22668E",
-  },
-  sidebarList: {
-    listStyleType: "none",
-    padding: 0,
-    margin: 0,
-    width: "100%",
-  },
-  sidebarItem: {
-    marginBottom: "20px",
-    cursor: "pointer",
-    textAlign: "center",
-    padding: "10px",
-    backgroundColor: "#578EAF",
-    borderRadius: "10px",
-  },
-  mainContent: {
-    flex: 1,
-    backgroundColor: "#f8f9fa",
-    position: "relative",
-  },
-  pageContainer: {
-    background: "rgba(228, 245, 255, 1)",
-    padding: "20px",
-    borderRadius: "0 20px 20px 0",
-    height: "100%",
-  },
-  pageHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "10px 20px",
-    marginBottom: "20px",
-  },
-  pageTitleLeft: {
-    fontSize: "20px",
-    fontWeight: "bold",
-    color: "#000000",
-  },
-  pageTitleRight: {
-    fontSize: "20px",
-    fontWeight: "400",
-    color: "#000000",
-  },
-  whiteContainer: {
-    backgroundColor: "#ffffff",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    height: "100%",
-  },
   InfoContainer: {
     backgroundColor: "#ffffff",
     padding: "5px",
@@ -250,23 +183,6 @@ const styles = {
     padding: "10px",
     fontSize: "26px",
     fontWeight: "bold",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-    backgroundColor: "#ffffff",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-  },
-  th: {
-    backgroundColor: "#D9D9D9",
-    color: "#000000",
-    padding: "10px",
-    textAlign: "left",
-  },
-  td: {
-    padding: "10px",
-    borderBottom: "1px solid #ddd",
   },
   formGroup: {
     display: "flex",

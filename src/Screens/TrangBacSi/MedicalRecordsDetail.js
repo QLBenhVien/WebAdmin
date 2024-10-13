@@ -1,8 +1,13 @@
 import React, { useContext } from "react";
 // import { Context } from "../main";
 import "./Doctor.css";
+import { useNavigate } from "react-router-dom";
 
 const MedicalRecordsDetails = () => {
+  const navigate = useNavigate();
+  const handleClose = () => {
+    navigate("/patientList");
+  };
   const data = [
     {
       stt: 1,
@@ -107,6 +112,11 @@ const MedicalRecordsDetails = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+      <div className="patient-list-search-filter2">
+        <div className="patient-search-buttonn" onClick={handleClose}>
+          Đóng
         </div>
       </div>
     </div>

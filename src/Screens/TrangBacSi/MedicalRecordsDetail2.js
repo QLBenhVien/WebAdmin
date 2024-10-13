@@ -53,7 +53,6 @@ const MedicalRecordsDetails2 = () => {
           <div className="diagnosis-text diagnosis-custom">
             Chuẩn đoán: {patientData.diagnosis}
           </div>
-
           <div className="patient-info patient-name-custom">
             <span>Tên bệnh nhân: </span>
             <span className="patient-name-highlight">{patientData.name}</span>

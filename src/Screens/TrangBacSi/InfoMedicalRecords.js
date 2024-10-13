@@ -1,7 +1,12 @@
 import React from "react";
 import "./Doctor.css";
+import { useNavigate } from "react-router-dom";
 
 const InfoMedicalRecords = () => {
+  const navigate = useNavigate();
+  const handleClose = () => {
+    navigate("/medicalRecord");
+  };
   return (
     <div className="outer">
       <div className="patient-header">
@@ -72,6 +77,11 @@ const InfoMedicalRecords = () => {
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div className="patient-list-search-filter2">
+        <div className="patient-search-buttonn" onClick={handleClose}>
+          Đóng
         </div>
       </div>
     </div>

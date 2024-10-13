@@ -9,7 +9,6 @@ import DoctorPage from "./DoctorPage";
 import MedicalRecords from "./QuanLyHoSoBenhAn/MedicalRecords";
 import Prescription from "./PhieuChiDinh/Prescription";
 import PatientInfo from "./ThongTinHoSoBenhAn/PatientInfo";
-// import Login from "./Screens/Dangnhap/Login";
 // import LetanPage from "./Screens/TrangLeTan/LetanPage";
 // import QuanLyDatKham from "./Screens/QuanLyDatKham/QuanLyDatKham";
 // import ThongTinDatKham from "./Screens/ThongTinDatKham/ThongTinDatkham";
@@ -26,6 +25,7 @@ import ResultTesting from "../TrangBacSi/ResultTesting";
 import Prescribe from "../TrangBacSi/Prescribe";
 import NavBacSi from "../../components/NavBacSi";
 import Header from "./Header";
+// import Login from "../Login/Login"; 
 const DoctorRoles = () => {
   return (
     <div

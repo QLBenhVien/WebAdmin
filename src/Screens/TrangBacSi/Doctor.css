@@ -300,7 +300,7 @@ body {
   padding: 5px 10px; /* Khoảng cách bên trong cho nút lọc */
   border-radius: 10px; /* Bo góc cho nút lọc */
   border: 1px solid #000000; /* Viền cho nút lọc */
-  margin-left: 20rem;
+  margin-left: 25.5rem;
   position: absolute;
   width: 45%;
 }
@@ -315,7 +315,7 @@ body {
   border: none; /* Không có viền */
   border-radius: 3px; /* Bo góc cho nút tra cứu */
   cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
-  margin-left: 60rem;
+  margin-left: 64.5rem;
   position: absolute;
 }
 .patient-search-buttonn {
@@ -516,12 +516,12 @@ body {
 .diagnosis-custom {
   width: 467px;
   height: 45px;
-  left: 47px;
+  left: 8px;
   top: 265px;
   position: absolute;
   text-align: center;
   color: black;
-  font-size: 23px;
+  font-size: 18px;
   font-family: "Roboto";
   font-weight: 1000;
   line-height: 34.5px;
@@ -538,7 +538,7 @@ body {
   position: absolute;
   text-align: center;
   color: black;
-  font-size: 23px;
+  font-size: 18px;
   font-family: "Roboto";
   font-weight: 1000;
   line-height: 34.5px;
@@ -549,7 +549,7 @@ body {
 .patient-name-custom {
   width: 330px; /* Keep your width */
   height: 41px; /* Keep your height */
-  left: 35px; /* Keep your left position */
+  left: 14px; /* Keep your left position */
   top: 19px; /* Keep your top position */
 }
 
@@ -563,7 +563,7 @@ body {
 .gender-custom {
   width: 159px;
   height: 45px;
-  left: 542px;
+  left: 549px;
   top: 83px;
 }
 
@@ -578,14 +578,14 @@ body {
 .doctor-name-custom {
   width: 190px;
   height: 38px;
-  left: 48px;
+  left: 60px;
   top: 202px;
 }
 
 .address-custom {
   width: 356px;
   height: 46px;
-  left: 47px;
+  left: 20px;
   top: 137px;
 }
 
@@ -594,7 +594,7 @@ body {
   height: 45px;
   left: 50px;
   top: 322px;
-  font-weight: 400;
+  font-weight: 1000;
 }
 /* Container for the entire medication table */
 .medication-table2 {

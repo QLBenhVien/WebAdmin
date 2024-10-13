@@ -87,7 +87,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "100%",
+    height: "106.7vw",
   },
   sidebarHeader: {
     display: "flex",
