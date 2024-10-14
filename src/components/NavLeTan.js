@@ -1,16 +1,9 @@
-import { useState } from "react";
-import logo from "../images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import logo from "../images/logo.png"; // Import đường dẫn logo của bạn
 
 const NavLeTan = () => {
   const navigate = useNavigate();
-
-  const [activeItem, setActiveItem] = useState("/Letan");
-
-  const navigateTo = (path) => {
-    setActiveItem(path);
-    navigate(path);
-  };
+  const location = useLocation();
 
   return (
     <div style={styles.sidebar}>
@@ -22,10 +15,11 @@ const NavLeTan = () => {
         <li
           style={{
             ...styles.sidebarItem,
-            backgroundColor: activeItem === "/Letan" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/Letan" ? "#000000" : "#FFFFFF",
+            backgroundColor:
+              location.pathname === "/Letan" ? "#FFFFFF" : "#578EAF",
+            color: location.pathname === "/Letan" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/Letan")}
+          onClick={() => navigate("/Letan")}
         >
           Trang chủ
         </li>
@@ -33,10 +27,11 @@ const NavLeTan = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/qlDatkham" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/qlDatkham" ? "#000000" : "#FFFFFF",
+              location.pathname === "/Letan/qlDatkham" ? "#FFFFFF" : "#578EAF",
+            color:
+              location.pathname === "/Letan/qlDatkham" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/qlDatkham")}
+          onClick={() => navigate("/Letan/qlDatkham")}
         >
           Quản lý đặt khám
         </li>
@@ -44,10 +39,15 @@ const NavLeTan = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/lapphieukhambenh" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/lapphieukhambenh" ? "#000000" : "#FFFFFF",
+              location.pathname === "/Letan/lapphieukhambenh"
+                ? "#FFFFFF"
+                : "#578EAF",
+            color:
+              location.pathname === "/Letan/lapphieukhambenh"
+                ? "#000000"
+                : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/lapphieukhambenh")}
+          onClick={() => navigate("/Letan/lapphieukhambenh")}
         >
           Lập phiếu khám bệnh
         </li>
@@ -55,10 +55,15 @@ const NavLeTan = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/danhsachbenhnhan" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/danhsachbenhnhan" ? "#000000" : "#FFFFFF",
+              location.pathname === "/Letan/danhsachbenhnhan"
+                ? "#FFFFFF"
+                : "#578EAF",
+            color:
+              location.pathname === "/Letan/danhsachbenhnhan"
+                ? "#000000"
+                : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/danhsachbenhnhan")}
+          onClick={() => navigate("/Letan/danhsachbenhnhan")}
         >
           Danh sách bệnh nhân
         </li>
@@ -66,12 +71,17 @@ const NavLeTan = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/danhsachhoadon" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/danhsachhoadon" ? "#000000" : "#FFFFFF",
+              location.pathname === "/Letan/danhsachhoadon"
+                ? "#FFFFFF"
+                : "#578EAF",
+            color:
+              location.pathname === "/Letan/danhsachhoadon"
+                ? "#000000"
+                : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/danhsachhoadon")}
+          onClick={() => navigate("/Letan/danhsachhoadon")}
         >
-          Danh sách hoá đơn 
+          Danh sách hoá đơn
         </li>
       </ul>
     </div>
