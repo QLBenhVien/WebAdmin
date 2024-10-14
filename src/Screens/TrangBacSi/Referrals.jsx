@@ -3,6 +3,7 @@ import "./Doctor.css";
 import { useNavigate } from "react-router-dom";
 
 const Referrals = () => {
+  const [alertMessage, setAlertMessage] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showQueryInfo, setShowQueryInfo] = useState(false);
   const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
@@ -29,6 +30,7 @@ const Referrals = () => {
   const handleSearch = () => {
     navigate("/");
   };
+
 
   const patientData = [
     {
@@ -66,6 +68,14 @@ const Referrals = () => {
       }
     });
 
+    const handleViewClick = (tinhTrang) => {
+      if (tinhTrang === "Chưa hoàn thành") {
+        window.alert("Không có xét nghiệm cho bệnh nhân này.");
+      } else {
+        navigate("/resultTesting");
+      }
+    };
+
   const PatientTable = () => {
     const getTinhTrangStyle = (tinhTrang) => {
       return {
@@ -75,6 +85,11 @@ const Referrals = () => {
     };
     return (
       <div className="patient-table">
+          {alertMessage && (
+        <div className="alert-message">
+          {alertMessage}
+        </div>
+      )}
       <div className="patient-table-header">
         <div className="patient-header-cell stt">STT</div>
         <div className="patient-header-cell ten-benh-nhan">
@@ -104,7 +119,7 @@ const Referrals = () => {
               {patient.tinhTrang}
             </div>
             <div className="patient-table-cell chi-tiet">
-              <a href="/resultTesting" className="link-xem">
+              <a href="" className="link-xem" onClick={() => handleViewClick(patient.tinhTrang)}>
                 Xem
               </a>
             </div>
