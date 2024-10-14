@@ -30,6 +30,14 @@ const ExaminationForm = () => {
     navigate("/");
   };
 
+  const handleViewMedicalRecord = (tinhTrang) => {
+    if (tinhTrang === "Chưa khám") {
+      window.alert("Không có bệnh án cho bệnh nhân này.");
+    } else {
+      navigate("/infoMedicalRecordsDetail");
+    }
+  };
+
   const patientData = [
     {
       id: 1,
@@ -86,9 +94,9 @@ const ExaminationForm = () => {
         <div className="patient-header-cell chi-tiet">Đơn thuốc</div>
       </div>
       <div className="patient-table">
-      {filteredPatients.map((patient) => (
+      {filteredPatients.map((patient, index) => (
           <div className="patient-table-row" key={patient.id}>
-            <div className="patient-table-cell stt">{patient.id}</div>
+            <div className="patient-table-cell stt">{index + 1}</div>
             <div className="patient-table-cell ten-benh-nhan">
               {patient.tenBenhNhan}
             </div>
@@ -102,10 +110,12 @@ const ExaminationForm = () => {
               {patient.tinhTrang}
             </div>
             <div className="patient-table-cell chi-tiet">
-              <a href="/infoMedicalRecordsDetail" className="link-xem">
-                Xem
-              </a>
-            </div>
+                <a
+                  className="link-xem"
+                  onClick={() => handleViewMedicalRecord(patient.tinhTrang)}>
+                  Xem
+                </a>  
+              </div>
             <div className="patient-table-cell ma-hs">
               <a href="/prescribe" className="link-xem">
                 Kê đơn

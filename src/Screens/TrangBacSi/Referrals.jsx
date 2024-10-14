@@ -88,9 +88,9 @@ const Referrals = () => {
         <div className="patient-header-cell chi-tiet">Chi tiết</div>
       </div>
       <div className="patient-table">
-      {filteredPatients.map((patient) => (
+      {filteredPatients.map((patient, index) => (
           <div className="patient-table-row" key={patient.id}>
-            <div className="patient-table-cell stt">{patient.id}</div>
+            <div className="patient-table-cell stt">{index + 1}</div>
             <div className="patient-table-cell ten-benh-nhan">
               {patient.tenBenhNhan}
             </div>
