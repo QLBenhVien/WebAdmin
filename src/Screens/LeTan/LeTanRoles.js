@@ -5,6 +5,7 @@ import QuanLyDatKham from "./QuanLyDatKham/QuanLyDatKham";
 import NavLeTan from "../../components/NavLeTan";
 import LapPhieuKhamBenh from "./LapPhieuKhamBenh/LapPhieuKhamBenh";
 import ThongTinDatKham from "./ThongTinDatKham/ThongTinDatkham";
+
 import DanhSachBenhNhan from "./DanhSachBenhNhan/DanhSachBenhNhan";
 import DanhSachHoaDon from "./DanhSachHoaDon/DanhSachHoaDon";
 import Header from "../TrangBacSi/Header";
@@ -17,11 +18,12 @@ const LeTanRoles = () => {
         backgroundColor: "#f0f8ff",
       }}
     >
-      <div style={{ flex: "3" }}>
+      <div style={{ flexBasis: "30%" }}>
         <NavLeTan />
       </div>
 
-      <div style={{ flex: "7" }}>
+      <div style={{ flexBasis: "70%" }}>
+
         <Header />
         <Routes>
         <Route path="/danhsachhoadon" element={<DanhSachHoaDon/>} />
@@ -29,37 +31,11 @@ const LeTanRoles = () => {
           <Route path="/danhsachbenhnhan" element={<DanhSachBenhNhan/>} />
           <Route path="/qlDatkham" element={<QuanLyDatKham />} />
           <Route path="/lapphieukhambenh" element={<LapPhieuKhamBenh />} />
-          <Route path="/chitietphieukham" element={<ThongTinDatKham />} />
+          <Route path="/chitietphieukham/:id" element={<ThongTinDatKham />} />
         </Routes>
       </div>
     </div>
   );
-};
-
-const styles = {
-  navbar: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: "10px 20px",
-    backgroundColor: "#FFFFFF",
-    borderBottom: "1px solid #DDD",
-  },
-  userInfo: {
-    display: "flex",
-    alignItems: "center",
-  },
-  userAvatar: {
-    width: "60px",
-    height: "60px",
-    background: "#D9D9D9",
-    borderRadius: "50%",
-    marginRight: "20px",
-  },
-  userName: {
-    fontSize: "20px",
-    fontWeight: "bold",
-  },
 };
 
 export default LeTanRoles;
