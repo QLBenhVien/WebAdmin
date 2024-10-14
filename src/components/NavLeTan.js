@@ -51,6 +51,28 @@ const NavLeTan = () => {
         >
           Lập phiếu khám bệnh
         </li>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              activeItem === "/danhsachbenhnhan" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/danhsachbenhnhan" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigateTo("/danhsachbenhnhan")}
+        >
+          Danh sách bệnh nhân
+        </li>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              activeItem === "/danhsachhoadon" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/danhsachhoadon" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigateTo("/danhsachhoadon")}
+        >
+          Danh sách hoá đơn 
+        </li>
       </ul>
     </div>
   );
