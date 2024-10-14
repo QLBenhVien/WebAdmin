@@ -14,7 +14,7 @@ const Referrals = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const toggleQueryInfo = () => {
+ const toggleQueryInfo = () => {
     setShowQueryInfo(!showQueryInfo);
   };
 
@@ -31,27 +31,26 @@ const Referrals = () => {
     navigate("/");
   };
 
+  
+
 
   const patientData = [
     {
       id: 1,
       tenBenhNhan: "Nguyễn Văn A",
       ngayKham: "03/09/2024",
-      yeuCau: "Gửi yêu cầu",
       tinhTrang: "Đã hoàn thành",
     },
     {
       id: 2,
       tenBenhNhan: "Trần Thị B",
       ngayKham: "04/09/2024",
-      yeuCau: "Gửi yêu cầu",
       tinhTrang: "Chưa hoàn thành",
     },
     {
       id: 3,
       tenBenhNhan: "Lê Văn C",
       ngayKham: "05/09/2024",
-      yeuCau: "Gửi yêu cầu",
       tinhTrang: "Đã hoàn thành",
     },
   ];
@@ -112,8 +111,10 @@ const Referrals = () => {
             <div className="patient-table-cell ngay-kham">
               {patient.ngayKham}
             </div>
-            <div className="patient-table-cell ma-hs">
-              {patient.yeuCau}
+            <div className="patient-table-cell chi-tiet">
+            <a className="link-xem pointer" onClick={toggleQueryInfo}>
+                Gửi yêu cầu
+              </a>
             </div>
             <div className="patient-table-cell ma-hs" style={getTinhTrangStyle(patient.tinhTrang)}>
               {patient.tinhTrang}
@@ -174,6 +175,7 @@ const Referrals = () => {
                 )}
               </div>
             </div>
+            
             <div className="patient-filter-button2">
               <img src="Search.png" alt="Doctor" />
               <input
@@ -187,6 +189,45 @@ const Referrals = () => {
           <PatientTable />
         </div>
       </div>
+      {showQueryInfo && (
+            <div className="info-container">
+              <div className="info-card">
+                <div className="info-header">
+                  <h2 className="header-title">GỬI YÊU CẦU XÉT NGHIỆM</h2>
+                </div>
+                <div className="search-section">
+                  <div className="search-row">
+                    <div className="patient-name">Phòng xét nghiệm:</div>
+                    <div className="search-input">
+                      <input
+                        type="text"
+                        className="text-input"
+                      />
+                    </div>
+                  </div>
+                  <div className="search-row">
+                    <div className="patient-name">Tên xét nghiệm:</div>
+                    <div className="search-input">
+                      <input type="text" className="text-input" />
+                    </div>
+                  </div>
+                </div>
+                <div className="button-container">
+                  <button
+                    className="button cancel-button"
+                    onClick={handleCancel}
+                  >
+                    HỦY
+                  </button>
+                  <button
+                    className="button lookup-button"
+                  >
+                    GỬI YÊU CẦU
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
     </div>
   );
 };
