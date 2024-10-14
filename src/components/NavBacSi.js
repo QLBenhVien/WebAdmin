@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../images/logo.png";
 import { useNavigate } from "react-router-dom";
 
-const NavLeTan = () => {
+const NavBacSi = () => {
   const navigate = useNavigate();
 
   const [activeItem, setActiveItem] = useState("/Letan");
@@ -22,10 +22,10 @@ const NavLeTan = () => {
         <li
           style={{
             ...styles.sidebarItem,
-            backgroundColor: activeItem === "/Letan" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/Letan" ? "#000000" : "#FFFFFF",
+            backgroundColor: activeItem === "/Bacsi" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/Bacsi" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/Letan")}
+          onClick={() => navigateTo("/Bacsi")}
         >
           Trang chủ
         </li>
@@ -33,45 +33,45 @@ const NavLeTan = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/qlDatkham" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/qlDatkham" ? "#000000" : "#FFFFFF",
+              activeItem === "/medicalRecord" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/medicalRecord" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/qlDatkham")}
+          onClick={() => navigateTo("/medicalRecord")}
         >
-          Quản lý đặt khám
+          Hồ sơ bệnh án
         </li>
         <li
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/lapphieukhambenh" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/lapphieukhambenh" ? "#000000" : "#FFFFFF",
+              activeItem === "/referrals" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/referrals" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/lapphieukhambenh")}
+          onClick={() => navigateTo("/referrals")}
         >
-          Lập phiếu khám bệnh
+          Gửi yêu cầu xét nghiệm
         </li>
         <li
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/danhsachbenhnhan" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/danhsachbenhnhan" ? "#000000" : "#FFFFFF",
+              activeItem === "/examinationForm" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/examinationForm" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/danhsachbenhnhan")}
+          onClick={() => navigateTo("/examinationForm")}
+        >
+          Phiếu khám bệnh
+        </li>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              activeItem === "/patientList" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/patientList" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigateTo("/patientList")}
         >
           Danh sách bệnh nhân
-        </li>
-        <li
-          style={{
-            ...styles.sidebarItem,
-            backgroundColor:
-              activeItem === "/danhsachhoadon" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/danhsachhoadon" ? "#000000" : "#FFFFFF",
-          }}
-          onClick={() => navigateTo("/danhsachhoadon")}
-        >
-          Danh sách hoá đơn 
         </li>
       </ul>
     </div>
@@ -87,7 +87,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "100%",
+    height: "106.7vw",
   },
   sidebarHeader: {
     display: "flex",
@@ -123,4 +123,4 @@ const styles = {
   },
 };
 
-export default NavLeTan;
+export default NavBacSi;
