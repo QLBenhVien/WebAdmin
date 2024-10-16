@@ -10,16 +10,33 @@ const DanhSachHoaDon = () => {
             MaBA: "1",
             TenBN: "nguyen van A",
             NgayKham: "12-2-2024",
-            TinhTrang: "false",
+            TrangThai: "false",
         },
         {
             MaBA: "12",
             TenBN: "lanh",
-            NgayKham: "29-02-2023",
-            TinhTrang: "true",
+            NgayKham: "29-02-2020",
+            TrangThai: "true",
         },
     ]);
-    
+    const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const handleSortChange = (option) => {
+        setSortOption(option);
+        setDropdownOpen(false);
+    };
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+    const filteredPatients = xemdatkhams
+        .sort((a, b) => {
+            if (sortOption === "Ngày khám gần nhất") {
+                return new Date(b.NgayKham) - new Date(a.NgayKham);
+            } else {
+                return new Date(a.NgayKham) - new Date(b.NgayKham);
+            }
+        });
+
 
     const navigateTo = (path) => {
         navigate(path);
@@ -40,9 +57,33 @@ const DanhSachHoaDon = () => {
                             <div style={styles.searchSection}>
                                 <div style={styles.searchSection}>
                                     <label style={styles.sortLabel}>Sắp xếp theo:</label>
-                                    <select style={styles.sortSelect}>
-                                        <option value="tinhTrang">Tình trạng</option>
-                                    </select>
+                                    <div className="patient-filter-button">
+                                        {sortOption}
+                                        <div className="dropdown-time">
+                                            <img
+                                                className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
+                                                src="Polygon 1.png"
+                                                alt="Doctor"
+                                                onClick={toggleDropdown}
+                                            />
+                                            {dropdownOpen && (
+                                                <div className="dropdown-menuTime show">
+                                                    <button
+                                                        className="dropdown-itemTime"
+                                                        onClick={() => handleSortChange("Ngày khám gần nhất")}
+                                                    >
+                                                        Ngày khám gần nhất
+                                                    </button>
+                                                    <button
+                                                        className="dropdown-itemTime"
+                                                        onClick={() => handleSortChange("Ngày khám xa nhất")}
+                                                    >
+                                                        Ngày khám xa nhất
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                     <button style={styles.searchButton}>TRA CỨU</button>
                                 </div>
                             </div>
@@ -58,7 +99,7 @@ const DanhSachHoaDon = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {xemdatkhams.map((xemdatkham, index) => (
+                                    {filteredPatients.map((xemdatkham, index) => (
                                         <tr key={index}>
                                             <td style={styles.td}>{index + 1}</td>
                                             <td style={styles.td}>{xemdatkham.MaBA}</td>
