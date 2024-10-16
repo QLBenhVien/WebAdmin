@@ -19,6 +19,7 @@ const DanhSachHoaDon = () => {
             TinhTrang: "true",
         },
     ]);
+    
 
     const navigateTo = (path) => {
         navigate(path);
@@ -176,13 +177,13 @@ const styles = {
     },
     sortLabel: {
         marginRight: '10px',  // Khoảng cách giữa chữ "Sắp xếp theo:" và ô chọn
-      },
-      sortSelect: {
+    },
+    sortSelect: {
         padding: '10px',  // Khoảng đệm bên trong ô chọn
         border: '1px solid #000',  // Viền màu đen
         borderRadius: '5px',  // Bo tròn các góc
         marginRight: '20px',  // Khoảng cách giữa ô chọn và nút Tra cứu
-      },
+    },
     addButton: {
         padding: "10px 20px",
         backgroundColor: "#22668E",

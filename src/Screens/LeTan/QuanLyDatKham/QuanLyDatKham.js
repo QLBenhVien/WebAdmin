@@ -24,19 +24,6 @@ const QuanLyDatKham = () => {
 
   //end thong bao
   const [searchQuery, setSearchQuery] = useState("");
-  const patientData = [
-    {
-      IdBN: "73333",
-      TenBN: "nguyen van A",
-      NgayDat: "12-2-2024",
-     
-  },
-  {
-    IdBN: "03333",
-    TenBN: "nguyen van A",
-    NgayDat: "12-2-2024",
-  },
-  ];
 
   const [datkhams, setDatkhams] = useState([
     {
