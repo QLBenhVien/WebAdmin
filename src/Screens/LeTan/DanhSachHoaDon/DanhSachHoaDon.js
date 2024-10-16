@@ -67,7 +67,7 @@ const DanhSachHoaDon = () => {
                                                 {xemdatkham.TrangThai === "true" ? (
                                                     <a
                                                         style={{
-                                                            color: "red",
+                                                            color: "green",
                                                             fontWeight: "700",
                                                         }}
                                                     >
@@ -76,7 +76,7 @@ const DanhSachHoaDon = () => {
                                                 ) : (
                                                     <a
                                                         style={{
-                                                            color: "green",
+                                                            color: "red",
                                                             fontWeight: "700",
                                                         }}
                                                     >

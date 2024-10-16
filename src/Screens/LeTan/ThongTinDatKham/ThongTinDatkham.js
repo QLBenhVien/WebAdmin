@@ -17,7 +17,18 @@ const ThongTinDatKham = () => {
     navigate(path);
   };
 
-  const [thongtin, setThongtin] = useState({});
+  const [thongtin, setThongtin] = useState({
+    GioiTinh: "73333",
+    TenBS: "nguyen van A",
+    NgayHen: "12-2-2024",
+    Ca:"sáng",
+    TrieuChung:"ho",
+    MaBN:"01",
+    TenBN:"a",
+    DiaChi:"abc",
+    SDT:"09342222",
+
+  });
 
   const fetchData = async () => {
     try {

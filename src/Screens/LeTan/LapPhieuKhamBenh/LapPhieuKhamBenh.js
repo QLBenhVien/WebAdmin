@@ -95,7 +95,7 @@ const ThongTinLapPhieu = () => {
             <div style={styles.buttonContainer}>
               <button
                 style={styles.backButton}
-                onClick={() => navigateTo("/quanlydatkham")}
+                onClick={() => navigateTo("/Letan/qlDatkham")}
               >
                 Tạo
               </button>

@@ -10,13 +10,13 @@ const DanhSachBenhNhan = () => {
             MaBN: "BN01",
             TenBN: "nguyen van A",
             NgayKham: "12-12-12",
-            TinhTrang: "false",
+            TrangThai: "false",
         },
         {
             MaBN: "12",
             TenBN: "lanh",
             NgayKham: "12-122-12",
-            TinhTrang: "true",
+            TrangThai: "true",
         },
     ]);
 
