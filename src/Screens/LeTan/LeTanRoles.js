@@ -8,6 +8,7 @@ import ThongTinDatKham from "./ThongTinDatKham/ThongTinDatkham";
 import DanhSachBenhNhan from "./DanhSachBenhNhan/DanhSachBenhNhan";
 import DanhSachHoaDon from "./DanhSachHoaDon/DanhSachHoaDon";
 import Header from "../../components/Header";
+import ChiTietBenhNhan from "./ChiTietBenhNhan/MedicalRecordsDetail";
 const LeTanRoles = () => {
   return (
     <div
@@ -24,6 +25,7 @@ const LeTanRoles = () => {
       <div style={{ flexBasis: "80%" }}>
         <Header />
         <Routes>
+          <Route path="chitietbenhnhan" element={<ChiTietBenhNhan/>} />
           <Route path="danhsachhoadon" element={<DanhSachHoaDon />} />
           <Route path="/" element={<LetanPage />} />
           <Route path="danhsachbenhnhan" element={<DanhSachBenhNhan />} />
