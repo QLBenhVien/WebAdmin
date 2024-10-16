@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-
+import Axios from "../../../Axios/axios";
 const ThongTinDatKham = () => {
   console.log("pagethongtindatkham");
   const { id } = useParams(); // Lấy id từ URL
@@ -22,9 +21,7 @@ const ThongTinDatKham = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:8080/receptionist/detailDatkham/${id}`
-      );
+      const res = await Axios.get(`/receptionist/detailDatkham/${id}`);
       console.log(res);
       setThongtin(res.data.data.detailDatkham);
     } catch (error) {
@@ -35,6 +32,15 @@ const ThongTinDatKham = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
+
+  const handleOnclick = async () => {
+    try {
+      const res = await Axios.put(`/receptionist/approveappointment/${id}`);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div style={styles.homePage}>
@@ -89,11 +95,14 @@ const ThongTinDatKham = () => {
             <div style={styles.buttonContainer}>
               <button
                 style={styles.backButton}
-                onClick={() => navigateTo("/qlDatkham")}
+                onClick={() => navigateTo("/Letan/qlDatkham")}
               >
                 Trở lại
               </button>
-              <button style={styles.duyetButton}> Duyệt</button>
+              <button onClick={handleOnclick} style={styles.duyetButton}>
+                {" "}
+                Duyệt
+              </button>
             </div>
           </div>
         </div>

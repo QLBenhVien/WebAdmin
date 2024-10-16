@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Barcode from "react-barcode";
-
+import Axios from "../../../Axios/axios";
+import Notification from "../../../components/Notification";
 // QuanLyDatKham component
 const QuanLyDatKham = () => {
   const navigate = useNavigate();
@@ -13,14 +14,22 @@ const QuanLyDatKham = () => {
     return date.toLocaleDateString("vi-VN"); // Định dạng cho Việt Nam: DD/MM/YYYY
   };
 
+  //thong bao
+  const [open, setOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  //end thong bao
+
   const [datkhams, setDatkhams] = useState([""]);
 
   const fetchdata = async () => {
     try {
       // Gọi API và lấy dữ liệu từ response
-      const res = await axios.get(
-        "http://localhost:8080/receptionist/getAlldatkham"
-      );
+      const res = await Axios.get("/receptionist/getAlldatkham");
       console.log(res);
 
       // Cập nhật datkhams bằng dữ liệu từ res.data.Datkham
@@ -29,19 +38,21 @@ const QuanLyDatKham = () => {
       console.log(error);
     }
   };
-  const token = localStorage.getItem("token");
   const handleCancel = async (id) => {
     console.log(id);
     try {
-      const res = await axios.post(
-        "http://localhost:8080/receptionist/cancelappointment",
-        {
-          id: id,
-        }
-      );
+      const res = await Axios.put("receptionist/cancelappointment", {
+        id: id,
+      });
       console.log(res);
+      setSnackbarMessage(res.data?.message || "Xóa thành công");
+      setSnackbarSeverity("success");
+      setOpen(true);
     } catch (error) {
       console.log(error);
+      setSnackbarMessage(error.response?.data?.message || "Có lỗi xảy ra");
+      setSnackbarSeverity("error");
+      setOpen(true);
     }
   };
 
@@ -55,6 +66,12 @@ const QuanLyDatKham = () => {
 
   return (
     <div style={styles.homePage}>
+      <Notification
+        isOpen={open}
+        message={snackbarMessage}
+        status={snackbarSeverity}
+        handleClose={handleClose}
+      />
       <div style={styles.content}>
         <div style={styles.mainContent}>
           <div style={styles.pageContainer}>
@@ -118,7 +135,7 @@ const QuanLyDatKham = () => {
                           style={styles.actionButton}
                           onClick={() => {
                             console.log(`/chitietphieukham/${datkham.id}`);
-                            navigateTo(`/chitietphieukham/${datkham.id}`);
+                            navigateTo(`/Letan/chitietphieukham/${datkham.id}`);
                           }}
                         >
                           Xem

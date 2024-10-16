@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-
+import Axios from "../Axios/axios";
 export default function Header() {
+  const [data, setData] = useState({});
+  const fectchData = async () => {
+    try {
+      const res = await Axios.get("/receptionist/home");
+      console.log(res.data.data.data);
+      setData({
+        name: res.data.data.data.name,
+        role: res.data.data.data.role,
+        gender: res.data.data.data.gender,
+        id: res.data.data.data.id,
+      });
+      console.log("data: ", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fectchData();
+  }, []);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -27,7 +47,7 @@ export default function Header() {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            Phạm Ngọc Duy
+            {data.name}
           </Button>
           <Menu
             id="basic-menu"

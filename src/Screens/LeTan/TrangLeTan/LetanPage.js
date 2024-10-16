@@ -1,6 +1,5 @@
-import React from "react";
-
-// Sidebar component
+import React, { useEffect, useState } from "react";
+import Axios from "../../../Axios/axios";
 
 // InfoCard component
 const InfoCard = ({ title, content, icon }) => {
@@ -25,9 +24,9 @@ const ProfileCard = ({ profile }) => {
         <div style={styles.profileAvatar}></div>
         <div style={styles.profileDetails}>
           <h3 style={styles.profileName}>{profile.name}</h3>
-          <p style={styles.profileRole}>{profile.role}</p>
+          <p style={styles.profileRole}>Lễ Tân</p>
           <div style={styles.profileDetailsRow}>
-            <p>Mã: {profile.id}</p>
+            <p>Mã: LT1</p>
             <p>Giới tính: {profile.gender}</p>
           </div>
         </div>
@@ -48,6 +47,7 @@ const Schedule = ({ schedule }) => {
     </div>
   );
 };
+
 const LetanPage = () => {
   const profile = {
     name: "Nguyễn Văn A",
@@ -69,6 +69,27 @@ const LetanPage = () => {
     };
   }, []);
 
+  const [data, setData] = useState({});
+  const fectchData = async () => {
+    try {
+      const res = await Axios.get("/receptionist/home");
+      console.log(res.data.data.data);
+      setData({
+        name: res.data.data.data.name,
+        role: res.data.data.data.role,
+        gender: res.data.data.data.gender,
+        id: res.data.data.data.id,
+      });
+      console.log("data: ", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fectchData();
+  }, []);
+
   return (
     <div style={styles.mainContent}>
       <div style={styles.pageContainer}>
@@ -77,7 +98,7 @@ const LetanPage = () => {
           <div style={styles.pageTitleRight}>Trang chủ / Trang chủ</div>
         </div>
         <div style={styles.contentRow}>
-          <ProfileCard profile={profile} />
+          <ProfileCard profile={data} />
           <div style={styles.infoCardsColumn}>
             <InfoCard
               title="Quản lý đặt khám"
