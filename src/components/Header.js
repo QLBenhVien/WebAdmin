@@ -1,61 +1,95 @@
-import { AppBar, Badge, Grid, IconButton, InputBase, Toolbar, styled } from '@mui/material'; // Nhập các thành phần từ MUI
-import React from 'react';
-import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'; // Nhập biểu tượng thông báo
-import ChatIcon from '@mui/icons-material/Chat'; // Nhập biểu tượng chat
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'; // Nhập biểu tượng đăng xuất
-import SearchIcon from '@mui/icons-material/Search'; // Nhập biểu tượng tìm kiếm
 
-// Tạo một AppBar được tùy chỉnh
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-    backgroundColor: '#fff', // Màu nền của AppBar
-    transform: 'translateZ(0)', // Đảm bảo hiệu ứng chuyển động mượt mà
-}));
-
-// Tạo một InputBase được tùy chỉnh cho trường tìm kiếm
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    backgroundColor: theme.palette.grey[100], // Màu nền cho InputBase
-    borderRadius: theme.shape.borderRadius, // Bo góc của InputBase
-    padding: `0px ${theme.spacing(1)}px`, // Padding cho InputBase
-    fontSize: '0.8rem', // Kích thước chữ trong InputBase
-    opacity: '0.6', // Độ mờ
-    paddingLeft: theme.spacing(2), // Padding bên trái
-    '&:hover': {
-        backgroundColor: '#f2f2f2' // Màu nền khi hover
-    },
-    '& .MuiSvgIcon-root': {
-        marginRight: theme.spacing(1) // Khoảng cách giữa biểu tượng và text
-    }
-}));
-
+import React, { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useNavigate } from "react-router-dom";
+import Axios from "../Axios/axios";
 export default function Header() {
-    return (
-        <StyledAppBar position="static"> {/* AppBar với vị trí static */}
-            <Toolbar> {/* Thanh công cụ chứa các thành phần */}
-                <Grid container alignItems="center"> {/* Lưới để căn giữa các thành phần */}
-                    <Grid item> {/* Ô cho trường tìm kiếm */}
-                        <StyledInputBase 
-                            placeholder="Search topics" // Placeholder cho trường tìm kiếm
-                            startAdornment={<SearchIcon fontSize="small" />} // Biểu tượng tìm kiếm ở đầu trường
-                        />
-                    </Grid>
-                    <Grid item sm></Grid> {/* Khoảng trống giữa trường tìm kiếm và các biểu tượng */}
-                    <Grid item> {/* Ô chứa các biểu tượng */}
-                        <IconButton> {/* Nút cho thông báo */}
-                            <Badge badgeContent={4} color="secondary"> {/* Hiển thị badge thông báo */}
-                                <CircleNotificationsIcon fontSize="small" /> {/* Biểu tượng thông báo */}
-                            </Badge>
-                        </IconButton>
-                        <IconButton> {/* Nút cho chat */}
-                            <Badge badgeContent={3} color="primary"> {/* Hiển thị badge chat */}
-                                <ChatIcon fontSize="small" /> {/* Biểu tượng chat */}
-                            </Badge>
-                        </IconButton>
-                        <IconButton> {/* Nút cho đăng xuất */}
-                            <PowerSettingsNewIcon fontSize="small" /> {/* Biểu tượng đăng xuất */}
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </Toolbar>
-        </StyledAppBar>
-    );
+  const [data, setData] = useState({});
+  const fectchData = async () => {
+    try {
+      const res = await Axios.get("/receptionist/home");
+      console.log(res.data.data.data);
+      setData({
+        name: res.data.data.data.name,
+        role: res.data.data.data.role,
+        gender: res.data.data.data.gender,
+        id: res.data.data.data.id,
+      });
+      console.log("data: ", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fectchData();
+  }, []);
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+  return (
+    <div style={styles.navbar}>
+      <div style={styles.userInfo}>
+        <div style={styles.userAvatar}></div>
+        <div style={styles.userName}>
+          <Button
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            {data.name}
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+            {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
+      </div>
+    </div>
+  );
 }
+const styles = {
+  navbar: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    padding: "10px 20px",
+    backgroundColor: "#FFFFFF",
+    borderBottom: "1px solid #DDD",
+  },
+  userInfo: {
+    display: "flex",
+    alignItems: "center",
+  },
+  userAvatar: {
+    width: "60px",
+    height: "60px",
+    background: "#D9D9D9",
+    borderRadius: "50%",
+    marginRight: "20px",
+  },
+  userName: {
+    fontSize: "20px",
+    fontWeight: "bold",
+  },
+};
