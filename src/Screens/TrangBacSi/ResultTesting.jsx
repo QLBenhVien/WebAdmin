@@ -1,15 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import "./Doctor.css";
 
 const ResultTesting = () => {
   const navigate = useNavigate();
+
   const handleExport = () => {
     const confirmExport = window.confirm("Bạn có chắc muốn xuất phiếu không?");
     if (confirmExport) {
+      const input = document.getElementById("pdf-content");
+
+      const hospitalNameElement = document.querySelector(".hospital-name-pdf");
+      hospitalNameElement.style.display = "block"; // Temporarily show it
+      html2canvas(input, { scale: 2 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("ket_qua_xet_nghiem.pdf");
+
+        hospitalNameElement.style.display = "none"; 
+      });
+
       alert("Xuất phiếu thành công!");
       navigate("/referrals");
-    } else {
     }
   };
 
@@ -19,18 +38,16 @@ const ResultTesting = () => {
 
   return (
     <div className="outer">
-      <div className="patient-header">
-        <div className="patient-header-title">KẾT QUẢ XÉT NGHIỆM</div>
-        <div className="patient-header-breadcrumb">
-          <span>
-            <strong>Gửi yêu cầu xét nghiệm / </strong>
-          </span>
-          <span className="patient-breadcrumb-secondary">
-            Kết quả xét nghiệm{" "}
-          </span>
-        </div>
+      <div id="pdf-content" className="container3">
+        {/* Hospital Name for PDF Export (Hidden on Website) */}
+        <div className="hospital-name-pdf">
+        <div style={styles.sidebarHeader}>
+        <img src="logo.png" alt="Logo" style={styles.logo} />
+        <span style={styles.sidebarTitle}>Phòng khám UCM</span>
       </div>
-      <div className="container3">
+        </div>
+
+        {/* Patient Information Section */}
         <div style={styles.InfoContainer}>
           <div style={styles.infoSection}>
             <h2 style={styles.sectionTitle}>Thông tin bệnh nhân</h2>
@@ -54,8 +71,8 @@ const ResultTesting = () => {
             </p>
           </div>
         </div>
-      </div>
-      <div className="container3">
+
+        {/* Test Results Section */}
         <div style={styles.infoSection}>
           <h2 style={styles.sectionTitle}>Kết quả xét nghiệm</h2>
           <table style={styles.table}>
@@ -80,8 +97,10 @@ const ResultTesting = () => {
           </table>
         </div>
       </div>
+
+      {/* Buttons for Export and Close */}
       <div className="patient-list-search-filter2">
-        <div className="patient-search-buttonn" onClick={handleExport} >
+        <div className="patient-search-buttonn" onClick={handleExport}>
           Xuất phiếu
         </div>
         <div className="patient-search-buttonn" onClick={handleClose}>
@@ -94,6 +113,12 @@ const ResultTesting = () => {
 
 // Styles
 const styles = {
+  hospitalName: {
+    fontSize: "32px",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: "20px",
+  },
   InfoContainer: {
     backgroundColor: "#ffffff",
     padding: "5px",
@@ -126,6 +151,28 @@ const styles = {
     padding: "10px",
     borderBottom: "1px solid #ddd",
   },
+
+  sidebarHeader: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "20px",
+    marginTop: "50px",
+    padding: "20px",
+    backgroundColor: "white",
+    borderRadius: "10px",
+  },
+  logo: {
+    width: "40px",
+    height: "40px",
+    marginRight: "10px",
+  },
+
+  sidebarTitle: {
+    fontSize: "50px",
+    fontWeight: "bold",
+    color: "#22668E",
+  },
+  
 };
 
 export default ResultTesting;

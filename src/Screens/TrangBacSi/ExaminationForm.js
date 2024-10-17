@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const ExaminationForm = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showQueryInfo, setShowQueryInfo] = useState(false);
   const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
@@ -13,22 +12,11 @@ const ExaminationForm = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const toggleQueryInfo = () => {
-    setShowQueryInfo(!showQueryInfo);
-  };
-
-  const handleCancel = () => {
-    setShowQueryInfo(false);
-  };
-
   const handleSortChange = (option) => {
     setSortOption(option);
     setDropdownOpen(false);
   };
 
-  const handleSearch = () => {
-    navigate("/");
-  };
 
   const handleViewMedicalRecord = (tinhTrang) => {
     if (tinhTrang === "Chưa khám") {
@@ -111,7 +99,7 @@ const ExaminationForm = () => {
             </div>
             <div className="patient-table-cell chi-tiet">
                 <a
-                  className="link-xem"
+                  className="link-xem pointer"
                   onClick={() => handleViewMedicalRecord(patient.tinhTrang)}>
                   Xem
                 </a>  
@@ -141,7 +129,7 @@ const ExaminationForm = () => {
         <div className="patient-header-title">PHIẾU KHÁM BỆNH</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Phiếu khám bệnh/ </strong>
+            <strong><a className="link-xem" href="/examinationForm">Phiếu khám bệnh </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">Phiếu khám bệnh </span>
         </div>

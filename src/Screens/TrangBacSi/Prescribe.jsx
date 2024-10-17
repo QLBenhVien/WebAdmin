@@ -44,7 +44,7 @@ const Prescribe = () => {
         <div className="patient-header-title">PHIẾU KHÁM BỆNH</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Phiếu khám bệnh / </strong>
+            <strong><a className="link-xem" href="/examinationForm">Phiếu khám bệnh </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">Phiếu khám bệnh</span>
         </div>
@@ -195,7 +195,7 @@ const styles = {
   label: {
     marginBottom: "5px",
     color: "black",
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Roboto",
     fontWeight: "700",
     lineHeight: "30px",
@@ -208,7 +208,7 @@ const styles = {
     border: "1px solid black",
     padding: "4px 13px",
     width: 723,
-    height: 47,
+    height: 30,
   },
   inputField: {
     width: "100%",

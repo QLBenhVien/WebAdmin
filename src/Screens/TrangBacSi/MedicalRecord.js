@@ -1,12 +1,11 @@
 import { useState } from "react";
 import "./Doctor.css";
-import { useNavigate } from "react-router-dom";
 
 const MedicalRecord = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -89,7 +88,7 @@ const MedicalRecord = () => {
         <div className="patient-header-title">DANH SÁCH HỒ SƠ BỆNH ÁN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Hồ sơ bệnh án / </strong>
+            <strong><a className="link-xem" href="/medicalRecord">Hồ sơ bệnh án </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Danh sách hồ sơ bệnh án

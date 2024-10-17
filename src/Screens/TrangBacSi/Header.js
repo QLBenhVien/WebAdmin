@@ -20,7 +20,7 @@ const Header = () => {
       <div className="doctor-info">
         <div className="doctor-profile">
           <img className="doctor-image" src="Male User.png" alt="Doctor" />
-          <a href="/Bacsi" className="doctor-name">
+          <a href="/profile" className="doctor-name">
             BS. Nguyễn Văn A
           </a>
           <div className="dropdown">
