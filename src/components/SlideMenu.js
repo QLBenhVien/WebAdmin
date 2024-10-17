@@ -1,33 +1,100 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Nhập Link để điều hướng
-import { withStyles } from '@mui/styles';
+import { useNavigate, useLocation } from "react-router-dom";
+import logo from "../images/logo.png"; // Import đường dẫn logo của bạn
 
-const styles = {
-    slideMenu: {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'absolute',
-        left: '0px',
-        width: '320px',
-        height: '100%',
-        backgroundColor: '#22668E',
-    },
-    menuItem: {
-        padding: '10px 20px',
-        color: '#fff',
-        textDecoration: 'none',
-    },
+const SlideMenu = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  return (
+    <div style={styles.sidebar}>
+      <div style={styles.sidebarHeader}>
+        <img src={logo} alt="Logo" style={styles.logo} />
+        <span style={styles.sidebarTitle}>Phòng khám UCM</span>
+      </div>
+      <ul style={styles.sidebarList}>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              location.pathname === "/Letan" ? "#FFFFFF" : "#578EAF",
+            color: location.pathname === "/Letan" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigate("/Letan")}
+        >
+          Trang chủ
+        </li>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              location.pathname === "/quantri/nhanvien" ? "#FFFFFF" : "#578EAF",
+            color:
+              location.pathname === "/quantri/nhanvien" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigate("/quantri/nhanvien")}
+        >
+          Quản lý nhân viên
+        </li>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              location.pathname === "/quantri/benhnhan" ? "#FFFFFF" : "#578EAF",
+            color:
+              location.pathname === "/quantri/benhnhan" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigate("/quantri/benhnhan")}
+        >
+          Quản lý bệnh nhân
+        </li>
+      </ul>
+    </div>
+  );
 };
 
-const SlideMenu = (props) => {
-    const { classes } = props;
+const styles = {
+  sidebar: {
+    width: "90%",
+    backgroundColor: "#22668E",
+    padding: "20px",
+    color: "white",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100%",
+  },
+  sidebarHeader: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "20px",
+    padding: "20px",
+    backgroundColor: "white",
+    borderRadius: "10px",
+  },
+  logo: {
+    width: "40px",
+    height: "40px",
+    marginRight: "10px",
+  },
+  sidebarTitle: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "#22668E",
+  },
+  sidebarList: {
+    listStyleType: "none",
+    padding: 0,
+    margin: 0,
+    width: "100%",
+  },
+  sidebarItem: {
+    marginBottom: "20px",
+    cursor: "pointer",
+    textAlign: "center",
+    padding: "10px",
+    backgroundColor: "#578EAF",
+    borderRadius: "10px",
+  },
+};
 
-    return (
-        <div className={classes.slideMenu}>
-            <Link to="/quantri" className={classes.menuItem}>Quản lý Nhân viên</Link>
-            <Link to="/quantriBN" className={classes.menuItem}>Quản lý Bệnh Nhân</Link>
-        </div>
-    );
-}
-
-export default withStyles(styles)(SlideMenu);
+export default SlideMenu;
