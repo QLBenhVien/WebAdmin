@@ -1,13 +1,47 @@
-import React from "react";
-import logo from "../../../images/logo.png";
-import { useNavigate } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Axios from "../../../Axios/axios";
 const ThongTinDatKham = () => {
+  console.log("pagethongtindatkham");
+  const { id } = useParams(); // Lấy id từ URL
+  console.log("ID phiếu khám:", id);
   const navigate = useNavigate();
+
+  //fix hien thi ngay
+  const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    return date.toLocaleDateString("vi-VN"); // Định dạng cho Việt Nam: DD/MM/YYYY
+  };
 
   const navigateTo = (path) => {
     navigate(path);
   };
+
+  const [thongtin, setThongtin] = useState({});
+
+  const fetchData = async () => {
+    try {
+      const res = await Axios.get(`/receptionist/detailDatkham/${id}`);
+      console.log(res);
+      setThongtin(res.data.data.detailDatkham);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const handleOnclick = async () => {
+    try {
+      const res = await Axios.put(`/receptionist/approveappointment/${id}`);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div style={styles.homePage}>
       <div style={styles.content}>
@@ -24,36 +58,36 @@ const ThongTinDatKham = () => {
               <div style={styles.infoSection}>
                 <div style={styles.column}>
                   <p style={styles.paragraph}>
-                    <strong>Giới tính:</strong> Nữ
+                    <strong>Giới tính:</strong> {thongtin.GioiTinh}
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>Tên bác sĩ:</strong> Nguyễn Văn A
+                    <strong>Tên bác sĩ:</strong> {thongtin.TenBS}
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>Ngày hẹn:</strong> 19/09/2024
+                    <strong>Ngày hẹn:</strong> {formatDate(thongtin.NgayHen)}
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>Ca hẹn:</strong> ca 2
+                    <strong>Ca hẹn:</strong> {thongtin.Ca}
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>Triệu chứng:</strong> sốt cao
+                    <strong>Triệu chứng:</strong> {thongtin.TrieuChung}
                   </p>
                 </div>
                 <div style={styles.column}>
                   <p style={styles.paragraph}>
-                    <strong>Mã bệnh nhân:</strong> BN01
+                    <strong>Mã bệnh nhân:</strong> {thongtin.MaBN}
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>Họ và Tên:</strong> Nguyễn Thị Kim Liên
+                    <strong>Họ và Tên:</strong> {thongtin.TenBN}
                   </p>
                   <p style={styles.paragraph}>
                     <strong>Tuổi:</strong> 24
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>Địa chỉ:</strong> Nguyễn Thái Sơn, Phường 5, Gò Vấp
+                    <strong>Địa chỉ:</strong> {thongtin.DiaChi}
                   </p>
                   <p style={styles.paragraph}>
-                    <strong>SDT:</strong> 0987967497
+                    <strong>SDT:</strong> {thongtin.SDT}
                   </p>
                 </div>
               </div>
@@ -61,11 +95,14 @@ const ThongTinDatKham = () => {
             <div style={styles.buttonContainer}>
               <button
                 style={styles.backButton}
-                onClick={() => navigateTo("/qlDatkham")}
+                onClick={() => navigateTo("/Letan/qlDatkham")}
               >
                 Trở lại
               </button>
-              <button style={styles.duyetButton}> Duyệt</button>
+              <button onClick={handleOnclick} style={styles.duyetButton}>
+                {" "}
+                Duyệt
+              </button>
             </div>
           </div>
         </div>
