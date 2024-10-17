@@ -44,7 +44,7 @@ const MedicalRecordsDetails2 = () => {
         <div className="patient-header-title">CHI TIẾT BỆNH ÁN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Hồ sơ bệnh án / </strong>
+            <strong><a className="link-xem" href="/medicalRecord">Hồ sơ bệnh án </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Chi tiết bệnh án{" "}

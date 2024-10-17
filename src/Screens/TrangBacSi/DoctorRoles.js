@@ -25,6 +25,7 @@ import ResultTesting from "../TrangBacSi/ResultTesting";
 import Prescribe from "../TrangBacSi/Prescribe";
 import NavBacSi from "../../components/NavBacSi";
 import Header from "./Header";
+import Profile from "./Profile";
 // import Login from "../Login/Login"; 
 const DoctorRoles = () => {
   return (
@@ -35,7 +36,7 @@ const DoctorRoles = () => {
         backgroundColor: "#f0f8ff",
       }}
     >
-      <div style={{ flex: "2" }}>
+      <div style={{ display: "flex", minHeight: "100vh" }}>
         <NavBacSi />
       </div>
 
@@ -47,6 +48,7 @@ const DoctorRoles = () => {
           <Route path="/medical-records" element={<MedicalRecords />} />
           <Route path="/prescription" element={<Prescription />} />
           <Route path="/Bacsi" element={<DoctorPage />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/patient-info" element={<PatientInfo />} />
           <Route path="/patientList" element={<PatientList />} />
           <Route path="/searchPatient" element={<SearchPatient />} />

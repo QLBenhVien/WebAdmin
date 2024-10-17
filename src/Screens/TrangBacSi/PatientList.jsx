@@ -108,7 +108,7 @@ const PatientList = () => {
         <div className="patient-header-title">DANH SÁCH BỆNH NHÂN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Danh sách bệnh nhân / </strong>
+            <strong><a className="link-xem" href="/patientList">Danh sách bệnh nhân </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Danh sách bệnh nhân{" "}
@@ -152,6 +152,7 @@ const PatientList = () => {
           </div>
 
           {showQueryInfo && (
+            <div className="overlay">
             <div className="info-container">
               <div className="info-card">
                 <div className="info-header">
@@ -191,11 +192,13 @@ const PatientList = () => {
                 </div>
               </div>
             </div>
+          </div>
           )}
           <PatientTable />
         </div>
       </div>
     </div>
+    
   );
 };
 

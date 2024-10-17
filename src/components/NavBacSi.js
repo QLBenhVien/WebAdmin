@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const NavBacSi = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState(location.pathname); // Đặt activeItem là đường dẫn hiện tại
 
-  const [activeItem, setActiveItem] = useState("/Letan");
+  // Khi đường dẫn thay đổi, cập nhật activeItem
+  useEffect(() => {
+    setActiveItem(location.pathname);
+  }, [location.pathname]);
 
   const navigateTo = (path) => {
     setActiveItem(path);
@@ -87,7 +92,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "106.7vw",
+    minHeight: "76.7vw", 
+    height: "auto",
   },
   sidebarHeader: {
     display: "flex",

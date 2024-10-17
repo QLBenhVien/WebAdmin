@@ -27,13 +27,6 @@ const Referrals = () => {
     setDropdownOpen(false);
   };
 
-  const handleSearch = () => {
-    navigate("/");
-  };
-
-  
-
-
   const patientData = [
     {
       id: 1,
@@ -45,7 +38,7 @@ const Referrals = () => {
       id: 2,
       tenBenhNhan: "Trần Thị B",
       ngayKham: "04/09/2024",
-      tinhTrang: "Chưa hoàn thành",
+      tinhTrang: "Chưa yêu cầu",
     },
     {
       id: 3,
@@ -68,7 +61,7 @@ const Referrals = () => {
     });
 
     const handleViewClick = (tinhTrang) => {
-      if (tinhTrang === "Chưa hoàn thành") {
+      if (tinhTrang === "Chưa yêu cầu") {
         window.alert("Không có xét nghiệm cho bệnh nhân này.");
       } else {
         navigate("/resultTesting");
@@ -78,7 +71,7 @@ const Referrals = () => {
   const PatientTable = () => {
     const getTinhTrangStyle = (tinhTrang) => {
       return {
-        color: tinhTrang === "Chưa hoàn thành" ? "red" : "green",
+        color: tinhTrang === "Chưa yêu cầu" ? "red" : "green",
         fontWeight: 400,
       };
     };
@@ -137,7 +130,7 @@ const Referrals = () => {
         <div className="patient-header-title">GỬI YÊU CẦU XÉT NGHIỆM</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong>Gửi yêu cầu xét nghiệm/ </strong>
+            <strong><a className="link-xem" href="/referrals">Gửi yêu cầu xét nghiệm </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Gửi yêu cầu xét nghiệm{" "}
@@ -190,6 +183,7 @@ const Referrals = () => {
         </div>
       </div>
       {showQueryInfo && (
+        <div className="overlay">
             <div className="info-container">
               <div className="info-card">
                 <div className="info-header">
@@ -227,6 +221,7 @@ const Referrals = () => {
                 </div>
               </div>
             </div>
+          </div>
           )}
     </div>
   );
