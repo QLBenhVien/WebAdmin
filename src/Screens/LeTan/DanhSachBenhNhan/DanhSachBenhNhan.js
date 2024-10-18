@@ -9,16 +9,33 @@ const DanhSachBenhNhan = () => {
         {
             MaBN: "BN01",
             TenBN: "nguyen van A",
-            NgayKham: "12-12-12",
-            TinhTrang: "false",
+            NgayKham: "10-2-2024",
+            TrangThai: "false",
         },
         {
             MaBN: "12",
             TenBN: "lanh",
-            NgayKham: "12-122-12",
-            TinhTrang: "true",
+            NgayKham: "02-29-2004",
+            TrangThai: "true",
         },
     ]);
+    const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const handleSortChange = (option) => {
+        setSortOption(option);
+        setDropdownOpen(false);
+    };
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+    const filteredPatients = xemdatkhams
+        .sort((a, b) => {
+            if (sortOption === "Ngày khám gần nhất") {
+                return new Date(b.NgayKham) - new Date(a.NgayKham);
+            } else {
+                return new Date(a.NgayKham) - new Date(b.NgayKham);
+            }
+        });
 
     const navigateTo = (path) => {
         navigate(path);
@@ -39,9 +56,33 @@ const DanhSachBenhNhan = () => {
                             <div style={styles.searchSection}>
                                 <div style={styles.searchSection}>
                                     <label style={styles.sortLabel}>Sắp xếp theo:</label>
-                                    <select style={styles.sortSelect}>
-                                        <option value="tinhTrang">Tình trạng</option>
-                                    </select>
+                                    <div className="patient-filter-button">
+                                        {sortOption}
+                                        <div className="dropdown-time">
+                                            <img
+                                                className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
+                                                src="Polygon 1.png"
+                                                alt="Doctor"
+                                                onClick={toggleDropdown}
+                                            />
+                                            {dropdownOpen && (
+                                                <div className="dropdown-menuTime show">
+                                                    <button
+                                                        className="dropdown-itemTime"
+                                                        onClick={() => handleSortChange("Ngày khám gần nhất")}
+                                                    >
+                                                        Ngày khám gần nhất
+                                                    </button>
+                                                    <button
+                                                        className="dropdown-itemTime"
+                                                        onClick={() => handleSortChange("Ngày khám xa nhất")}
+                                                    >
+                                                        Ngày khám xa nhất
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                     <button style={styles.searchButton}>TRA CỨU</button>
                                 </div>
                             </div>
@@ -176,13 +217,13 @@ const styles = {
     },
     sortLabel: {
         marginRight: '10px',  // Khoảng cách giữa chữ "Sắp xếp theo:" và ô chọn
-      },
-      sortSelect: {
+    },
+    sortSelect: {
         padding: '10px',  // Khoảng đệm bên trong ô chọn
         border: '1px solid #000',  // Viền màu đen
         borderRadius: '5px',  // Bo tròn các góc
         marginRight: '20px',  // Khoảng cách giữa ô chọn và nút Tra cứu
-      },
+    },
     addButton: {
         padding: "10px 20px",
         backgroundColor: "#22668E",
