@@ -128,7 +128,7 @@ const DanhSachBenhNhan = () => {
                                             <td style={styles.td}>
                                                 <button
                                                     style={styles.actionButton}
-                                                    onClick={() => navigateTo("/chitietbenhnhan")}
+                                                    onClick={() => navigateTo("/Letan/chitietbenhnhan")}
                                                 >
                                                     Xem
                                                 </button>{" "}
