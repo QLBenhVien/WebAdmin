@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Axios from "../../../Axios/axios";
+import { useNotification } from '../../../context/NotificationContext'; // Import useNotification
 const ThongTinDatKham = () => {
   console.log("pagethongtindatkham");
   const { id } = useParams(); // Lấy id từ URL
@@ -12,6 +13,7 @@ const ThongTinDatKham = () => {
     const date = new Date(isoDateString);
     return date.toLocaleDateString("vi-VN"); // Định dạng cho Việt Nam: DD/MM/YYYY
   };
+  const { showNotification } = useNotification();
 
   const navigateTo = (path) => {
     navigate(path);
@@ -21,13 +23,12 @@ const ThongTinDatKham = () => {
     GioiTinh: "73333",
     TenBS: "nguyen van A",
     NgayHen: "12-2-2024",
-    Ca:"sáng",
-    TrieuChung:"ho",
-    MaBN:"01",
-    TenBN:"a",
-    DiaChi:"abc",
-    SDT:"09342222",
-
+    Ca: "sáng",
+    TrieuChung: "ho",
+    MaBN: "01",
+    TenBN: "a",
+    DiaChi: "abc",
+    SDT: "09342222",
   });
 
   const fetchData = async () => {
@@ -47,7 +48,8 @@ const ThongTinDatKham = () => {
   const handleOnclick = async () => {
     try {
       const res = await Axios.put(`/receptionist/approveappointment/${id}`);
-      console.log(res);
+      showNotification("Duyệt thành công", "success");
+      navigateTo("/Letan/danhsachbenhnhan");
     } catch (error) {
       console.log(error);
     }
