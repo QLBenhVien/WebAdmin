@@ -156,6 +156,7 @@ export default function Employees({ data }) {
 
 	const toggleAccountStatus = (employee) => {
 		if (employee.active === true) {
+			console.log("Employee to disable:", employee.active);
 			if (window.confirm("Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không?")) {
 				const result = employeeService.disableEmployee(employee.MaTK); // Vô hiệu hóa
 				if (result) {
@@ -169,7 +170,7 @@ export default function Employees({ data }) {
 				}
 			}
 		} else if (employee.active === false) {
-			if (window.confirm("Bạn có chắc chắn muốn kích hoạt lại tài khoản này không?")) {
+				if (window.confirm("Bạn có chắc chắn muốn kích hoạt lại tài khoản này không?")) {
 				const result = employeeService.enableEmployee(employee.MaTK); // Kích hoạt lại
 				if (result) {
 					// setRecords(employeeService.getAllEmployees());

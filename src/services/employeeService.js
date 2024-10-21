@@ -129,7 +129,15 @@ export async function getAllEmployees() {
 		const res = await Axios.get("/itSupport/nhanvien/all");
 		const employeeData = res.data.data.lstNhanViens || [];
 		// Kiểm tra xem dữ liệu có phải là array
-		return employeeData.reverse();
+		const newEmployeeData = employeeData.map((x) => ({
+			...x,
+			active: x?.MaTK?.active || false,
+			MaTK: x?.MaTK?._id || "",
+		}));
+
+		console.log(newEmployeeData);
+
+		return newEmployeeData.reverse();
 	} catch (error) {
 		console.log(error);
 	}
