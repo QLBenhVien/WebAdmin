@@ -19,7 +19,7 @@ const SlideMenu = () => {
               location.pathname === "/Letan" ? "#FFFFFF" : "#578EAF",
             color: location.pathname === "/Letan" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigate("/Letan")}
+          onClick={() => navigate("")}
         >
           Trang chủ
         </li>
@@ -54,7 +54,7 @@ const SlideMenu = () => {
 
 const styles = {
   sidebar: {
-    width: "90%",
+    // width: "90%",
     backgroundColor: "#22668E",
     padding: "20px",
     color: "white",
