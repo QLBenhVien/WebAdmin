@@ -4,7 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-
+prettierrc.json
+.editorconfig
+.env
+.history
 # testing
 /coverage
 
