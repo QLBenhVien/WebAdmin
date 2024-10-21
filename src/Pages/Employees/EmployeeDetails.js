@@ -21,8 +21,20 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+export const departmentList = [
+	{ id: "6690b2d8ff2ee427f702b839", title: "Răng hàm mặt" },
+	{ id: "6690b305ff2ee427f702b83b", title: "Tai mũi họng" },
+	{ id: "6690b332ff2ee427f702b83c", title: "Nội khoa" },
+	{ id: "6690b349ff2ee427f702b83d", title: "Ngoại khoa" },
+	{ id: "6690b35fff2ee427f702b83e", title: "Phụ khoa" },
+];
+
 const EmployeeDetails = ({ employee }) => {
 	const classes = useStyles();
+
+	const department = departmentList.find((dep) => {
+		return dep.id === employee?.MaKhoa;
+	});
 
 	return (
 		<Paper className={classes.paper}>
@@ -50,6 +62,9 @@ const EmployeeDetails = ({ employee }) => {
 					</Typography>
 					<Typography className={classes.detail}>
 						<strong>Chức vụ:</strong> {employee?.MaCV?.TenCV}
+					</Typography>
+					<Typography className={classes.detail}>
+						<strong>Mã Khoa:</strong> {department?.title}
 					</Typography>
 					<Typography className={classes.detail}>
 						<strong>Ngày tạo:</strong> {employee.hireDate}

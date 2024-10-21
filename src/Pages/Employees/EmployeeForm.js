@@ -12,6 +12,14 @@ const genderItems = [
 	{ id: "other", title: "Khác" },
 ];
 
+export const departmentList = [
+	{ id: "6690b2d8ff2ee427f702b839", title: "Răng hàm mặt" },
+	{ id: "6690b305ff2ee427f702b83b", title: "Tai mũi họng" },
+	{ id: "6690b332ff2ee427f702b83c", title: "Nội khoa" },
+	{ id: "6690b349ff2ee427f702b83d", title: "Ngoại khoa" },
+	{ id: "6690b35fff2ee427f702b83e", title: "Phụ khoa" },
+];
+
 // Giá trị khởi tạo cho form
 const initialFValues = {
 	id: 0,
@@ -22,6 +30,7 @@ const initialFValues = {
 	DiaChi: "",
 	GioiTinh: "male",
 	role: "",
+	Khoa: "",
 	hireDate: new Date(),
 	isPermanent: false,
 };
@@ -115,6 +124,7 @@ export default function EmployeeForm(props) {
 			id: recordForEdit?.MaTK || 0,
 			MaTK: recordForEdit?.MaTK || 0,
 			role: roleValue,
+			Khoa: recordForEdit?.MaKhoa || "",
 		});
 	}, [recordForEdit]);
 	return (
@@ -162,6 +172,16 @@ export default function EmployeeForm(props) {
 						error={errors.role}
 					/>
 
+					{values.role === "BS" && (
+						<Control.Select
+							name="Khoa"
+							label="Khoa"
+							value={values.Khoa}
+							onChange={handleInputChange}
+							options={departmentList}
+							error={errors.Khoa}
+						/>
+					)}
 					<Control.Input
 						name="DiaChi"
 						label="Địa chỉ"
