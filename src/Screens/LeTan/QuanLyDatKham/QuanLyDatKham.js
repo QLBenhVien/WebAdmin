@@ -25,32 +25,20 @@ const QuanLyDatKham = () => {
   //end thong bao
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [datkhams, setDatkhams] = useState([
-    {
-      IdBN: "73333",
-      TenBN: "nguyen van A",
-      NgayDat: "12-2-2024",
-     
-  },
-  {
-    IdBN: "03333",
-    TenBN: "Tran van B",
-    NgayDat: "12-2-2024",
-  },
-  ]);
-  const filteredPatients = datkhams
-    .filter((patient) =>
-      patient.TenBN.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const [datkhams, setDatkhams] = useState([]);
+  const filteredPatients = datkhams;
+  // .filter((patient) =>
+  //   patient.TenBN.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   const fetchdata = async () => {
     try {
       // Gọi API và lấy dữ liệu từ response
       const res = await Axios.get("/receptionist/getAlldatkham");
-      console.log(res);
 
       // Cập nhật datkhams bằng dữ liệu từ res.data.Datkham
       setDatkhams(res.data.data.Datkham);
+      console.log(datkhams,"datkhamsdatkhamsdatkhams");
     } catch (error) {
       console.log(error);
     }
@@ -100,12 +88,12 @@ const QuanLyDatKham = () => {
             </div>
             <div style={styles.whiteContainer}>
               <div style={styles.searchSection}>
-              <input
-                placeholder="Nhập tên bệnh nhân"
-                style={styles.searchInput}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+                <input
+                  placeholder="Nhập tên bệnh nhân"
+                  style={styles.searchInput}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
                 <button style={styles.searchButton}>Tìm kiếm</button>
                 <button style={styles.addButton}>+ Thêm hồ sơ</button>
               </div>
@@ -124,9 +112,11 @@ const QuanLyDatKham = () => {
                   {filteredPatients.map((datkham, index) => (
                     <tr key={index}>
                       <td style={styles.td}>{index + 1}</td>
-                      <td style={styles.td}>{datkham.IdBN}</td>
-                      <td style={styles.td}>{datkham.TenBN}</td>
-                      <td style={styles.td}>{formatDate(datkham.NgayDat)}</td>
+                      <td style={styles.td}>{datkham.BenhNhanID._id.toString()}</td>
+                      <td style={styles.td}>{datkham.BenhNhanID.Ten.toString()}</td>
+                      <td style={styles.td}>
+                        {formatDate(datkham.NgayDatKham)}
+                      </td>
                       <td style={styles.td}>
                         {datkham.TrangThai === true ? (
                           <a
@@ -152,8 +142,8 @@ const QuanLyDatKham = () => {
                         <button
                           style={styles.actionButton}
                           onClick={() => {
-                            console.log(`/chitietphieukham/${datkham.id}`);
-                            navigateTo(`/Letan/chitietphieukham/${datkham.id}`);
+                            console.log(`/chitietphieukham/${datkham._id}`);
+                            navigateTo(`/Letan/chitietphieukham/${datkham._id}`);
                           }}
                         >
                           Xem
