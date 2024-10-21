@@ -1,9 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Screens/Login/Login";
-import LeTanRoles from "./Screens/LeTan/LeTanRoles";
-import DoctorRoles from "./Screens/TrangBacSi/DoctorRoles";
-import QuanTriRoles from "./Screens/QuanTri/QuanTriRoles";
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { NotificationProvider } from './context/NotificationContext'; // Import NotificationProvider
+import Login from './Screens/Login/Login';
+import LeTanRoles from './Screens/LeTan/LeTanRoles';
+import DoctorRoles from './Screens/TrangBacSi/DoctorRoles';
+import QuanTriRoles from './Screens/QuanTri/QuanTriRoles';
 
 const App = () => {
   return (
@@ -21,7 +23,9 @@ const App = () => {
 export default function AppWrapper() {
   return (
     <Router>
-      <App />
+      <NotificationProvider>
+        <App />
+      </NotificationProvider>
     </Router>
   );
 }

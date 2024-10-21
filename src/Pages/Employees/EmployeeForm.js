@@ -7,9 +7,9 @@ import { format } from "date-fns";
 
 // Danh sách giới tính
 const genderItems = [
-	{ id: "male", title: "Nam" },
-	{ id: "female", title: "Nữ" },
-	{ id: "other", title: "Khác" },
+  { id: "male", title: "Nam" },
+  { id: "female", title: "Nữ" },
+  { id: "other", title: "Khác" },
 ];
 
 export const departmentList = [
@@ -207,17 +207,18 @@ export default function EmployeeForm(props) {
 					/>
 
 					{/* <Control.Checkbox
+
             name="isPermanent"
             label="Nhân viên chính thức"
             value={values.isPermanent}
             onChange={handleInputChange}
           /> */}
-					<div>
-						<Control.Button type="submit" text="Lưu" />
-						<Control.Button color="default" text="Hủy" onClick={resetForm} />
-					</div>
-				</Grid>
-			</Grid>
-		</FormComponent>
-	);
+          <div>
+            <Control.Button type="submit" text="Lưu" />
+            <Control.Button color="default" text="Hủy" onClick={resetForm} />
+          </div>
+        </Grid>
+      </Grid>
+    </FormComponent>
+  );
 }
