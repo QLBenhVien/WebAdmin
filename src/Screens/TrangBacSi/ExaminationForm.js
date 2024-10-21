@@ -17,12 +17,11 @@ const ExaminationForm = () => {
     setDropdownOpen(false);
   };
 
-
   const handleViewMedicalRecord = (tinhTrang) => {
     if (tinhTrang === "Chưa khám") {
       window.alert("Không có bệnh án cho bệnh nhân này.");
     } else {
-      navigate("/infoMedicalRecordsDetail");
+      navigate("/Bacsi/infoMedicalRecordsDetail");
     }
   };
 
@@ -32,21 +31,21 @@ const ExaminationForm = () => {
       tenBenhNhan: "Nguyễn Văn A",
       ngayKham: "03/09/2024",
       caKham: "1",
-      tinhTrang: "Chưa khám"
+      tinhTrang: "Chưa khám",
     },
     {
       id: 2,
       tenBenhNhan: "Trần Thị B",
       ngayKham: "04/09/2024",
       caKham: "2",
-      tinhTrang: "Đã khám"
+      tinhTrang: "Đã khám",
     },
     {
       id: 3,
       tenBenhNhan: "Lê Văn C",
       ngayKham: "05/09/2024",
       caKham: "1",
-      tinhTrang: "Chưa khám"
+      tinhTrang: "Chưa khám",
     },
   ];
   const filteredPatients = patientData
@@ -55,9 +54,9 @@ const ExaminationForm = () => {
     )
     .sort((a, b) => {
       if (sortOption === "Ngày khám gần nhất") {
-        return new Date(b.ngayKham) - new Date(a.ngayKham); 
+        return new Date(b.ngayKham) - new Date(a.ngayKham);
       } else {
-        return new Date(a.ngayKham) - new Date(b.ngayKham); 
+        return new Date(a.ngayKham) - new Date(b.ngayKham);
       }
     });
 
@@ -70,56 +69,56 @@ const ExaminationForm = () => {
     };
     return (
       <div className="patient-table">
-      <div className="patient-table-header">
-        <div className="patient-header-cell stt">STT</div>
-        <div className="patient-header-cell ten-benh-nhan">
-          Tên bệnh nhân
+        <div className="patient-table-header">
+          <div className="patient-header-cell stt">STT</div>
+          <div className="patient-header-cell ten-benh-nhan">Tên bệnh nhân</div>
+          <div className="patient-header-cell ngay-kham">Ngày khám</div>
+          <div className="patient-header-cell ma-hs">Ca khám</div>
+          <div className="patient-header-cell ma-tt">Tình trạng</div>
+          <div className="patient-header-cell ma-hs">Bệnh án</div>
+          <div className="patient-header-cell chi-tiet">Đơn thuốc</div>
         </div>
-        <div className="patient-header-cell ngay-kham">Ngày khám</div>
-        <div className="patient-header-cell ma-hs">Ca khám</div>
-        <div className="patient-header-cell ma-tt">Tình trạng</div>
-        <div className="patient-header-cell ma-hs">Bệnh án</div>
-        <div className="patient-header-cell chi-tiet">Đơn thuốc</div>
-      </div>
-      <div className="patient-table">
-      {filteredPatients.map((patient, index) => (
-          <div className="patient-table-row" key={patient.id}>
-            <div className="patient-table-cell stt">{index + 1}</div>
-            <div className="patient-table-cell ten-benh-nhan">
-              {patient.tenBenhNhan}
-            </div>
-            <div className="patient-table-cell ngay-kham">
-              {patient.ngayKham}
-            </div>
-            <div className="patient-table-cell ma-hs">
-              {patient.caKham}
-            </div>
-            <div className="patient-table-cell ma-tt" style={getTinhTrangStyle(patient.tinhTrang)}>
-              {patient.tinhTrang}
-            </div>
-            <div className="patient-table-cell chi-tiet">
+        <div className="patient-table">
+          {filteredPatients.map((patient, index) => (
+            <div className="patient-table-row" key={patient.id}>
+              <div className="patient-table-cell stt">{index + 1}</div>
+              <div className="patient-table-cell ten-benh-nhan">
+                {patient.tenBenhNhan}
+              </div>
+              <div className="patient-table-cell ngay-kham">
+                {patient.ngayKham}
+              </div>
+              <div className="patient-table-cell ma-hs">{patient.caKham}</div>
+              <div
+                className="patient-table-cell ma-tt"
+                style={getTinhTrangStyle(patient.tinhTrang)}
+              >
+                {patient.tinhTrang}
+              </div>
+              <div className="patient-table-cell chi-tiet">
                 <a
                   className="link-xem pointer"
-                  onClick={() => handleViewMedicalRecord(patient.tinhTrang)}>
+                  onClick={() => handleViewMedicalRecord(patient.tinhTrang)}
+                >
                   Xem
-                </a>  
-              </div>
-            <div className="patient-table-cell ma-hs">
-              <a href="/prescribe" className="link-xem">
-                Kê đơn
-              </a>
-              <span> |</span>
-              <span>
-                {" "}
-                <a href="/prescribe" className="link-xem">
-                  Sửa
                 </a>
-              </span>
+              </div>
+              <div className="patient-table-cell ma-hs">
+                <a href="/Bacsi/prescribe" className="link-xem">
+                  Kê đơn
+                </a>
+                <span> |</span>
+                <span>
+                  {" "}
+                  <a href="/Bacsi/prescribe" className="link-xem">
+                    Sửa
+                  </a>
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
     );
   };
 
@@ -129,7 +128,12 @@ const ExaminationForm = () => {
         <div className="patient-header-title">PHIẾU KHÁM BỆNH</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/examinationForm">Phiếu khám bệnh </a> / </strong>
+            <strong>
+              <a className="link-xem" href="/Bacsi/examinationForm">
+                Phiếu khám bệnh{" "}
+              </a>{" "}
+              /{" "}
+            </strong>
           </span>
           <span className="patient-breadcrumb-secondary">Phiếu khám bệnh </span>
         </div>

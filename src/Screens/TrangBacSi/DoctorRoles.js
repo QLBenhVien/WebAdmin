@@ -26,7 +26,7 @@ import Prescribe from "../TrangBacSi/Prescribe";
 import NavBacSi from "../../components/NavBacSi";
 import Header from "./Header";
 import Profile from "./Profile";
-// import Login from "../Login/Login"; 
+// import Login from "../Login/Login";
 const DoctorRoles = () => {
   return (
     <div
@@ -47,7 +47,7 @@ const DoctorRoles = () => {
           <Route path="/resultTesting" element={<ResultTesting />} />
           <Route path="/medical-records" element={<MedicalRecords />} />
           <Route path="/prescription" element={<Prescription />} />
-          <Route path="/Bacsi" element={<DoctorPage />} />
+          <Route path="/" element={<DoctorPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/patient-info" element={<PatientInfo />} />
           <Route path="/patientList" element={<PatientList />} />
@@ -71,32 +71,6 @@ const DoctorRoles = () => {
       </div>
     </div>
   );
-};
-
-const styles = {
-  navbar: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: "10px 20px",
-    backgroundColor: "#FFFFFF",
-    borderBottom: "1px solid #DDD",
-  },
-  userInfo: {
-    display: "flex",
-    alignItems: "center",
-  },
-  userAvatar: {
-    width: "60px",
-    height: "60px",
-    background: "#D9D9D9",
-    borderRadius: "50%",
-    marginRight: "20px",
-  },
-  userName: {
-    fontSize: "20px",
-    fontWeight: "bold",
-  },
 };
 
 export default DoctorRoles;

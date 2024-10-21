@@ -21,12 +21,9 @@ body {
 }
 
 .hospital-name-pdf {
-  display:none;
+  display: none;
   margin-left: 365px;
 }
-
-
-
 
 .overlay {
   position: fixed;
@@ -334,7 +331,7 @@ body {
   border: 1px solid #000000; /* Viền cho nút lọc */
   margin-left: 25.5rem;
   position: absolute;
-  width: 45%;
+  width: 40%;
 }
 
 .patient-filter-button img {
@@ -347,7 +344,7 @@ body {
   border: none; /* Không có viền */
   border-radius: 3px; /* Bo góc cho nút tra cứu */
   cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
-  margin-left: 64.5rem;
+  margin-left: 59rem;
   position: absolute;
 }
 .patient-search-buttonn {
@@ -397,7 +394,7 @@ body {
   border: none;
   color: #333;
   padding: 12px 20px; /* Tăng padding để tạo không gian */
-  width: 100%; /* Giữ nguyên chiều rộng 100% */
+  width: 50%; /* Giữ nguyên chiều rộng 100% */
   text-align: left;
   font-size: 16px;
   cursor: pointer;

@@ -68,8 +68,9 @@ const Login = () => {
       }
       if (response.data.data.role === "BS") {
         navigate("/Bacsi");
-      } else {
-        console.log("loi");
+      }
+      if (response.data.data.role === "NVIT") {
+        navigate("/quantri");
       }
       // navigate("/");
     } catch (error) {

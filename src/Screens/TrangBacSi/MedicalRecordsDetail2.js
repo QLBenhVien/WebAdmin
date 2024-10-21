@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const MedicalRecordsDetails2 = () => {
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate("/infoMedicalRecordsDetail");
+    navigate("/Bacsi/infoMedicalRecordsDetail");
   };
   const data = [
     {
@@ -44,7 +44,12 @@ const MedicalRecordsDetails2 = () => {
         <div className="patient-header-title">CHI TIẾT BỆNH ÁN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/medicalRecord">Hồ sơ bệnh án </a> / </strong>
+            <strong>
+              <a className="link-xem" href="/medicalRecord">
+                Hồ sơ bệnh án{" "}
+              </a>{" "}
+              /{" "}
+            </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Chi tiết bệnh án{" "}

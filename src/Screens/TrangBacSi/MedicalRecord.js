@@ -6,7 +6,6 @@ const MedicalRecord = () => {
   const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -21,7 +20,7 @@ const MedicalRecord = () => {
       id: 1,
       maHs: "0000000",
       tenBenhNhan: "Nguyễn Văn A",
-      ngayKham: "2024-09-03", 
+      ngayKham: "2024-09-03",
     },
     {
       id: 2,
@@ -43,9 +42,9 @@ const MedicalRecord = () => {
     )
     .sort((a, b) => {
       if (sortOption === "Ngày khám gần nhất") {
-        return new Date(b.ngayKham) - new Date(a.ngayKham); 
+        return new Date(b.ngayKham) - new Date(a.ngayKham);
       } else {
-        return new Date(a.ngayKham) - new Date(b.ngayKham); 
+        return new Date(a.ngayKham) - new Date(b.ngayKham);
       }
     });
 
@@ -71,7 +70,7 @@ const MedicalRecord = () => {
                 {patient.ngayKham}
               </div>
               <div className="patient-table-cell chi-tiet">
-                <a href="/infoMedicalRecordsDetail" className="link-xem">
+                <a href="/Bacsi/infoMedicalRecordsDetail" className="link-xem">
                   Xem
                 </a>
               </div>
@@ -88,7 +87,12 @@ const MedicalRecord = () => {
         <div className="patient-header-title">DANH SÁCH HỒ SƠ BỆNH ÁN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/medicalRecord">Hồ sơ bệnh án </a> / </strong>
+            <strong>
+              <a className="link-xem" href="/Bacsi/medicalRecord">
+                Hồ sơ bệnh án{" "}
+              </a>{" "}
+              /{" "}
+            </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Danh sách hồ sơ bệnh án

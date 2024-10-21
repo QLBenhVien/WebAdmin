@@ -94,7 +94,7 @@ const MedicalRecords = () => {
                     <td style={styles.td}>
                       <button
                         style={styles.actionButton}
-                        onClick={() => navigateTo("/patient-info")}
+                        onClick={() => navigateTo("/Bacsi/patient-info")}
                       >
                         Xem
                       </button>{" "}

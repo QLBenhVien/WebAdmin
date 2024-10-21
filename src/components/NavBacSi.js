@@ -27,10 +27,10 @@ const NavBacSi = () => {
         <li
           style={{
             ...styles.sidebarItem,
-            backgroundColor: activeItem === "/Bacsi" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/Bacsi" ? "#000000" : "#FFFFFF",
+            backgroundColor: activeItem === "/Bacsi/" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/Bacsi/" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/Bacsi")}
+          onClick={() => navigateTo("/Bacsi/")}
         >
           Trang chủ
         </li>
@@ -38,10 +38,11 @@ const NavBacSi = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/medicalRecord" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/medicalRecord" ? "#000000" : "#FFFFFF",
+              activeItem === "/Bacsi/medicalRecord" ? "#FFFFFF" : "#578EAF",
+            color:
+              activeItem === "/Bacsi/medicalRecord" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/medicalRecord")}
+          onClick={() => navigateTo("/Bacsi/medicalRecord")}
         >
           Hồ sơ bệnh án
         </li>
@@ -49,10 +50,10 @@ const NavBacSi = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/referrals" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/referrals" ? "#000000" : "#FFFFFF",
+              activeItem === "/Bacsi/referrals" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/Bacsi/referrals" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/referrals")}
+          onClick={() => navigateTo("/Bacsi/referrals")}
         >
           Gửi yêu cầu xét nghiệm
         </li>
@@ -60,10 +61,11 @@ const NavBacSi = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/examinationForm" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/examinationForm" ? "#000000" : "#FFFFFF",
+              activeItem === "/Bacsi/examinationForm" ? "#FFFFFF" : "#578EAF",
+            color:
+              activeItem === "/Bacsi/examinationForm" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/examinationForm")}
+          onClick={() => navigateTo("/Bacsi/examinationForm")}
         >
           Phiếu khám bệnh
         </li>
@@ -71,10 +73,10 @@ const NavBacSi = () => {
           style={{
             ...styles.sidebarItem,
             backgroundColor:
-              activeItem === "/patientList" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/patientList" ? "#000000" : "#FFFFFF",
+              activeItem === "/Bacsi/patientList" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/Bacsi/patientList" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/patientList")}
+          onClick={() => navigateTo("/Bacsi/patientList")}
         >
           Danh sách bệnh nhân
         </li>
@@ -92,7 +94,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    minHeight: "76.7vw", 
+    minHeight: "76.7vw",
     height: "auto",
   },
   sidebarHeader: {

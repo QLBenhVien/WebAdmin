@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const InfoMedicalRecords = () => {
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate("/medicalRecord");
+    navigate("/Bacsi/medicalRecord");
   };
   return (
     <div className="outer">
@@ -13,7 +13,12 @@ const InfoMedicalRecords = () => {
         <div className="patient-header-title">THÔNG TIN HỒ SƠ BỆNH ÁN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/medicalRecord">Hồ sơ bệnh án </a> / </strong>
+            <strong>
+              <a className="link-xem" href="/medicalRecord">
+                Hồ sơ bệnh án{" "}
+              </a>{" "}
+              /{" "}
+            </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Xem hồ sơ bệnh án{" "}
@@ -69,7 +74,7 @@ const InfoMedicalRecords = () => {
                 <td style={styles.td}>25/9/2024</td>
                 <td style={styles.td}>
                   <div className="patient-table-cell chi-tiet">
-                    <a href="/medicalRecordsDetail2" className="link-xem">
+                    <a href="/Bacsi/medicalRecordsDetail2" className="link-xem">
                       Xem
                     </a>
                   </div>
