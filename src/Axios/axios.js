@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401) {
       // Xử lý khi token hết hạn, chuyển hướng về trang đăng nhập chẳng hạn
       localStorage.removeItem("token");
-      window.location.href = "/login"; // Chuyển hướng về trang đăng nhập
+      window.location.href = "/"; // Chuyển hướng về trang đăng nhập
     }
 
     return Promise.reject(error);
