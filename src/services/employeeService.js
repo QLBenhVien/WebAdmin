@@ -71,7 +71,6 @@ export const getCondition = () => [
 // 	}
 // }
 
-// chuwa ra
 export const updateEmployee = async (employeeData) => {
 	try {
 		const response = await Axios.put("/itSupport/nhanvien/update", employeeData);
