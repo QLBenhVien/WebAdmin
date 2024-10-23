@@ -11,6 +11,7 @@ export const getDepartmentCollection = () => [
 	{ id: "BS", title: "Bác sĩ" },
 	{ id: "LT", title: "Lễ tân" },
 	{ id: "XN", title: "Xét nghiệm" },
+	{ id: "IT", title: "Quản trị viên" },
 ];
 
 // export const getCondition = () => [
