@@ -69,10 +69,8 @@ export const getCondition = () => [
 ];
 
 export default function Employees({ data }) {
-  const classes = useStyles();
-  // const [records, setRecords] = useState(employeeService.getAllEmployees());
-
-  const [records, setRecords] = useState(data || []);
+	const classes = useStyles();
+	const [records, setRecords] = useState(data || []);
 
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {

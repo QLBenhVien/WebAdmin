@@ -106,6 +106,7 @@ export default function EmployeeForm(props) {
 			addOrEdit(values, resetForm);
 		}
 	};
+
 	useEffect(() => {
 		if (recordForEdit != null) console.log("recordForEdit", recordForEdit);
 
@@ -119,11 +120,12 @@ export default function EmployeeForm(props) {
 		setValues({
 			...values,
 			HoTen: recordForEdit?.HoTen || "",
-			SDT: recordForEdit?.DiaChi || "",
+			SDT: recordForEdit?.SDT || "",
 			email: recordForEdit?.Email || "",
 			id: recordForEdit?.MaTK || 0,
 			MaTK: recordForEdit?.MaTK || 0,
 			role: roleValue,
+			DiaChi: recordForEdit?.DiaChi || "",
 			Khoa: recordForEdit?.MaKhoa || "",
 		});
 	}, [recordForEdit]);
