@@ -65,11 +65,12 @@ const Login = () => {
       if (response.data.data.role === "LT") {
         console.log(response.data.data.role);
         navigate("/Letan");
-      }
-      if (response.data.data.role === "BS") {
+      } else if (response.data.data.role === "BS") {
         navigate("/Bacsi");
+      } else if (response.data.data.role === "IT") {
+        navigate("/quantri");
       } else {
-        console.log("loi");
+        navigate("/*");
       }
       // navigate("/");
     } catch (error) {

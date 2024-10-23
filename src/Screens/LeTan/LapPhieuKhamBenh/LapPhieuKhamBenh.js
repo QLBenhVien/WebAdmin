@@ -1,23 +1,137 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../../images/logo.png";
 import { useNavigate } from "react-router-dom";
-
+import departmentApi from "../../../api/departmentApi";
+import doctorApi from "../../../api/doctorApi";
+import receptionistApi from "../../../api/receptionistApi";
+import { useNotification } from '../../../context/NotificationContext'; // Import useNotification
 const ThongTinLapPhieu = () => {
   const navigate = useNavigate();
+  const { showNotification } = useNotification();
+  const [khoaList, setKhoaList] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
+  const [selectedKhoa, setSelectedKhoa] = useState("");
+  const [patientInfo, setPatientInfo] = useState({
+    TenBN: "",
+    NgaySinhBN: "",
+    GioiTinhBN: "",
+    SDTBN: "",
+    DiaChiBN: "",
+    MaKhoa: "", // Thêm mã khoa
+    MaBS: "", // Thêm mã bác sĩ
+    TrieuChung: "",
+    NgayDatKham: "",
+    CaKham: "",
+  });
+
+  useEffect(() => {
+    const fetchKhoaList = async () => {
+      try {
+        const response = await departmentApi.getAllDepartments();
+        setKhoaList(response.data.data);
+      } catch (error) {
+        console.error("Lỗi khi tải danh sách khoa:", error);
+      }
+    };
+    fetchKhoaList();
+  }, []);
 
   const navigateTo = (path) => {
     navigate(path);
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPatientInfo({
+      ...patientInfo,
+      [name]: value,
+    });
+  };
+
+  const handleKhoaChange = async (e) => {
+    const khoaId = e.target.value;
+    setSelectedKhoa(khoaId);
+
+    // Cập nhật MaKhoa trong patientInfo
+    setPatientInfo({
+      ...patientInfo,
+      MaKhoa: khoaId, // Thêm mã khoa
+      MaBS: "", // Reset MaBS khi chọn khoa mới
+    });
+
+    try {
+      const response = await doctorApi.getListDoctorByDepartmentId(khoaId);
+      setDoctorList(response.data.data);
+    } catch (error) {
+      console.error("Lỗi khi tải danh sách bác sĩ:", error);
+    }
+  };
+
+  const handleDoctorChange = (e) => {
+    const doctorId = e.target.value;
+
+    // Cập nhật MaBS trong patientInfo
+    setPatientInfo({
+      ...patientInfo,
+      MaBS: doctorId, // Thêm mã bác sĩ
+    });
+  };
+
+  const handleCreateAppointment = async () => {
+    console.log(patientInfo);
+    // Kiểm tra tính hợp lệ của thông tin bệnh nhân
+    if (!validatePatientInfo()) {
+      showNotification('Vui lòng điền đầy đủ thông tin', 'error');
+      return;
+    }
+    try {
+      const response = await receptionistApi.scheduleappointment(patientInfo);
+      if (response.data?.code == 201) {
+        showNotification('Tạo lịch khám thành công', 'success');
+        navigateTo("/Letan/qlDatkham");
+      } else {
+        showNotification(response.data.message, 'error');
+      }
+    } catch (error) {
+      console.error("Lỗi khi tạo lịch hẹn:", error);
+      alert("Đã xảy ra lỗi khi tạo lịch hẹn.");
+    }
+  };
+
+  // Hàm kiểm tra tính hợp lệ của thông tin bệnh nhân
+  const validatePatientInfo = () => {
+    const {
+      TenBN,
+      NgaySinhBN,
+      GioiTinhBN,
+      SDTBN,
+      DiaChiBN,
+      MaKhoa,
+      MaBS,
+      TrieuChung,
+      NgayDatKham,
+      CaKham,
+    } = patientInfo;
+
+    // Kiểm tra xem tất cả các trường có giá trị không
+    return (
+      TenBN &&
+      NgaySinhBN &&
+      GioiTinhBN &&
+      SDTBN &&
+      DiaChiBN &&
+      MaKhoa &&
+      MaBS &&
+      TrieuChung &&
+      NgayDatKham &&
+      CaKham
+    );
+  };
+
   return (
     <div style={styles.homePage}>
       <div style={styles.content}>
         <div style={styles.mainContent}>
-          {/* <div style={styles.navbar}>
-            <div style={styles.userInfo}>
-              <div style={styles.userAvatar}></div>
-              <div style={styles.userName}>BS. Nguyễn Văn A</div>
-            </div>
-          </div> */}
           <div style={styles.pageContainer}>
             <div style={styles.pageHeader}>
               <div style={styles.pageTitleLeft}>THÔNG TIN LẬP PHIẾU</div>
@@ -32,23 +146,42 @@ const ThongTinLapPhieu = () => {
                   <input
                     style={styles.input}
                     type="text"
-                    defaultValue="Nguyễn Văn A"
+                    name="TenBN" // Sửa thành TenBN
+                    value={patientInfo.TenBN}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div>
-                  <label style={styles.label}>Tuổi</label>
-                  <input style={styles.input} type="text" defaultValue="24" />
+                  <label style={styles.label}>Ngày sinh</label>
+                  <input
+                    style={styles.input}
+                    type="date"
+                    name="NgaySinhBN"
+                    value={patientInfo.NgaySinhBN}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 <div>
                   <label style={styles.label}>Giới tính</label>
-                  <input style={styles.input} type="text" />
+                  <select
+                    style={styles.select}
+                    name="GioiTinhBN"
+                    value={patientInfo.GioiTinhBN}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Chọn giới tính</option>
+                    <option value="true">Nam</option>
+                    <option value="false">Nữ</option>
+                  </select>
                 </div>
                 <div style={styles.fullWidth}>
                   <label style={styles.label}>SDT</label>
                   <input
                     style={styles.input}
                     type="text"
-                    defaultValue="0923444444"
+                    name="SDTBN" // Sửa thành SDTBN
+                    value={patientInfo.SDTBN}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div style={styles.fullWidth}>
@@ -56,46 +189,79 @@ const ThongTinLapPhieu = () => {
                   <input
                     style={styles.input}
                     type="text"
-                    defaultValue="Ấp 2, Tắc Vân, TP. Cà Mau"
+                    name="DiaChiBN" // Sửa thành DiaChiBN
+                    value={patientInfo.DiaChiBN}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div style={styles.fullWidth}>
+                  <label style={styles.label}>Chọn khoa</label>
+                  <select
+                    style={styles.select}
+                    value={selectedKhoa}
+                    onChange={handleKhoaChange}
+                  >
+                    <option value="">Chọn khoa</option>
+                    {khoaList?.map((khoa) => (
+                      <option key={khoa._id} value={khoa._id}>
+                        {khoa.Tenkhoa}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div style={styles.fullWidth}>
                   <label style={styles.label}>Tên bác sĩ</label>
-                  <select style={styles.select} defaultValue="Lê Thị Hồng">
-                    <option>Lê Thị Hồng</option>
-                    <option>Lê Thị Hồng 2</option>
-                    <option>Lê Thị Hồng 3</option>
-                    {/* Add more options as needed */}
+                  <select
+                    style={styles.select}
+                    value={patientInfo.MaBS} // Sửa thành MaBS
+                    onChange={handleDoctorChange}
+                  >
+                    <option value="">Chọn bác sĩ</option>
+                    {doctorList?.map((doctor) => (
+                      <option key={doctor._id} value={doctor._id}>
+                        {doctor.HoTen}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>
                   <label style={styles.label}>Ngày khám</label>
                   <div style={styles.dateContainer}>
-                    <input style={styles.input} type="date" />
+                    <input
+                      style={styles.input}
+                      type="date"
+                      name="NgayDatKham"
+                      value={patientInfo.NgayDatKham}
+                      onChange={handleInputChange}
+                    />
                   </div>
                 </div>
                 <div>
                   <label style={styles.label}>Ca khám</label>
-                  <input style={styles.input} type="text" />
+                  <input
+                    style={styles.input}
+                    type="text"
+                    name="CaKham" // Sửa thành CaKham
+                    value={patientInfo.CaKham}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 <div style={styles.fullWidth}>
                   <label style={styles.label}>Triệu chứng</label>
                   <input
                     style={styles.input}
                     type="text"
-                    defaultValue="Khó thở"
+                    name="TrieuChung" // Sửa thành TrieuChung
+                    value={patientInfo.TrieuChung}
+                    onChange={handleInputChange}
                   />
-                </div>
-                <div style={styles.fullWidth}>
-                  <label style={styles.label}>Chọn khoa</label>
-                  <input style={styles.input} type="text" />
                 </div>
               </form>
             </div>
             <div style={styles.buttonContainer}>
               <button
                 style={styles.backButton}
-                onClick={() => navigateTo("/Letan/qlDatkham")}
+                onClick={handleCreateAppointment}
               >
                 Tạo
               </button>

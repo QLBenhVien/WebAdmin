@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+
 import PatientForm from "./PatientForm";
 import PageHeader from "../../components/PageHeader";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { makeStyles } from "@mui/styles";
 import { Paper, TableBody, TableCell, TableRow, Toolbar, InputAdornment } from "@mui/material";
+
 import useTable from "../../components/useTable";
 import * as patientService from "../../services/patientService"; // Dịch vụ cho bệnh nhân
 import { EditOutlined, Search, Visibility } from "@mui/icons-material";
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	actionButton: {
 		margin: "0 5px", // Căn giữa khoảng cách giữa các nút
 	},
+
 }));
 
 // Khai báo các cột trong bảng bệnh nhân
@@ -332,4 +335,5 @@ export default function Patients({ data }) {
 			<Notification notify={notify} setNotify={setNotify} />
 		</>
 	);
+
 }
