@@ -38,7 +38,7 @@ const QuanLyDatKham = () => {
 
       // Cập nhật datkhams bằng dữ liệu từ res.data.Datkham
       setDatkhams(res.data.data.Datkham);
-      console.log(datkhams,"datkhamsdatkhamsdatkhams");
+      console.log(datkhams, "datkhamsdatkhamsdatkhams");
     } catch (error) {
       console.log(error);
     }
@@ -109,55 +109,69 @@ const QuanLyDatKham = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredPatients.map((datkham, index) => (
-                    <tr key={index}>
-                      <td style={styles.td}>{index + 1}</td>
-                      <td style={styles.td}>{datkham.BenhNhanID._id.toString()}</td>
-                      <td style={styles.td}>{datkham.BenhNhanID.Ten.toString()}</td>
-                      <td style={styles.td}>
-                        {formatDate(datkham.NgayDatKham)}
-                      </td>
-                      <td style={styles.td}>
-                        {datkham.TrangThai === true ? (
-                          <a
-                            style={{
-                              color: "green",
-                              fontWeight: "700",
+                  {filteredPatients.length > 0 ? (
+                    filteredPatients.map((datkham, index) => (
+                      <tr key={index}>
+                        <td style={styles.td}>{index + 1}</td>
+                        <td style={styles.td}>
+                          {datkham.BenhNhanID._id.toString()}
+                        </td>
+                        <td style={styles.td}>
+                          {datkham.BenhNhanID.Ten.toString()}
+                        </td>
+                        <td style={styles.td}>
+                          {formatDate(datkham.NgayDatKham)}
+                        </td>
+                        <td style={styles.td}>
+                          {datkham.TrangThai === true ? (
+                            <a
+                              style={{
+                                color: "green",
+                                fontWeight: "700",
+                              }}
+                            >
+                              Đã Duyệt
+                            </a>
+                          ) : (
+                            <a
+                              style={{
+                                color: "red",
+                                fontWeight: "700",
+                              }}
+                            >
+                              Chưa Duyệt
+                            </a>
+                          )}
+                        </td>
+                        <td style={styles.td}>
+                          <button
+                            style={styles.actionButton}
+                            onClick={() => {
+                              console.log(`/chitietdatkham/${datkham._id}`);
+                              navigateTo(
+                                `/Letan/chitietdatkham/${datkham._id}`
+                              );
                             }}
                           >
-                            Đã Duyệt
-                          </a>
-                        ) : (
-                          <a
-                            style={{
-                              color: "red",
-                              fontWeight: "700",
-                            }}
+                            Xem
+                          </button>{" "}
+                          |{" "}
+                          <button
+                            style={styles.actionButton}
+                            onClick={() => handleCancel(datkham._id)}
                           >
-                            Chưa Duyệt
-                          </a>
-                        )}
-                      </td>
-                      <td style={styles.td}>
-                        <button
-                          style={styles.actionButton}
-                          onClick={() => {
-                            console.log(`/chitietphieukham/${datkham._id}`);
-                            navigateTo(`/Letan/chitietphieukham/${datkham._id}`);
-                          }}
-                        >
-                          Xem
-                        </button>{" "}
-                        |{" "}
-                        <button
-                          style={styles.actionButton}
-                          onClick={() => handleCancel(datkham.id)}
-                        >
-                          Xóa
-                        </button>
+                            Xóa
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" style={styles.td}>
+                        Không có lịch khám
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -178,6 +192,7 @@ const styles = {
     background: "#E4F5FF",
     display: "flex",
     flexDirection: "column",
+    marginLeft: "1%",
   },
   content: {
     display: "flex",

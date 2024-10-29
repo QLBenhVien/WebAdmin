@@ -26,21 +26,21 @@ import Prescribe from "../TrangBacSi/Prescribe";
 import NavBacSi from "../../components/NavBacSi";
 import Header from "./Header";
 import Profile from "./Profile";
-// import Login from "../Login/Login"; 
+// import Login from "../Login/Login";
 const DoctorRoles = () => {
   return (
     <div
       style={{
         display: "flex",
-        height: "100vh",
+        maxHeight: "100vh",
         backgroundColor: "#f0f8ff",
       }}
     >
-      <div style={{ display: "flex", minHeight: "100vh" }}>
+      <div style={{ flexBasis: "20%" }}>
         <NavBacSi />
       </div>
 
-      <div style={{ flex: "8" }}>
+      <div style={{ flexBasis: "80%" }}>
         <Header />
         <Routes>
           <Route path="/prescribe" element={<Prescribe />} />

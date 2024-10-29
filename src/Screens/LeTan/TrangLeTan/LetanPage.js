@@ -123,12 +123,14 @@ const styles = {
     flex: 1,
     backgroundColor: "#f8f9fa",
     position: "relative",
+    width: "100%",
+    marginLeft: "1%",
   },
   pageContainer: {
     background: "rgba(228, 245, 255, 1)",
     padding: "20px",
     borderRadius: "0 20px 20px 0",
-    height: "100%",
+    // height: "100%",
   },
   pageHeader: {
     display: "flex",

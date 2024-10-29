@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   function (config) {
     // Lấy token từ localStorage (nếu có)
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     // Nếu có token thì thêm vào header của request
     if (token) {
@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
     // Bạn có thể xử lý các lỗi chung như token hết hạn ở đây
     if (error.response.status === 401) {
       // Xử lý khi token hết hạn, chuyển hướng về trang đăng nhập chẳng hạn
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       window.location.href = "/"; // Chuyển hướng về trang đăng nhập
     }
 

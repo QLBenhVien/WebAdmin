@@ -15,23 +15,23 @@ const LeTanRoles = () => {
       style={{
         display: "flex",
         backgroundColor: "#f0f8ff",
-        height: "100vh",
+        maxHeight: "100vh",
       }}
     >
       <div style={{ flexBasis: "20%" }}>
         <NavLeTan />
       </div>
 
-      <div style={{ flexBasis: "80%" }}>
+      <div style={{ flexBasis: "80%", marginLeft: "0.5%" }}>
         <Header />
         <Routes>
-          <Route path="chitietbenhnhan" element={<ChiTietBenhNhan/>} />
           <Route path="danhsachhoadon" element={<DanhSachHoaDon />} />
           <Route path="/" element={<LetanPage />} />
           <Route path="danhsachbenhnhan" element={<DanhSachBenhNhan />} />
           <Route path="qlDatkham" element={<QuanLyDatKham />} />
           <Route path="lapphieukhambenh" element={<LapPhieuKhamBenh />} />
-          <Route path="chitietphieukham/:id" element={<ThongTinDatKham />} />
+          <Route path="chitietdatkham/:id" element={<ThongTinDatKham />} />
+          <Route path="chitietphieukham/:id" element={<ChiTietBenhNhan />} />
         </Routes>
       </div>
     </div>

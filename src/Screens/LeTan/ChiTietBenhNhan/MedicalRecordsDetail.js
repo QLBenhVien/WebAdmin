@@ -1,95 +1,153 @@
-import React, { useContext } from "react";
-// import { Context } from "../main";
-import "../../TrangBacSi/Doctor.css";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Axios from "../../../Axios/axios";
 
 const ChiTietBenhNhan = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+
   const handleClose = () => {
     navigate("/Letan/danhsachbenhnhan");
   };
+
   const data = [
     {
-      stt: 1,
-      name: "Panadol Extra",
-      unit: "Viên",
-      quantity: 30,
-      dosage: "Uống, Sáng 2 viên, Chiều 2 viên",
-    },
-    {
-      stt: 2,
-      name: "Aspirin",
-      unit: "Viên",
-      quantity: 20,
-      dosage: "Uống, Sáng 1 viên, Chiều 1 viên",
+      stt: "",
+      name: "",
+      unit: "",
+      quantity: "",
+      dosage: "",
     },
   ];
 
-  // Chuyển đổi thành một biến để lấy dữ liệu bệnh nhân
-  const patientData = {
-    name: "Nguyễn Văn A",
-    age: 24,
-    gender: "Nữ",
-    patientCode: "10392",
-    doctorName: "Bác sĩ Nguyễn",
-    address: "Ấp 2, Tắc Vân, TP. Cà Mau",
-    diagnosis: "Thấp không ảnh hưởng đến tim",
+  const [dataphieu, setDataphieu] = useState({});
+
+  const fetchData = async () => {
+    try {
+      const res = await Axios.get(`/receptionist/chitietphieukham/${id}`);
+      setDataphieu(res.data.data.appointment);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // const { isAuthenticated, admin } = useContext(Context);
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const styles = {
+    header: {
+      display: "flex",
+      flexDirection: "row",
+      padding: "20px",
+      justifyContent: "space-between", // Căn đều hai bên
+    },
+    headerTitle: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      color: "#333",
+      marginBottom: "5px",
+    },
+    headerBreadcrumb: {
+      fontSize: "16px",
+      color: "#555",
+    },
+    container: {
+      display: "flex",
+      justifyContent: "center",
+      padding: "20px",
+    },
+    reportContainer: {
+      maxWidth: "800px",
+      width: "100%",
+      backgroundColor: "#fff",
+      border: "1px solid #e0e0e0",
+      padding: "20px",
+      borderRadius: "8px",
+      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+    },
+    sectionText: {
+      fontSize: "18px",
+      color: "#333",
+      marginBottom: "10px",
+    },
+    medicationTable: {
+      width: "100%",
+      borderCollapse: "collapse",
+    },
+    medicationHeader: {
+      padding: "10px",
+      backgroundColor: "#f0f4f8",
+      color: "#333",
+      border: "1px solid #e0e0e0",
+      fontWeight: "bold",
+      textAlign: "left",
+    },
+    medicationRow: {
+      padding: "8px",
+      border: "1px solid #e0e0e0",
+      color: "#555",
+    },
+    dosageRow: {
+      fontStyle: "italic",
+    },
+    closeButton: {
+      padding: "10px 20px",
+      color: "#000",
+      borderRadius: "4px",
+      textAlign: "center",
+      cursor: "pointer",
+      marginTop: "20px",
+      width: "7%",
+    },
+  };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
 
   return (
-    <div className="outer">
-      <div className="patient-header">
-        <div className="patient-header-title">CHI TIẾT BỆNH ÁN</div>
-        <div className="patient-header-breadcrumb">
+    <div>
+      <div style={styles.header}>
+        <div style={styles.headerTitle}>CHI TIẾT PHIẾU KHÁM</div>
+        <div style={styles.headerBreadcrumb}>
           <span>
             <strong>Danh sách bệnh nhân / </strong>
           </span>
-          <span className="patient-breadcrumb-secondary">
-            Chi tiết bệnh án{" "}
-          </span>
+          <span>Chi tiết bệnh án</span>
         </div>
       </div>
 
-      <div className="container2">
-        <div className="report-container report-container-custom">
-          <div className="report-background report-background-custom" />
-          <div className="diagnosis-text diagnosis-custom">
-            Chuẩn đoán: {patientData.diagnosis}
+      <div style={styles.container}>
+        <div style={styles.reportContainer}>
+          <div style={styles.sectionText}>
+            Tên bệnh nhân: {dataphieu.MaBenhNhan?.Ten || "Không có dữ liệu"}
           </div>
+          <div style={styles.sectionText}>
+            Ngày Sinh:{" "}
+            {formatDate(dataphieu.MaBenhNhan?.NgaySinh) || "Không có dữ liệu"}
+          </div>
+          <div style={styles.sectionText}>
+            Giới tính: {dataphieu.MaBenhNhan?.GioiTinh || "Không có dữ liệu"}
+          </div>
+          <div style={styles.sectionText}>
+            Mã BN: {dataphieu.MaBenhNhan?._id || "Không có dữ liệu"}
+          </div>
+          <div style={styles.sectionText}>
+            Tên bác sĩ: {dataphieu.MaNhanVien?.HoTen || "Không có dữ liệu"}
+          </div>
+          <div style={styles.sectionText}>
+            Địa chỉ: {dataphieu.MaBenhNhan?.DiaChi || "Không có dữ liệu"}
+          </div>
+          <div style={styles.sectionText}>Thuốc đã kê:</div>
 
-          <div className="patient-info patient-name-custom">
-            <span>Tên bệnh nhân: </span>
-            <span className="patient-name-highlight">{patientData.name}</span>
-          </div>
-
-          <div className="patient-age age-custom">
-            <span>Tuổi: </span>
-            <span className="age-highlight">{patientData.age}</span>
-          </div>
-
-          <div className="patient-gender gender-custom">
-            <span>Giới tính: </span>
-            <span className="gender-highlight">{patientData.gender}</span>
-          </div>
-
-          <div className="patient-code patient-code-custom">
-            Mã BN: {patientData.patientCode}
-          </div>
-          <div className="doctor-name doctor-name-custom">
-            Tên bác sĩ: {patientData.doctorName}
-          </div>
-          <div className="patient-address address-custom">
-            Địa chỉ: {patientData.address}
-          </div>
-
-          <div className="medication-title medication-title-custom">
-            Thuốc đã kê:
-          </div>
-          <table className="medication-table">
+          <table style={styles.medicationTable}>
             <thead>
-              <tr className="medication-header">
+              <tr style={styles.medicationHeader}>
                 <th>STT</th>
                 <th>Tên thuốc / Hàm lượng</th>
                 <th>ĐVT</th>
@@ -97,15 +155,15 @@ const ChiTietBenhNhan = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
-                <React.Fragment key={item.stt}>
-                  <tr className="medication-row">
+              {data.map((item, index) => (
+                <React.Fragment key={index}>
+                  <tr style={styles.medicationRow}>
                     <td>{item.stt}</td>
                     <td>{item.name}</td>
                     <td>{item.unit}</td>
                     <td>{item.quantity}</td>
                   </tr>
-                  <tr className="medication-dosage-row">
+                  <tr style={styles.dosageRow}>
                     <td colSpan="4">{item.dosage}</td>
                   </tr>
                 </React.Fragment>
@@ -114,10 +172,8 @@ const ChiTietBenhNhan = () => {
           </table>
         </div>
       </div>
-      <div className="patient-list-search-filter2">
-        <div className="patient-search-buttonn" onClick={handleClose}>
-          Đóng
-        </div>
+      <div style={styles.closeButton} onClick={handleClose}>
+        Trở lại
       </div>
     </div>
   );

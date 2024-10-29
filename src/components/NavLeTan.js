@@ -90,14 +90,18 @@ const NavLeTan = () => {
 
 const styles = {
   sidebar: {
-    width: "90%",
+    // width: "90%",
     backgroundColor: "#22668E",
     padding: "20px",
     color: "white",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "100%",
+    height: "100vh",
+    position: "fixed", // Đảm bảo sidebar luôn cố định khi cuộn trang
+    top: 0,
+    left: 0,
+    boxSizing: "border-box", // Đảm bảo padding không làm thay đổi chiều rộng và chiều cao
   },
   sidebarHeader: {
     display: "flex",

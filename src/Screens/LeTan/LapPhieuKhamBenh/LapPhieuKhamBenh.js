@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import departmentApi from "../../../api/departmentApi";
 import doctorApi from "../../../api/doctorApi";
 import receptionistApi from "../../../api/receptionistApi";
-import { useNotification } from '../../../context/NotificationContext'; // Import useNotification
+import { useNotification } from "../../../context/NotificationContext"; // Import useNotification
 const ThongTinLapPhieu = () => {
   const navigate = useNavigate();
   const { showNotification } = useNotification();
@@ -81,16 +81,16 @@ const ThongTinLapPhieu = () => {
     console.log(patientInfo);
     // Kiểm tra tính hợp lệ của thông tin bệnh nhân
     if (!validatePatientInfo()) {
-      showNotification('Vui lòng điền đầy đủ thông tin', 'error');
+      showNotification("Vui lòng điền đầy đủ thông tin", "error");
       return;
     }
     try {
       const response = await receptionistApi.scheduleappointment(patientInfo);
       if (response.data?.code == 201) {
-        showNotification('Tạo lịch khám thành công', 'success');
+        showNotification("Tạo lịch khám thành công", "success");
         navigateTo("/Letan/qlDatkham");
       } else {
-        showNotification(response.data.message, 'error');
+        showNotification(response.data.message, "error");
       }
     } catch (error) {
       console.error("Lỗi khi tạo lịch hẹn:", error);
@@ -238,13 +238,16 @@ const ThongTinLapPhieu = () => {
                 </div>
                 <div>
                   <label style={styles.label}>Ca khám</label>
-                  <input
-                    style={styles.input}
-                    type="text"
-                    name="CaKham" // Sửa thành CaKham
+                  <select
+                    style={styles.select}
+                    name="CaKham"
                     value={patientInfo.CaKham}
                     onChange={handleInputChange}
-                  />
+                  >
+                    <option value="-1">Chọn ca khám</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
                 </div>
                 <div style={styles.fullWidth}>
                   <label style={styles.label}>Triệu chứng</label>

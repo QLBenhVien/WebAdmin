@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Axios from "../../../Axios/axios";
-import { useNotification } from '../../../context/NotificationContext'; // Import useNotification
+import { useNotification } from "../../../context/NotificationContext"; // Import useNotification
 const ThongTinDatKham = () => {
   console.log("pagethongtindatkham");
   const { id } = useParams(); // Lấy id từ URL

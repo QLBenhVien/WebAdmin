@@ -2,28 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import receptionistApi from "../../../api/receptionistApi";
 import dayjs from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 // DanhSachBenhNhan component
 const DanhSachBenhNhan = () => {
   const navigate = useNavigate();
 
   const [xemdatkhams, setxemdatkhams] = useState([]);
-  const [startDay, setStartDay] = useState(null);
-  const [endDay, setEndDay] = useState(null);
-  
-  // Phân trang
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // Số lượng mục trên mỗi trang
+  const [itemsPerPage] = useState(10);
 
   const fetchData = async () => {
     try {
-      const response = await receptionistApi.listAppointment(startDay, endDay);
+      const response = await receptionistApi.listAppointment();
       setxemdatkhams(response.data.data.listAppointment);
-      console.log(response.data.data.listAppointment, "response.data.data.listAppointment");
+      setFilteredPatients(response.data.data.listAppointment); // Gán dữ liệu ban đầu
     } catch (error) {
       console.error("Lỗi khi gọi API:", error);
     }
@@ -31,45 +25,41 @@ const DanhSachBenhNhan = () => {
 
   useEffect(() => {
     fetchData();
-  }, []); // Cập nhật khi ngày bắt đầu hoặc ngày kết thúc thay đổi
+  }, []);
 
-  const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // Hàm lọc dữ liệu theo ngày dựa trên sortOption
   const handleSortChange = (option) => {
     setSortOption(option);
-    setDropdownOpen(false);
-  };
-  
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-  
-  const filteredPatients = xemdatkhams.sort((a, b) => {
-    if (sortOption === "Ngày khám gần nhất") {
-      return new Date(b.NgayKham) - new Date(a.NgayKham);
-    } else {
-      return new Date(a.NgayKham) - new Date(b.NgayKham);
-    }
-  });
 
-  // Lấy dữ liệu cho trang hiện tại
+    const currentDate = dayjs();
+
+    let filteredData;
+    if (option === "1") {
+      // Lọc danh sách hôm nay
+      filteredData = xemdatkhams.filter((item) =>
+        dayjs(item.NgayKham).isSame(currentDate, "day")
+      );
+    } else if (option === "2") {
+      // Lọc danh sách trong tuần
+      filteredData = xemdatkhams.filter((item) =>
+        dayjs(item.NgayKham).isSame(currentDate, "week")
+      );
+    } else {
+      // Hiển thị tất cả nếu không có sortOption
+      filteredData = xemdatkhams;
+    }
+
+    setFilteredPatients(filteredData); // Cập nhật state với danh sách đã lọc
+    setCurrentPage(1); // Reset trang về trang 1 khi lọc mới
+  };
+
   const indexOfLastPatient = currentPage * itemsPerPage;
   const indexOfFirstPatient = indexOfLastPatient - itemsPerPage;
-  const currentPatients = filteredPatients.slice(indexOfFirstPatient, indexOfLastPatient);
+  const currentPatients = filteredPatients.slice(
+    indexOfFirstPatient,
+    indexOfLastPatient
+  );
 
-  const navigateTo = (path) => {
-    navigate(path);
-  };
-  
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-
-  // Tính toán tổng số trang
   const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
 
   return (
@@ -85,28 +75,23 @@ const DanhSachBenhNhan = () => {
             </div>
             <div style={styles.whiteContainer}>
               <div style={styles.searchSection}>
-                <div style={styles.searchSection}>
-                  <label style={styles.sortLabel}>Sắp xếp theo:</label>
-
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DatePicker", "DatePicker"]}>
-                      <DatePicker
-                        label="Ngày bắt đầu"
-                        value={startDay}
-                        onChange={(newValue) => setStartDay(newValue)}
-                      />
-                      <DatePicker
-                        label="Ngày kết thúc"
-                        value={endDay}
-                        onChange={(newValue) => setEndDay(newValue)}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-
-                  <button style={styles.searchButton} onClick={fetchData}>
-                    TRA CỨU
-                  </button>
-                </div>
+                <label style={styles.sortLabel}>Sắp xếp theo:</label>
+                <select
+                  style={{
+                    padding: "1rem",
+                    borderRadius: "1rem",
+                    marginRight: "1rem",
+                  }}
+                  name="CaKham"
+                  value={sortOption}
+                  onChange={(e) => handleSortChange(e.target.value)}
+                >
+                  <option value="2">Trong tuần</option>
+                  <option value="1">Hôm nay</option>
+                </select>
+                {/* <button style={styles.searchButton} onClick={() => fetchData()}>
+                  TRA CỨU
+                </button> */}
               </div>
 
               <table style={styles.table}>
@@ -123,21 +108,37 @@ const DanhSachBenhNhan = () => {
                 <tbody>
                   {currentPatients.map((xemdatkham, index) => (
                     <tr key={index}>
-                      <td style={styles.td}>{indexOfFirstPatient + index + 1}</td>
-                      <td style={styles.td}>{xemdatkham?.BenhNhanID?._id?.toString()}</td>
-                      <td style={styles.td}>{xemdatkham?.BenhNhanID?.Ten?.toString()}</td>
-                      <td style={styles.td}>{formatDate(xemdatkham.NgayDatKham)}</td>
+                      <td style={styles.td}>
+                        {indexOfFirstPatient + index + 1}
+                      </td>
+                      <td style={styles.td}>
+                        {xemdatkham?.MaBenhNhan?._id?.toString()}
+                      </td>
+                      <td style={styles.td}>
+                        {xemdatkham?.MaBenhNhan?.Ten?.toString()}
+                      </td>
+                      <td style={styles.td}>
+                        {dayjs(xemdatkham.NgayKham).format("DD-MM-YYYY")}
+                      </td>
                       <td style={styles.td}>
                         {xemdatkham.TrangThai === false ? (
-                          <a style={{ color: "red", fontWeight: "700" }}>Chưa Khám</a>
+                          <span style={{ color: "red", fontWeight: "700" }}>
+                            Chưa Khám
+                          </span>
                         ) : (
-                          <a style={{ color: "green", fontWeight: "700" }}>Đã khám</a>
+                          <span style={{ color: "green", fontWeight: "700" }}>
+                            Đã khám
+                          </span>
                         )}
                       </td>
                       <td style={styles.td}>
                         <button
                           style={styles.actionButton}
-                          onClick={() => navigateTo("/Letan/chitietbenhnhan")}
+                          onClick={() =>
+                            navigate(
+                              `/Letan/chitietphieukham/${xemdatkham._id}`
+                            )
+                          }
                         >
                           Xem
                         </button>
@@ -146,18 +147,23 @@ const DanhSachBenhNhan = () => {
                   ))}
                 </tbody>
               </table>
-              
-              {/* Phân trang */}
+
               <div style={styles.pagination}>
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
                 >
                   Trước
                 </button>
-                <span>Trang {currentPage} / {totalPages}</span>
+                <span>
+                  Trang {currentPage} / {totalPages}
+                </span>
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
                 >
                   Sau
@@ -173,6 +179,11 @@ const DanhSachBenhNhan = () => {
 
 // Styles
 const styles = {
+  whiteContainer: {
+    backgroundColor: "white",
+    padding: "2rem",
+    borderRadius: "2rem",
+  },
   homePage: {
     width: "100%",
     height: "100%",
@@ -221,7 +232,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     marginBottom: "20px",
-    justifyContent: "space-between",
+    justifyContent: "start",
   },
   searchInput: {
     padding: "10px",

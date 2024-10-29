@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(4),
   },
   searchInput: {
-    width: "80%",
+    width: "75%",
     marginRight: "30px",
   },
   actionButton: {
@@ -69,8 +69,8 @@ export const getCondition = () => [
 ];
 
 export default function Employees({ data }) {
-	const classes = useStyles();
-	const [records, setRecords] = useState(data || []);
+  const classes = useStyles();
+  const [records, setRecords] = useState(data || []);
 
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
@@ -163,27 +163,32 @@ export default function Employees({ data }) {
     setOpenPopup(true);
   };
 
-	const toggleAccountStatus = (employee) => {
-		if (employee.active === true) {
-			console.log("Employee to disable:", employee.active);
-			if (window.confirm("Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không?")) {
-				const result = employeeService.disableEmployee(employee.MaTK); // Vô hiệu hóa
-				if (result) {
-					// setRecords(employeeService.getAllEmployees());
+  const toggleAccountStatus = (employee) => {
+    if (employee.active === true) {
+      console.log("Employee to disable:", employee.active);
+      if (
+        window.confirm("Bạn có chắc chắn muốn vô hiệu hóa tài khoản này không?")
+      ) {
+        const result = employeeService.disableEmployee(employee.MaTK); // Vô hiệu hóa
+        if (result) {
+          // setRecords(employeeService.getAllEmployees());
 
-					setNotify({
-						isOpen: true,
-						message: "Vô hiệu hóa thành công",
-						type: "error",
-					});
-				}
-			}
-		} else if (employee.active === false) {
-				if (window.confirm("Bạn có chắc chắn muốn kích hoạt lại tài khoản này không?")) {
-				const result = employeeService.enableEmployee(employee.MaTK); // Kích hoạt lại
-				if (result) {
-					// setRecords(employeeService.getAllEmployees());
-
+          setNotify({
+            isOpen: true,
+            message: "Vô hiệu hóa thành công",
+            type: "error",
+          });
+        }
+      }
+    } else if (employee.active === false) {
+      if (
+        window.confirm(
+          "Bạn có chắc chắn muốn kích hoạt lại tài khoản này không?"
+        )
+      ) {
+        const result = employeeService.enableEmployee(employee.MaTK); // Kích hoạt lại
+        if (result) {
+          // setRecords(employeeService.getAllEmployees());
 
           setNotify({
             isOpen: true,
@@ -208,7 +213,11 @@ export default function Employees({ data }) {
 
   return (
     <>
-      <Header />
+      <PageHeader
+        title="Quản lý Nhân viên"
+        subTitle="Form design with validation"
+        icon={<PeopleAltIcon fontSize="large" />}
+      />
 
       <Paper className={classes.pageContent}>
         <Toolbar>

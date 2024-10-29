@@ -59,19 +59,24 @@ const Login = () => {
       setOpen(true);
 
       // Lưu token vào localStorage
-      localStorage.setItem("token", response.data.data.accessToken);
-      localStorage.setItem("loginSuccess", "true");
+      sessionStorage.setItem("token", response.data.data.accessToken);
+      sessionStorage.setItem("loginSuccess", "true");
       // Điều hướng sau khi đăng nhập thành công
-      if (response.data.data.role === "LT") {
-        console.log(response.data.data.role);
-        navigate("/Letan");
-      } else if (response.data.data.role === "BS") {
-        navigate("/Bacsi");
-      } else if (response.data.data.role === "IT") {
-        navigate("/quantri");
+      if (response.data.data.active === true) {
+        if (response.data.data.role === "LT") {
+          console.log(response.data.data.role);
+          navigate("/Letan");
+        } else if (response.data.data.role === "BS") {
+          navigate("/Bacsi");
+        } else if (response.data.data.role === "IT") {
+          navigate("/quantri");
+        }
       } else {
-        navigate("/*");
+        setSnackbarMessage("Tài khoản đã bị vô hiệu hóa !");
+        setSnackbarSeverity("error");
+        setOpen(true);
       }
+
       // navigate("/");
     } catch (error) {
       console.log(error);
