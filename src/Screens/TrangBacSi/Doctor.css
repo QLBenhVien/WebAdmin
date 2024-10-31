@@ -359,6 +359,21 @@ body {
   cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
   margin-left: 20px;
 }
+
+.page-button {
+  padding: 7px; /* Khoảng cách bên trong cho nút tra cứu */
+  background-color: #22668e; /* Màu nền cho nút tra cứu */
+  color: white; /* Màu chữ cho nút tra cứu */
+  border: none; /* Không có viền */
+  border-radius: 3px; /* Bo góc cho nút tra cứu */
+  cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
+}
+
+.pagination {
+  position: relative;
+  margin-left: 130px;
+}
+
 .link-xem {
   font-weight: bold; /* In đậm */
   color: rgb(19, 19, 20); /* Màu chữ */
@@ -662,4 +677,10 @@ body {
   text-align: left;
   border: 1px solid #ddd;
   font-weight: bold;
+}
+
+.schedule {
+  position:relative;
+  margin-left: 100px;
+  padding:30px;
 }

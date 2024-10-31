@@ -28,12 +28,12 @@ const ResultTesting = () => {
       });
 
       alert("Xuất phiếu thành công!");
-      navigate("/referrals");
+      navigate("/Bacsi/referrals");
     }
   };
 
   const handleClose = () => {
-    navigate("/referrals");
+    navigate("/Bacsi/referrals");
   };
 
   return (

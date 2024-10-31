@@ -32,7 +32,7 @@ const Prescribe = () => {
     if (confirmSave) {
       console.log("Data saved:", data);
       alert("Dữ liệu đã được lưu thành công!");
-      navigate("/examinationForm");
+      navigate("/Bacsi/examinationForm");
     } else {
       
     }

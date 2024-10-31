@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Doctor.css";
 import { useNavigate } from "react-router-dom";
+import dropdown from "../../images/Polygon 1.png";
 
 const PatientList = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -124,7 +125,7 @@ const PatientList = () => {
               <div className="dropdown-time">
                 <img
                   className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
-                  src="Polygon 1.png"
+                  src={dropdown}
                   alt="Doctor"
                   onClick={toggleDropdown}
                 />
