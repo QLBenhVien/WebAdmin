@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Doctor.css";
 import { useNavigate } from "react-router-dom";
+import search from "../../images/Search copy.png";
+import dropdown from "../../images/Polygon 1.png";
 
 const ExaminationForm = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -22,7 +24,7 @@ const ExaminationForm = () => {
     if (tinhTrang === "Chưa khám") {
       window.alert("Không có bệnh án cho bệnh nhân này.");
     } else {
-      navigate("/infoMedicalRecordsDetail");
+      navigate("/Bacsi/infoMedicalRecordsDetail");
     }
   };
 
@@ -105,13 +107,13 @@ const ExaminationForm = () => {
                 </a>  
               </div>
             <div className="patient-table-cell ma-hs">
-              <a href="/prescribe" className="link-xem">
+              <a href="/Bacsi/prescribe" className="link-xem">
                 Kê đơn
               </a>
               <span> |</span>
               <span>
                 {" "}
-                <a href="/prescribe" className="link-xem">
+                <a href="/Bacsi/prescribe" className="link-xem">
                   Sửa
                 </a>
               </span>
@@ -143,7 +145,7 @@ const ExaminationForm = () => {
               <div className="dropdown-time">
                 <img
                   className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
-                  src="Polygon 1.png"
+                  src={dropdown}
                   alt="Doctor"
                   onClick={toggleDropdown}
                 />
@@ -166,7 +168,7 @@ const ExaminationForm = () => {
               </div>
             </div>
             <div className="patient-filter-button2">
-              <img src="Search.png" alt="Doctor" />
+              <img src={search} alt="Doctor" />
               <input
                 placeholder="Nhập tên bệnh nhân"
                 style={{ border: "none", outline: "none" }}

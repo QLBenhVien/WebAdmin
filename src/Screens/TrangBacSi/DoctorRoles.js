@@ -26,6 +26,7 @@ import Prescribe from "../TrangBacSi/Prescribe";
 import NavBacSi from "../../components/NavBacSi";
 import Header from "./Header";
 import Profile from "./Profile";
+import Schedule from "./Schedule";
 // import Login from "../Login/Login";
 const DoctorRoles = () => {
   return (
@@ -52,6 +53,7 @@ const DoctorRoles = () => {
           <Route path="/patient-info" element={<PatientInfo />} />
           <Route path="/patientList" element={<PatientList />} />
           <Route path="/searchPatient" element={<SearchPatient />} />
+          <Route path="/schedule" element={<Schedule />} />
           <Route
             path="/medicalRecordsDetail"
             element={<MedicalRecordsDetails />}

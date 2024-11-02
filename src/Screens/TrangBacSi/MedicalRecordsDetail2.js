@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const MedicalRecordsDetails2 = () => {
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate("/infoMedicalRecordsDetail");
+    navigate("/Bacsi/infoMedicalRecordsDetail");
   };
   const data = [
     {

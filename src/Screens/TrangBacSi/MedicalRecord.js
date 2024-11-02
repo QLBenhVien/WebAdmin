@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./Doctor.css";
+import search from "../../images/Search copy.png";
+import dropdown from "../../images/Polygon 1.png";
 
 const MedicalRecord = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -71,7 +73,7 @@ const MedicalRecord = () => {
                 {patient.ngayKham}
               </div>
               <div className="patient-table-cell chi-tiet">
-                <a href="/infoMedicalRecordsDetail" className="link-xem">
+                <a href="/Bacsi/infoMedicalRecordsDetail" className="link-xem">
                   Xem
                 </a>
               </div>
@@ -104,7 +106,7 @@ const MedicalRecord = () => {
               <div className="dropdown-time">
                 <img
                   className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
-                  src="Polygon 1.png"
+                  src={dropdown}
                   alt="Doctor"
                   onClick={toggleDropdown}
                 />
@@ -127,7 +129,7 @@ const MedicalRecord = () => {
               </div>
             </div>
             <div className="patient-filter-button2">
-              <img src="Search.png" alt="Doctor" />
+              <img src={search} alt="Doctor" />
               <input
                 placeholder="Nhập tên bệnh nhân"
                 style={{ border: "none", outline: "none" }}

@@ -27,10 +27,10 @@ const NavBacSi = () => {
         <li
           style={{
             ...styles.sidebarItem,
-            backgroundColor: activeItem === "/Bacsi" ? "#FFFFFF" : "#578EAF",
-            color: activeItem === "/Bacsi" ? "#000000" : "#FFFFFF",
+            backgroundColor: activeItem === "/Bacsi/Bacsi" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/Bacsi/Bacsi" ? "#000000" : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/Bacsi")}
+          onClick={() => navigateTo("/Bacsi/Bacsi")}
         >
           Trang chủ
         </li>
@@ -79,6 +79,17 @@ const NavBacSi = () => {
           onClick={() => navigateTo("/Bacsi/patientList")}
         >
           Danh sách bệnh nhân
+        </li>
+        <li
+          style={{
+            ...styles.sidebarItem,
+            backgroundColor:
+              activeItem === "/Bacsi/schedule" ? "#FFFFFF" : "#578EAF",
+            color: activeItem === "/Bacsi/schedule" ? "#000000" : "#FFFFFF",
+          }}
+          onClick={() => navigateTo("/Bacsi/schedule")}
+        >
+          Đăng ký lịch làm việc
         </li>
       </ul>
     </div>
