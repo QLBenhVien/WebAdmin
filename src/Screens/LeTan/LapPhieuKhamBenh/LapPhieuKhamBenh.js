@@ -3,12 +3,15 @@ import logo from "../../../images/logo.png";
 import { useNavigate } from "react-router-dom";
 import departmentApi from "../../../api/departmentApi";
 import doctorApi from "../../../api/doctorApi";
+
 import receptionistApi from "../../../api/receptionistApi";
 import { useNotification } from "../../../context/NotificationContext"; // Import useNotification
 const ThongTinLapPhieu = () => {
   const navigate = useNavigate();
   const { showNotification } = useNotification();
   const [khoaList, setKhoaList] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(""); // Lưu trữ ngày đã chọn
+  const [selectedShift, setSelectedShift] = useState("");
   const [doctorList, setDoctorList] = useState([]);
   const [selectedKhoa, setSelectedKhoa] = useState("");
   const [patientInfo, setPatientInfo] = useState({
@@ -58,14 +61,57 @@ const ThongTinLapPhieu = () => {
       MaKhoa: khoaId, // Thêm mã khoa
       MaBS: "", // Reset MaBS khi chọn khoa mới
     });
-
-    try {
-      const response = await doctorApi.getListDoctorByDepartmentId(khoaId);
-      setDoctorList(response.data.data);
-    } catch (error) {
-      console.error("Lỗi khi tải danh sách bác sĩ:", error);
-    }
+    setDoctorList([]);
   };
+
+  const handleDateChange = (e) => {
+    const selected = e.target.value;
+    setSelectedDate(selected);
+
+    // Cập nhật NgayDatKham trong patientInfo
+    setPatientInfo({
+      ...patientInfo,
+      NgayDatKham: selected,
+    });
+    setDoctorList([]);
+  };
+  const handleShiftChange = (e) => {
+    const shift = e.target.value;
+    setSelectedShift(shift);
+
+    // Cập nhật CaKham trong patientInfo
+    setPatientInfo({
+      ...patientInfo,
+      CaKham: shift,
+    });
+
+    // Reset danh sách bác sĩ khi thay đổi ca
+    setDoctorList([]);
+  };
+
+  useEffect(() => {
+    if (selectedKhoa && selectedDate && selectedShift) {
+      const fetchDoctorList = async () => {
+        try {
+          const response = await doctorApi.listAvailableDoctors(
+            selectedKhoa,
+            selectedDate,
+            selectedShift
+          );
+          setDoctorList(response.data.data);
+        } catch (error) {
+          console.error("Lỗi khi tải danh sách bác sĩ:", error);
+        }
+      };
+      fetchDoctorList();
+    }
+  }, [selectedKhoa, selectedDate, selectedShift]);
+  // try {
+  //   const response = await doctorApi.getListDoctorByDepartmentId(khoaId);
+  //   setDoctorList(response.data.data);
+  // } catch (error) {
+  //   console.error("Lỗi khi tải danh sách bác sĩ:", error);
+  // }
 
   const handleDoctorChange = (e) => {
     const doctorId = e.target.value;
@@ -209,6 +255,32 @@ const ThongTinLapPhieu = () => {
                     ))}
                   </select>
                 </div>
+                <div>
+                  <label style={styles.label}>Ngày khám</label>
+                  <div style={styles.dateContainer}>
+                    <input
+                      style={styles.input}
+                      type="date"
+                      name="NgayDatKham"
+                      value={patientInfo.NgayDatKham}
+                      onChange={handleDateChange}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label style={styles.label}>Ca khám</label>
+                  <select
+                    style={styles.select}
+                    name="CaKham"
+                    value={patientInfo.CaKham}
+                    onChange={handleShiftChange}
+                  >
+                    <option value="-1">Chọn ca khám</option>
+                    <option value="1">Ca 1</option>
+                    <option value="2">Ca 2</option>
+                  </select>
+                </div>
                 <div style={styles.fullWidth}>
                   <label style={styles.label}>Tên bác sĩ</label>
                   <select
@@ -224,31 +296,7 @@ const ThongTinLapPhieu = () => {
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label style={styles.label}>Ngày khám</label>
-                  <div style={styles.dateContainer}>
-                    <input
-                      style={styles.input}
-                      type="date"
-                      name="NgayDatKham"
-                      value={patientInfo.NgayDatKham}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label style={styles.label}>Ca khám</label>
-                  <select
-                    style={styles.select}
-                    name="CaKham"
-                    value={patientInfo.CaKham}
-                    onChange={handleInputChange}
-                  >
-                    <option value="-1">Chọn ca khám</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                </div>
+
                 <div style={styles.fullWidth}>
                   <label style={styles.label}>Triệu chứng</label>
                   <input
@@ -275,6 +323,7 @@ const ThongTinLapPhieu = () => {
     </div>
   );
 };
+
 const styles = {
   buttonContainer: {
     display: "flex",

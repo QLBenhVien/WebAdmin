@@ -2,17 +2,33 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import receptionistApi from "../../../api/receptionistApi";
 import dayjs from "dayjs";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import PaymentPage from "../../Payment/PaymentPage";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 // DanhSachBenhNhan component
 const DanhSachBenhNhan = () => {
   const navigate = useNavigate();
-
+  const [totalUSD, setTotalUSD] = useState(0);
   const [xemdatkhams, setxemdatkhams] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
   const fetchData = async () => {
     try {
       const response = await receptionistApi.listAppointment();
@@ -61,7 +77,17 @@ const DanhSachBenhNhan = () => {
   );
 
   const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
-
+  const [open, setOpen] = React.useState(false);
+  const handlePaymentOpen = async (appointmentId) => {
+    setSelectedAppointmentId(appointmentId); // Lưu ID đơn hàng
+    const response = await receptionistApi.paymentForExamination(appointmentId);
+    if (response.data?.code == 200) {
+      setTotalUSD(response.data?.data.totalAmountUSD);
+      handleOpen(); // Mở modal
+    }
+  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div style={styles.homePage}>
       <div style={styles.content}>
@@ -127,7 +153,9 @@ const DanhSachBenhNhan = () => {
                           </span>
                         ) : (
                           <span style={{ color: "green", fontWeight: "700" }}>
-                            Đã khám
+                            {xemdatkham?.MaHoaDon?.TrangThaiThanhToan != null
+                              ? xemdatkham?.MaHoaDon.TrangThaiThanhToan
+                              : "Đã khám"}
                           </span>
                         )}
                       </td>
@@ -142,6 +170,59 @@ const DanhSachBenhNhan = () => {
                         >
                           Xem
                         </button>
+                        {xemdatkham.TrangThai && xemdatkham?.MaHoaDon?.TrangThaiThanhToan != "Đã Thanh Toán" && (
+                          <>
+                            <Modal
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              {/* <Box sx={style}>
+                                <Typography
+                                  id="modal-modal-title"
+                                  variant="h6"
+                                  component="h2"
+                                >
+                                  Text in a modal
+                                </Typography>
+                                <Typography
+                                  id="modal-modal-description"
+                                  sx={{ mt: 2 }}
+                                >
+                                  Duis mollis, est non commodo luctus, nisi erat
+                                  porttitor ligula.
+                                </Typography>
+                              </Box> */}
+                              <Box
+                                sx={{
+                                  ...style,
+                                  width: 600,
+                                  maxHeight: "90vh",
+                                  overflowY: "auto",
+                                }}
+                              >
+                                <Typography
+                                  id="modal-modal-title"
+                                  variant="h6"
+                                  component="h2"
+                                >
+                                  Thanh toán
+                                </Typography>
+                                <PaymentPage
+                                  appointmentId={selectedAppointmentId}
+                                  totalAmountUSD={totalUSD}
+                                />
+                              </Box>
+                            </Modal>
+                            <button
+                              style={styles.actionButton}
+                              onClick={() => handlePaymentOpen(xemdatkham._id)}
+                            >
+                              Thanh toán
+                            </button>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))}

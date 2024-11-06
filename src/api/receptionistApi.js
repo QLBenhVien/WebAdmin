@@ -15,6 +15,11 @@ const receptionistApi = {
       console.error("Error creating appointment:", error);
       throw error;
     }
-  }
+  },
+  paymentForExamination: async (appointmentId) => {
+    const url = `receptionist/paymentForExamination/${appointmentId}`;
+    const response = await axiosInstance.get(url);
+    return response;
+  } 
 };
 export default receptionistApi;

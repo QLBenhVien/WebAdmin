@@ -7,6 +7,7 @@ import LeTanRoles from "./Screens/LeTan/LeTanRoles";
 import DoctorRoles from "./Screens/TrangBacSi/DoctorRoles";
 import QuanTriRoles from "./Screens/QuanTri/QuanTriRoles";
 import Notfound from "./Screens/NotFound/Notfound";
+import PaymentPage from "./Screens/Payment/PaymentPage";
 
 const App = () => {
   return (
@@ -17,6 +18,8 @@ const App = () => {
         <Route path="/Bacsi/*" element={<DoctorRoles />} />
         <Route path="/QuanTri/*" element={<QuanTriRoles />} />
         <Route path="/*" element={<Notfound />} />
+        <Route path="/payment" element={<PaymentPage />} />
+
       </Routes>
     </div>
   );
