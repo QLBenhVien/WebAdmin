@@ -31,6 +31,7 @@ const ThongTinLapPhieu = () => {
         setKhoaList(response.data.data);
       } catch (error) {
         console.error("Lỗi khi tải danh sách khoa:", error);
+        showNotification("Lỗi khi tải danh sách khoa", "error");
       }
     };
     fetchKhoaList();

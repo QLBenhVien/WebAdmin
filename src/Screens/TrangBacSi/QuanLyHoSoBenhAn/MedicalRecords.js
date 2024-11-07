@@ -62,7 +62,7 @@ const MedicalRecords = () => {
           </div>
           <div style={styles.pageContainer}>
             <div style={styles.pageHeader}>
-              <div style={styles.pageTitleLeft}>DANH SÁCH HỒ SƠ BỆNH ÁN</div>
+              <div style={styles.pageTitleLeft}>DANH SÁCH BỆNH NHÂN</div>
               <div style={styles.pageTitleRight}>
                 Quản lý / Danh sách hồ sơ bệnh án
               </div>
@@ -94,7 +94,9 @@ const MedicalRecords = () => {
                     <td style={styles.td}>
                       <button
                         style={styles.actionButton}
-                        onClick={() => navigateTo("/patient-info")}
+                        onClick={() =>
+                          navigateTo("/medicalRecord/patient-info")
+                        }
                       >
                         Xem
                       </button>{" "}

@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Doctor.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useNotification } from "../../context/NotificationContext";
+import axiosInstance from "../../Axios/axios";
+import { set } from "date-fns";
 
 const Prescribe = () => {
+  const { showNotification } = useNotification();
+  const { id } = useParams();
+
   const navigate = useNavigate();
   const [status, setStatus] = useState("chưa khám");
   const [data, setData] = useState([
     { stt: 1, name: "", unit: "", quantity: "", dosage: "" },
   ]);
-
+  const [benhnhan, setBenhnhan] = useState({});
+  // const [symptoms, setSymptoms] = useState("");
+  // const [diagnosis, setDiagnosis] = useState("");
+  // const [doctorNotes, setDoctorNotes] = useState("");
+  // const [thuoc, setThuoc] = useState([]);
   const handleInputChange = (index, field, value) => {
     const updatedData = [...data];
     updatedData[index][field] = value;
     setData(updatedData);
+    console.log(data);
   };
 
   const handleAddRow = () => {
@@ -27,16 +38,58 @@ const Prescribe = () => {
   };
 
   const handleSave = () => {
-    const confirmSave = window.confirm("Bạn có muốn lưu lại những thay đổi không?");
-    
+    const confirmSave = window.confirm(
+      "Bạn có muốn lưu lại những thay đổi không?"
+    );
     if (confirmSave) {
       console.log("Data saved:", data);
       alert("Dữ liệu đã được lưu thành công!");
-      navigate("/Bacsi/examinationForm");
-    } else {
-      
+      // navigate("/Bacsi/examinationForm");
     }
   };
+
+  const fetchData = async () => {
+    try {
+      const res = await axiosInstance.get(`/doctor/detailPhieukham/${id}`);
+      setBenhnhan(res.data.data.detail); // Updated this line
+      console.log("Patient data:", res.data.data.detail);
+      if (Array.isArray(res.data.data.detail.Thuoc)) {
+        const thuoc = res.data.data.detail.Thuoc;
+        const newData = thuoc.map((item, index) => ({
+          stt: index + 1,
+          name: item.MaThuoc?.tenthuoc || "",
+          unit: item.DVT,
+          quantity: item.SoLuong,
+          dosage: item.Cachdung,
+        }));
+        setData(newData);
+      } else {
+        setData([]);
+      }
+      console.log(data, "data thuoc");
+    } catch (error) {
+      console.log(error);
+      showNotification("Lỗi khi lấy dữ liệu bệnh nhân", "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // const [goiy, setGoiy] = useState([]);
+  // const fetchGoiy = async (ten) => {
+  //   try {
+  //     const res = await axiosInstance.get(`doctor/thuoc/${ten}`);
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchGoiy();
+  // }, [data]);
 
   return (
     <div className="outer">
@@ -44,7 +97,12 @@ const Prescribe = () => {
         <div className="patient-header-title">PHIẾU KHÁM BỆNH</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/examinationForm">Phiếu khám bệnh </a> / </strong>
+            <strong>
+              <a className="link-xem" href="/examinationForm">
+                Phiếu khám bệnh{" "}
+              </a>{" "}
+              /{" "}
+            </strong>
           </span>
           <span className="patient-breadcrumb-secondary">Phiếu khám bệnh</span>
         </div>
@@ -55,22 +113,22 @@ const Prescribe = () => {
           <div style={styles.infoSection}>
             <h2 style={styles.sectionTitle}>Thông tin bệnh nhân</h2>
             <p>
-              <strong>Mã bệnh nhân:</strong> 0000000
+              <strong>Mã bệnh nhân:</strong> {benhnhan.MaBenhNhan?._id}
             </p>
             <p>
-              <strong>Họ và Tên:</strong> Nguyễn Thị Ngọc Hoài
+              <strong>Họ và Tên:</strong> {benhnhan.MaBenhNhan?.Ten}
             </p>
             <p>
-              <strong>Ngày sinh:</strong> 20/10/2004
+              <strong>Ngày sinh:</strong> {benhnhan.MaBenhNhan?.NgaySinh}
             </p>
             <p>
-              <strong>Địa chỉ:</strong> Nguyễn Thái Sơn, Phường 5, Gò Vấp
+              <strong>Địa chỉ:</strong> {benhnhan.MaBenhNhan?.DiaChi}
             </p>
             <p>
-              <strong>Giới tính:</strong> Nữ
+              <strong>Giới tính:</strong> {benhnhan.MaBenhNhan?.GioiTinh}
             </p>
             <p>
-              <strong>SDT:</strong> 0987967497
+              <strong>SDT:</strong> {benhnhan.MaBenhNhan?.SDT}
             </p>
           </div>
         </div>
@@ -80,27 +138,47 @@ const Prescribe = () => {
         <div style={styles.formGroup}>
           <div style={styles.label}>Triệu chứng</div>
           <div style={styles.inputContainer}>
-            <input type="text" style={styles.inputField} />
+            <input
+              type="text"
+              style={styles.inputField}
+              value={benhnhan.TrieuChung}
+              onChange={(e) =>
+                setBenhnhan({ ...benhnhan, TrieuChung: e.target.value })
+              }
+            />
           </div>
         </div>
 
         <div style={styles.formGroup}>
           <div style={styles.label}>Chuẩn đoán</div>
           <div style={styles.inputContainer}>
-            <input type="text" style={styles.inputField} />
+            <input
+              type="text"
+              style={styles.inputField}
+              value={benhnhan.ChanDoan}
+              onChange={(e) =>
+                setBenhnhan({ ...benhnhan, ChanDoan: e.target.value })
+              }
+            />
           </div>
         </div>
 
         <div style={styles.formGroup}>
           <div style={styles.label}>Lời dặn của bác sĩ</div>
           <div style={styles.inputContainer}>
-            <input type="text" style={styles.inputField} />
+            <input
+              type="text"
+              style={styles.inputField}
+              value={benhnhan.LoiDan}
+              onChange={(e) =>
+                setBenhnhan({ ...benhnhan, LoiDan: e.target.value })
+              }
+            />
           </div>
         </div>
 
         <div style={styles.infoSection}>
           <h2 style={styles.sectionTitle}>Kê thuốc</h2>
-
           <table className="medication-table2">
             <thead>
               <tr className="medication-header">
@@ -113,55 +191,81 @@ const Prescribe = () => {
             </thead>
             <tbody>
               {data.map((item, index) => (
-                <React.Fragment key={item.stt}>
-                  <tr className="medication-row">
-                    <td>{item.stt}</td>
-                    <td>
-                      <input
-                        type="text"
-                        value={item.name}
-                        style={{ border: "none", outline: "none" }}
-                        onChange={(e) => handleInputChange(index, "name", e.target.value)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        value={item.unit}
-                        style={{ border: "none", outline: "none" }}
-                        onChange={(e) => handleInputChange(index, "unit", e.target.value)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        value={item.quantity}
-                        style={{ border: "none", outline: "none" }}
-                        onChange={(e) => handleInputChange(index, "quantity", e.target.value)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        value={item.dosage}
-                        style={{ border: "none", outline: "none" }}
-                        onChange={(e) => handleInputChange(index, "dosage", e.target.value)}
-                      />
-                    </td>
-                  </tr>
-                </React.Fragment>
+                <tr className="medication-row" key={index}>
+                  <td>{item.stt}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={item.name}
+                      style={{ border: "none", outline: "none" }}
+                      onChange={(e) =>
+                        handleInputChange(index, "name", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={item.unit}
+                      style={{ border: "none", outline: "none" }}
+                      onChange={(e) =>
+                        handleInputChange(index, "unit", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={item.quantity}
+                      style={{ border: "none", outline: "none" }}
+                      onChange={(e) =>
+                        handleInputChange(index, "quantity", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={item.dosage}
+                      style={{ border: "none", outline: "none" }}
+                      onChange={(e) =>
+                        handleInputChange(index, "dosage", e.target.value)
+                      }
+                    />
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
-
-          <button onClick={handleAddRow} className="add-row-button">
-            Thêm hàng
-          </button>
+          {!benhnhan.TrangThai && (
+            <button
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                fontSize: "1.5rem",
+                color: "blueviolet",
+                cursor: "pointer",
+              }}
+              onClick={handleAddRow}
+            >
+              +
+            </button>
+          )}
         </div>
       </div>
 
       <div className="patient-list-search-filter2">
-        <div onClick={handleSave} className="patient-search-buttonn">Lưu</div>
+        <div style={{ display: "flex" }}>
+          <div onClick={() => navigate(-1)} className="patient-search-buttonn">
+            Quay lại
+          </div>
+
+          {!benhnhan.TrangThai && (
+            <div onClick={handleSave} className="patient-search-buttonn">
+              Kết thúc khám{" "}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -204,8 +308,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     background: "white",
-    borderRadius: 7,
-    border: "1px solid black",
+    borderBottom: "1px solid #ccc",
     padding: "4px 13px",
     width: 723,
     height: 30,

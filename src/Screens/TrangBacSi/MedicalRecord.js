@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Doctor.css";
 import search from "../../images/Search copy.png";
 import dropdown from "../../images/Polygon 1.png";
+
+import { useNotification } from "../../context/NotificationContext";
+import axiosInstance from "../../Axios/axios";
 
 const MedicalRecord = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sortOption, setSortOption] = useState("Ngày khám gần nhất");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const showNotification = useNotification();
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -17,39 +21,32 @@ const MedicalRecord = () => {
     setSortOption(option);
     setDropdownOpen(false);
   };
+  const [patientData, setPatientData] = useState([]);
+  const fetchData = async () => {
+    try {
+      const res = await axiosInstance.get("/doctor/getAllhoso");
+      console.log(res);
+      setPatientData(res.data.data);
+    } catch (error) {
+      showNotification("Lỗi tải trang, vui lòng truy cập lại!", "error");
+    }
+  };
 
-  const patientData = [
-    {
-      id: 1,
-      maHs: "0000000",
-      tenBenhNhan: "Nguyễn Văn A",
-      ngayKham: "2024-09-03", 
-    },
-    {
-      id: 2,
-      maHs: "0000001",
-      tenBenhNhan: "Trần Thị B",
-      ngayKham: "2024-09-04",
-    },
-    {
-      id: 3,
-      maHs: "0000002",
-      tenBenhNhan: "Lê Văn C",
-      ngayKham: "2024-09-05",
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const filteredPatients = patientData
-    .filter((patient) =>
-      patient.tenBenhNhan.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => {
-      if (sortOption === "Ngày khám gần nhất") {
-        return new Date(b.ngayKham) - new Date(a.ngayKham); 
-      } else {
-        return new Date(a.ngayKham) - new Date(b.ngayKham); 
-      }
-    });
+  const filteredPatients = patientData;
+  // .filter((patient) =>
+  //   patient.tenBenhNhan.toLowerCase().includes(searchQuery.toLowerCase())
+  // )
+  // .sort((a, b) => {
+  //   if (sortOption === "Ngày khám gần nhất") {
+  //     return new Date(b.ngayKham) - new Date(a.ngayKham);
+  //   } else {
+  //     return new Date(a.ngayKham) - new Date(b.ngayKham);
+  //   }
+  // });
 
   const PatientTable = () => {
     return (
@@ -63,17 +60,18 @@ const MedicalRecord = () => {
         </div>
         <div className="patient-table">
           {filteredPatients.map((patient, index) => (
-            <div className="patient-table-row" key={patient.id}>
+            <div className="patient-table-row" key={patient._id}>
               <div className="patient-table-cell stt">{index + 1}</div>
-              <div className="patient-table-cell ma-hs">{patient.maHs}</div>
+              <div className="patient-table-cell ma-hs">{patient._id}</div>
               <div className="patient-table-cell ten-benh-nhan">
-                {patient.tenBenhNhan}
+                {patient.MaBenhNhan.Ten}
               </div>
-              <div className="patient-table-cell ngay-kham">
-                {patient.ngayKham}
-              </div>
+              <div className="patient-table-cell ngay-kham">"Chua kham"</div>
               <div className="patient-table-cell chi-tiet">
-                <a href="/Bacsi/infoMedicalRecordsDetail" className="link-xem">
+                <a
+                  href={`/Bacsi/medicalRecord/infoMedicalRecordsDetail/${patient.MaBenhNhan._id}`}
+                  className="link-xem"
+                >
                   Xem
                 </a>
               </div>
@@ -87,10 +85,15 @@ const MedicalRecord = () => {
   return (
     <div className="outer">
       <div className="patient-header">
-        <div className="patient-header-title">DANH SÁCH HỒ SƠ BỆNH ÁN</div>
+        <div className="patient-header-title">DANH SÁCH BỆNH NHÂN</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/medicalRecord">Hồ sơ bệnh án </a> / </strong>
+            <strong>
+              <a className="link-xem" href="/medicalRecord">
+                Hồ sơ bệnh án{" "}
+              </a>{" "}
+              /{" "}
+            </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Danh sách hồ sơ bệnh án
