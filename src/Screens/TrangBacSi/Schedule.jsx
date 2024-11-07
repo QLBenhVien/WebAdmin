@@ -1,35 +1,82 @@
 import React, { useState, useEffect } from "react";
 import "./Doctor.css";
-import dropdown from "../../images/Polygon 1.png";
+import { useNotification } from "../../context/NotificationContext";
+import Axios from "../../Axios/axios";
 
 const Schedule = () => {
+  const { showNotification } = useNotification();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sortOption, setSortOption] = useState("Tất cả ngày");
   const [currentPage, setCurrentPage] = useState(0);
-  const doctorName = "Đã đăng ký"; // Replace with logged-in doctor's name
-  const daysPerPage = 6;
+  const [lichLam, setLichLam] = useState([]); // To store the doctor's schedule
 
-  // Generate schedule data for the next 12 months (52 weeks)
-  const [initialScheduleData] = useState(() => {
-    const startDate = new Date(2024, 10, 1); // Start from November 1, 2024
-    return Array.from({ length: 365 }, (_, dayIndex) => { // Total of 365 days
-      const date = new Date(startDate);
-      date.setDate(startDate.getDate() + dayIndex);
-      return { date, ca1: null, ca2: null };
-    });
-  });
+  // Fetch the schedule and doctor info (MaNV) from the backend
+  const fetchData = async () => {
+    try {
+      const res = await Axios.get(`/doctor/lichlam`);
+      console.log(res)
+      const fetchedData = res.data.danhsachkham.map((item) => ({
+        ...item,
+        NgayKham: new Date(item.NgayKham),
+      }));
+      setLichLam(fetchedData);
 
-  const [scheduleData, setScheduleData] = useState(initialScheduleData);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+      // Set MaNV (doctor's ID) from the API response, assuming it is available in the response
+    
+    } catch (error) {
+      console.error("Failed to fetch schedule:", error);
+      showNotification("Đã xảy ra lỗi khi tải lịch làm việc", "error");
+    }
   };
 
-  const handleSortChange = (option) => {
-    setSortOption(option);
-    setDropdownOpen(false);
-  };
+  // Fetch the schedule when the component is mounted
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const handleClick = async (dayIndex, ca) => {
+    const currentDay = getNext6Days()[dayIndex];
+    const NgayKham = currentDay.toISOString().split("T")[0]; // Convert to YYYY-MM-DD format
+    const shift = ca === "ca1" ? 1 : 2;
+  
+    try {
+      // Tiến hành gọi API để đăng ký ca làm việc
+      const response = await Axios.put("/doctor/themlichlam", {
+        NgayKham,
+        Ca: shift, // Ca là 1 hoặc 2
+      });
+  
+      if (response.status === 200) {
+        // Kiểm tra thông báo từ server
+        if (response.data.message === "Đăng ký lịch khám thành công") {
+          // Nếu đăng ký thành công
+          showNotification(
+            `Đăng ký ca ${ca === "ca1" ? "Ca 1" : "Ca 2"} vào ngày ${formatDate(currentDay)} thành công!`,
+            "success"
+          );
+  
+          // Cập nhật danh sách ca đã đăng ký
+          setLichLam((prevLichLam) => [
+            ...prevLichLam,
+            { NgayKham: currentDay, Ca: shift, status: "Đã đăng ký" }, // Đã đăng ký
+          ]);
+        } else if (response.data.message === "Ca này đã được đăng ký trước đó") {
+          // Nếu ca đã đăng ký rồi
+          showNotification(
+            `${ca === "ca1" ? "Ca 1" : "Ca 2"} vào ngày ${formatDate(currentDay)} đã được đăng ký, không thể chuyển về Đăng ký!`,
+            "error"
+          );
+        }
+      } else {
+        showNotification("Ca này đã được đăng ký", "error");
+      }
+    } catch (error) {
+      console.error("Error registering shift", error);
+      showNotification("Ca này đã được đăng ký", "error");
+    }
+  };
+  
+  
   const formatDate = (date) => {
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -37,45 +84,26 @@ const Schedule = () => {
     return `${day}/${month}/${year}`;
   };
 
-  const getDaysForPage = () => {
-    // Return only 6 days for the current page
-    return scheduleData.slice(currentPage * daysPerPage, (currentPage + 1) * daysPerPage);
+  // Get the next 6 days starting from tomorrow
+  const getNext6Days = () => {
+    const days = [];
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() + 1); // Start from tomorrow
+
+    for (let i = 0; i < 6; i++) {
+      days.push(new Date(startDate));
+      startDate.setDate(startDate.getDate() + 1);
+    }
+
+    return days;
   };
 
-  const handleClick = (dayIndex, ca) => {
-    const dayGlobalIndex = currentPage * daysPerPage + dayIndex;
-    setScheduleData((prevData) =>
-      prevData.map((day, index) =>
-        index === dayGlobalIndex
-          ? { ...day, [ca]: day[ca] ? null : doctorName }
-          : day
-      )
+  // Check if a shift is registered for a specific day
+  const getScheduleForDay = (date, ca) => {
+    const scheduleForDay = lichLam.find(
+      (entry) => entry.NgayKham.toDateString() === date.toDateString() && entry.Ca === ca
     );
-  };
-
-  useEffect(() => {
-    const now = new Date();
-    const filteredData = scheduleData.filter((day) => day.date > now);
-    setScheduleData(filteredData);
-  }, []);
-
-  const handleRegister = () => {
-    const confirmed = window.confirm("Bạn có chắc là muốn đăng ký lịch?");
-    if (confirmed) {
-      // Lưu lịch ở đây
-      alert("Lịch đã được lưu thành công!");
-    }
-  };
-
-  const handleClearSchedule = () => {
-    const confirmed = window.confirm("Bạn có chắc là muốn xóa hết lịch đăng ký?");
-    if (confirmed) {
-      // Reset the scheduleData to remove all registrations
-      setScheduleData((prevData) =>
-        prevData.map((day) => ({ ...day, ca1: null, ca2: null }))
-      );
-      alert("Tất cả lịch đã được xóa!");
-    }
+    return scheduleForDay ? "Đã đăng ký" : "Đăng ký";
   };
 
   return (
@@ -91,86 +119,58 @@ const Schedule = () => {
               /
             </strong>
           </span>
-          <span className="patient-breadcrumb-secondary">Đăng ký lịch làm việc</span>
+          <span className="patient-breadcrumb-secondary"> Đăng ký lịch làm việc</span>
         </div>
       </div>
       <div className="container2">
         <div className="patient-container">
           <div className="patient-list-search-filter">
-            <div className="patient-sort-by">Sắp xếp theo:</div>
-            <div className="patient-filter-button">
-              {sortOption}
-              <div className="dropdown-time">
-                <img
-                  className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
-                  src={dropdown}
-                  alt="Doctor"
-                  onClick={toggleDropdown}
-                />
-                {dropdownOpen && (
-                  <div className="dropdown-menuTime show">
-                    <button
-                      className="dropdown-itemTime"
-                      onClick={() => handleSortChange("Tất cả ngày")}
-                    >
-                      Tất cả ngày
-                    </button>
-                    <button
-                      className="dropdown-itemTime"
-                      onClick={() => handleSortChange("Đã đăng ký")}
-                    >
-                      Đã đăng ký
-                    </button>
-                    <button
-                      className="dropdown-itemTime"
-                      onClick={() => handleSortChange("Chưa đăng ký")}
-                    >
-                      Chưa đăng ký
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
+            <div className="patient-header-title2">Lịch làm của bác sĩ</div>
+
+          </div>
+          <div className="patient-list-search-filter">
+          <div className="luuY">Lưu ý:</div>
+          <div className="patient-header-title3">Chỉ được đăng ký 1 lần và không được hủy!</div>
           </div>
           <div className="schedule">
             <table border="1" cellPadding="10">
               <thead>
                 <tr>
                   <th>Thời gian</th>
-                  {getDaysForPage().map((day, index) => (
-                    <th key={index}>{formatDate(day.date)}</th>
+                  {getNext6Days().map((day, index) => (
+                    <th key={index}>{formatDate(day)}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Ca 1 (7:30 - 11:00)</td>
-                  {getDaysForPage().map((day, dayIndex) => (
+                  {getNext6Days().map((day, dayIndex) => (
                     <td key={dayIndex}>
                       <a
+                        onClick={() => handleClick(dayIndex, "ca1")}
                         style={{
                           ...styles.link,
-                          color: day.ca1 ? "green" : styles.link.color,
+                          color: getScheduleForDay(day, 1) === "Đã đăng ký" ? "green" : styles.link.color,
                         }}
-                        onClick={() => handleClick(dayIndex, "ca1")}
                       >
-                        {day.ca1 || "Đăng ký"}
+                        {getScheduleForDay(day, 1)}
                       </a>
                     </td>
                   ))}
                 </tr>
                 <tr>
                   <td>Ca 2 (13:30 - 17:00)</td>
-                  {getDaysForPage().map((day, dayIndex) => (
+                  {getNext6Days().map((day, dayIndex) => (
                     <td key={dayIndex}>
                       <a
+                        onClick={() => handleClick(dayIndex, "ca2")}
                         style={{
                           ...styles.link,
-                          color: day.ca2 ? "green" : styles.link.color,
+                          color: getScheduleForDay(day, 2) === "Đã đăng ký" ? "green" : styles.link.color,
                         }}
-                        onClick={() => handleClick(dayIndex, "ca2")}
                       >
-                        {day.ca2 || "Đăng ký"}
+                        {getScheduleForDay(day, 2)}
                       </a>
                     </td>
                   ))}
@@ -178,38 +178,11 @@ const Schedule = () => {
               </tbody>
             </table>
           </div>
-          <div className="pagination">
-            <button
-              className="page-button"
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
-              disabled={currentPage === 0}
-            >
-              Trước
-            </button>
-            <span> Trang {currentPage + 1} </span>
-            <button
-              className="page-button"
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={(currentPage + 1) * daysPerPage >= scheduleData.length}
-            >
-              Sau
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="patient-list-search-filter2">
-        <div className="patient-search-buttonn" onClick={handleRegister}>
-          Đăng ký
-        </div>
-        <div className="patient-search-buttonn" onClick={handleClearSchedule}>
-          Xóa
         </div>
       </div>
     </div>
   );
 };
-
-export default Schedule;
 
 const styles = {
   link: {
@@ -218,3 +191,5 @@ const styles = {
     cursor: "pointer",
   },
 };
+
+export default Schedule;

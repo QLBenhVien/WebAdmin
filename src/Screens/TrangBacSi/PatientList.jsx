@@ -31,26 +31,26 @@ const PatientList = () => {
   };
 
 
-  const patientData = [
-    {
-      id: 1,
-      maHs: "0000000",
-      tenBenhNhan: "Nguyễn Văn A",
-      ngayKham: "03/09/2024",
-    },
-    {
-      id: 2,
-      maHs: "0000001",
-      tenBenhNhan: "Trần Thị B",
-      ngayKham: "04/09/2024",
-    },
-    {
-      id: 3,
-      maHs: "0000002",
-      tenBenhNhan: "Lê Văn C",
-      ngayKham: "05/09/2024",
-    },
-  ];
+      const patientData = [
+        {
+          id: 1,
+          maHs: "0000000",
+          tenBenhNhan: "Nguyễn Văn A",
+          ngayKham: "03/09/2024",
+        },
+        {
+          id: 2,
+          maHs: "0000001",
+          tenBenhNhan: "Trần Thị B",
+          ngayKham: "04/09/2024",
+        },
+        {
+          id: 3,
+          maHs: "0000002",
+          tenBenhNhan: "Lê Văn C",
+          ngayKham: "05/09/2024",
+        },
+      ];
   const filteredPatients = patientData
   .sort((a, b) => {
     if (sortOption === "Ngày khám gần nhất") {
