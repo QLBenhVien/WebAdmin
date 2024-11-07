@@ -21,12 +21,9 @@ body {
 }
 
 .hospital-name-pdf {
-  display:none;
+  display: none;
   margin-left: 365px;
 }
-
-
-
 
 .overlay {
   position: fixed;
@@ -111,7 +108,7 @@ body {
   width: 100%;
   height: 5rem;
   background: white;
-  position: relative;
+  /* position: relative; */
 }
 
 .doctor-info {
@@ -332,7 +329,7 @@ body {
   padding: 5px 10px; /* Khoảng cách bên trong cho nút lọc */
   border-radius: 10px; /* Bo góc cho nút lọc */
   border: 1px solid #000000; /* Viền cho nút lọc */
-  margin-left: 25.5rem;
+  /* margin-left: 25.5rem; */
   position: absolute;
   width: 45%;
 }
@@ -666,7 +663,6 @@ body {
 
 .medication-row td {
   padding: 10px;
-  text-align: center;
   border: 1px solid #ddd;
   font-weight: bold;
 }
@@ -680,7 +676,17 @@ body {
 }
 
 .schedule {
-  position:relative;
+  position: relative;
   margin-left: 100px;
-  padding:30px;
+  padding: 30px;
+}
+/* goi y */
+
+.suggestion-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-list li:hover {
+  background-color: #f0f0f0;
 }

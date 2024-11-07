@@ -44,13 +44,16 @@ const DoctorRoles = () => {
       <div style={{ flexBasis: "80%" }}>
         <Header />
         <Routes>
-          <Route path="/prescribe" element={<Prescribe />} />
+          <Route
+            path="/examinationForm/prescribe/:id"
+            element={<Prescribe />}
+          />
           <Route path="/resultTesting" element={<ResultTesting />} />
           <Route path="/medical-records" element={<MedicalRecords />} />
           <Route path="/prescription" element={<Prescription />} />
           <Route path="/Bacsi" element={<DoctorPage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/patient-info" element={<PatientInfo />} />
+          <Route path="/medicalRecord/patient-info" element={<PatientInfo />} />
           <Route path="/patientList" element={<PatientList />} />
           <Route path="/searchPatient" element={<SearchPatient />} />
           <Route path="/schedule" element={<Schedule />} />
@@ -63,7 +66,7 @@ const DoctorRoles = () => {
             element={<MedicalRecordsDetails2 />}
           />
           <Route
-            path="/infoMedicalRecordsDetail"
+            path="/medicalRecord/infoMedicalRecordsDetail/:id"
             element={<InfoMedicalRecords />}
           />
           <Route path="/referrals" element={<Referrals />} />
