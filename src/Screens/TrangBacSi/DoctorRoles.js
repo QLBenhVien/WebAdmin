@@ -51,7 +51,7 @@ const DoctorRoles = () => {
           <Route path="/resultTesting" element={<ResultTesting />} />
           <Route path="/medical-records" element={<MedicalRecords />} />
           <Route path="/prescription" element={<Prescription />} />
-          <Route path="/Bacsi" element={<DoctorPage />} />
+          <Route path="/home" element={<DoctorPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/medicalRecord/patient-info" element={<PatientInfo />} />
           <Route path="/patientList" element={<PatientList />} />

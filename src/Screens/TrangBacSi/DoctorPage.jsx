@@ -79,7 +79,7 @@ const DoctorPage = () => {
         <div className="patient-header-title">TRANG CHỦ</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/Bacsi/Bacsi">Trang chủ </a> / </strong>
+            <strong><a className="link-xem" href="/Bacsi/home">Trang chủ </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">Trang chủ </span>
         </div>

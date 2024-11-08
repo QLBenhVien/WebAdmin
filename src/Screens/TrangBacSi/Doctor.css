@@ -196,7 +196,7 @@ body {
 .container {
   background-color: #ffffff;
   height: auto;
-  width: 500px;
+  width: 100%;
 }
 
 .container2 {
@@ -707,11 +707,23 @@ body {
 }
 /* goi y */
 
-.suggestion-list li {
+.suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  position: absolute;
+  z-index: 10;
+  width: calc(100% - 20px); /* Ensure suggestions take the full width */
+  max-height: 200px; /* Optional: restrict max height */
+  overflow-y: auto; /* Make the list scrollable */
+}
+.suggestion-item {
   padding: 8px;
   cursor: pointer;
 }
 
-.suggestion-list li:hover {
+.suggestion-item:hover {
   background-color: #f0f0f0;
 }

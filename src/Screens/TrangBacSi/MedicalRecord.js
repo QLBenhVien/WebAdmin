@@ -36,17 +36,17 @@ const MedicalRecord = () => {
     fetchData();
   }, []);
 
-  const filteredPatients = patientData;
-  // .filter((patient) =>
-  //   patient.tenBenhNhan.toLowerCase().includes(searchQuery.toLowerCase())
-  // )
-  // .sort((a, b) => {
-  //   if (sortOption === "Ngày khám gần nhất") {
-  //     return new Date(b.ngayKham) - new Date(a.ngayKham);
-  //   } else {
-  //     return new Date(a.ngayKham) - new Date(b.ngayKham);
-  //   }
-  // });
+  const filteredPatients = patientData
+  .filter((patient) =>
+    patient.MaBenhNhan.Ten.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .sort((a, b) => {
+    if (sortOption === "Ngày khám gần nhất") {
+      return new Date(b.ngayKham) - new Date(a.ngayKham);
+    } else {
+      return new Date(a.ngayKham) - new Date(b.ngayKham);
+    }
+  });
 
   const PatientTable = () => {
     return (
@@ -89,7 +89,7 @@ const MedicalRecord = () => {
         <div className="patient-header-breadcrumb">
           <span>
             <strong>
-              <a className="link-xem" href="/medicalRecord">
+              <a className="link-xem" href="/Bacsi/medicalRecord">
                 Hồ sơ bệnh án{" "}
               </a>{" "}
               /{" "}
