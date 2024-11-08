@@ -1,0 +1,729 @@
+/* App.css */
+
+body {
+  font-family: "Roboto", sans-serif; /* Áp dụng font Roboto cho toàn bộ trang */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.outer {
+  background-color: rgb(192, 227, 242); /* Màu nền đỏ cho khung */
+  padding: 2rem;
+  min-height: 70vw;
+  height: auto;
+}
+
+.outer2 {
+  background-color: rgb(192, 227, 242); /* Màu nền đỏ cho khung */
+  padding: 20px;
+  min-height: 71.5vw;
+  height: auto;
+}
+
+.hospital-name-pdf {
+  display: none;
+  margin-left: 365px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu đen mờ với độ mờ 50% */
+  z-index: 999; /* Đảm bảo lớp phủ nằm trên cùng */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.sidebar {
+  width: 250px; /* Chiều rộng của sidebar */
+  height: 100vh; /* Chiều dài bằng chiều cao toàn bộ trang */
+  background-color: #22668e; /* Màu nền cho sidebar */
+  padding: 20px; /* Khoảng cách bên trong */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Đổ bóng cho sidebar */
+  position: fixed; /* Giữ sidebar cố định bên trái */
+  top: 0; /* Bắt đầu từ đỉnh trang */
+  left: 0; /* Căn trái */
+  overflow-y: auto; /* Cuộn dọc nếu nội dung vượt quá chiều cao */
+}
+
+.sidebar-header {
+  background-color: white; /* Màu nền cho khung tiêu đề */
+  padding: 15px; /* Khoảng cách bên trong khung tiêu đề */
+  border-radius: 4px; /* Bo góc cho khung tiêu đề */
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px; /* Khoảng cách dưới header */
+}
+
+.sidebar-header h2 {
+  color: #22668e;
+  font-weight: bold; /* Làm chữ đậm */
+}
+
+.sidebar-header img {
+  width: 40px; /* Kích thước logo */
+  height: 40px; /* Kích thước logo */
+  margin-right: 10px; /* Khoảng cách giữa logo và tên */
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column; /* Sắp xếp các nút theo chiều dọc */
+}
+
+.sidebar-button {
+  background-color: #578eaf; /* Màu nền của nút */
+  color: #000000; /* Màu chữ */
+  border: none; /* Không có viền */
+  padding: 10px 15px; /* Khoảng cách bên trong nút */
+  margin-bottom: 10px; /* Khoảng cách giữa các nút */
+  cursor: pointer; /* Con trỏ chuột thành hình bàn tay khi hover */
+  border-radius: 4px; /* Bo góc cho nút */
+  transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+  font-family: "Roboto", sans-serif; /* Áp dụng font Roboto cho nút */
+  font-weight: bold; /* Làm chữ đậm */
+  text-align: left; /* Căn trái chữ trong nút */
+  padding-left: 20px; /* Thêm khoảng cách bên trái cho chữ */
+  font-size: 16px;
+}
+
+.sidebar-button:hover {
+  background-color: #0056b3; /* Màu khi hover */
+}
+
+.sidebar-button.active {
+  background-color: white; /* Màu nền cho nút đang hoạt động */
+  color: #22668e; /* Màu chữ cho nút đang hoạt động */
+}
+
+/*Header*/
+
+.header {
+  width: 100%;
+  height: 5rem;
+  background: white;
+  /* position: relative; */
+}
+
+.doctor-info {
+  display: flex; /* Hiển thị các phần tử theo hàng ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: flex-end; /* Căn các phần tử sát phải */
+  position: absolute; /* Cố định vị trí của doctor-info */
+  top: 15px; /* Cách trên cùng 15px */
+  right: 50px; /* Cách bên phải 20px */
+  width: auto; /* Tự động điều chỉnh chiều rộng theo nội dung */
+  height: 60px; /* Đảm bảo chiều cao vừa với các phần tử bên trong */
+}
+
+.doctor-profile {
+  display: flex;
+  align-items: center; /* Căn giữa hình ảnh, tên, và mũi tên theo chiều dọc */
+  gap: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.doctor-image {
+  width: 3rem;
+}
+
+.doctor-name {
+  font-size: 1rem;
+  font-family: Roboto;
+  font-weight: 700;
+  color: #22668e;
+  text-decoration: none; /* Không có gạch chân cho link */
+}
+
+.doctor-arrow {
+  width: 19px;
+  height: 14px;
+  cursor: pointer; /* Con trỏ chuột thành hình tay khi hover */
+}
+
+/* Dropdown styles */
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 12px 0;
+  border-radius: 8px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  background: none;
+  border: none;
+  color: #333;
+  padding: 12px 20px;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #22668e; /* Tạo điểm nhấn khi hover */
+}
+
+.doctor-arrow {
+  transition: transform 0.3s ease;
+}
+
+.doctor-arrow.open {
+  transform: rotate(180deg);
+}
+
+.container {
+  background-color: #ffffff;
+  height: auto;
+  width: 100%;
+}
+
+.container2 {
+  background-color: #ffffff;
+  height: auto;
+}
+
+.container4 {
+  background-color: #ffffff;
+  border-radius: 20px;
+  height: auto;
+}
+.container3 {
+  background-color: #ffffff;
+  /* margin-bottom: 10px; Thêm khoảng cách dưới */
+  height: auto;
+}
+/* Container cho toàn bộ nội dung */
+.patient-container {
+  margin-left: 5px; /* Margin from sidebar */
+  margin-top: 10px; /* Adjust to provide space for the header */
+  padding: 10px; /* Inner padding */
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Header của danh sách bệnh nhân */
+.patient-header {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-between; /* Distribute space evenly */
+  align-items: center; /* Center vertically */
+  padding: 10px 20px; /* Inner padding */
+  position: relative; /* Make header sticky */
+  top: 0; /* Sticks to the top of the patient content */
+  z-index: 9; /* Higher z-index to overlay other elements */
+}
+
+.patient-header-title {
+  font-size: 24px; /* Kích thước chữ cho tiêu đề */
+  font-weight: bold; /* Đậm chữ */
+  color: #333; /* Màu chữ */
+}
+
+.patient-header-title2 {
+  font-size: 20px; /* Kích thước chữ cho tiêu đề */
+  font-weight:bold; /* Đậm chữ */
+  color: #333; /* Màu chữ */
+}
+
+
+.patient-header-title3 {
+  font-size: 16px; /* Kích thước chữ cho tiêu đề */
+  font-weight:bold; /* Đậm chữ */
+  color: #333; /* Màu chữ */
+}
+
+.luuY {
+  font-size: 16px; /* Kích thước chữ cho tiêu đề */
+  font-weight:bold; /* Đậm chữ */
+  color: #333; /* Màu chữ */
+  color:red;
+}
+
+.patient-header-breadcrumb {
+  font-size: 16px; /* Kích thước chữ cho breadcrumb */
+  color: #666; /* Màu chữ */
+}
+
+.patient-header-breadcrumb span {
+  color: black;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+/* Bảng bệnh nhân */
+.patient-table {
+  width: 100%; /* Full width */
+  background: white;
+  overflow: hidden; /* Hide overflow */
+  flex-direction: column;
+}
+
+/* Tiêu đề bảng */
+.patient-table-header {
+  background: #e6e6e6;
+  display: flex; /* Sử dụng flex để căn chỉnh */
+  height: 50px;
+}
+
+/* Ô tiêu đề bảng */
+.patient-header-cell {
+  flex: 0.6; /* Chiều rộng mỗi ô bằng nhau */
+  text-align: left;
+  color: black;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  padding: 7px; /* Thêm khoảng cách đều nhau */
+  margin-top: 5px;
+}
+
+/* Dòng dữ liệu trong bảng */
+.patient-table-row {
+  display: flex; /* Sử dụng flex để dễ dàng căn chỉnh */
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Ô dữ liệu trong bảng */
+.patient-table-cell {
+  flex: 1; /* Chiều rộng mỗi ô bằng nhau */
+  text-align: left;
+  color: black;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  padding: 10px; /* Thêm khoảng cách đều nhau */
+  box-sizing: border-box; /* Đảm bảo padding không làm vượt quá chiều rộng */
+}
+
+.patient-list-search-filter {
+  display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử trên một hàng */
+  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  padding: 10px; /* Khoảng cách bên trong cho khung lọc */
+  background-color: #ffffff; /* Màu nền cho khung lọc */
+}
+
+.patient-list-search-filter2 {
+  display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử */
+  justify-content: flex-end; /* Đẩy các phần tử sang bên phải */
+  padding: 10px; /* Khoảng cách bên trong */
+  background-color: rgb(192, 227, 242); /* Màu nền cho khung lọc */
+}
+
+.patient-sort-by {
+  margin-right: 10px; /* Khoảng cách bên phải cho "Sắp xếp theo:" */
+  font-weight: bold; /* Đậm chữ cho "Sắp xếp theo:" */
+}
+
+.patient-filter-button {
+  display: flex; /* Sử dụng flexbox cho "Ngày khám gần nhất" */
+  align-items: center; /* Căn giữa hình ảnh và văn bản theo chiều dọc */
+  margin-right: 20px; /* Khoảng cách bên phải cho "Ngày khám gần nhất" */
+  background-color: #ffffff; /* Màu nền cho nút lọc */
+  padding: 5px 10px; /* Khoảng cách bên trong cho nút lọc */
+  border-radius: 10px; /* Bo góc cho nút lọc */
+  border: 1px solid #000000; /* Viền cho nút lọc */
+}
+
+.patient-filter-button2 {
+  display: flex; /* Sử dụng flexbox cho "Ngày khám gần nhất" */
+  align-items: center; /* Căn giữa hình ảnh và văn bản theo chiều dọc */
+  margin-right: 20px; /* Khoảng cách bên phải cho "Ngày khám gần nhất" */
+  background-color: #ffffff; /* Màu nền cho nút lọc */
+  padding: 5px 10px; /* Khoảng cách bên trong cho nút lọc */
+  border-radius: 10px; /* Bo góc cho nút lọc */
+  border: 1px solid #000000; /* Viền cho nút lọc */
+  /* margin-left: 25.5rem; */
+  position: absolute;
+  width: 45%;
+}
+
+.patient-filter-button img {
+  margin-left: 5px; /* Khoảng cách bên trái cho hình ảnh */
+}
+.patient-search-button {
+  padding: 5px 10px; /* Khoảng cách bên trong cho nút tra cứu */
+  background-color: #22668e; /* Màu nền cho nút tra cứu */
+  color: white; /* Màu chữ cho nút tra cứu */
+  border: none; /* Không có viền */
+  border-radius: 3px; /* Bo góc cho nút tra cứu */
+  cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
+  margin-left: 64.5rem;
+  position: absolute;
+}
+.patient-search-buttonn {
+  padding: 5px 10px; /* Khoảng cách bên trong cho nút tra cứu */
+  background-color: #22668e; /* Màu nền cho nút tra cứu */
+  color: white; /* Màu chữ cho nút tra cứu */
+  border: none; /* Không có viền */
+  border-radius: 3px; /* Bo góc cho nút tra cứu */
+  cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
+  margin-left: 20px;
+}
+
+.page-button {
+  padding: 7px; /* Khoảng cách bên trong cho nút tra cứu */
+  background-color: #22668e; /* Màu nền cho nút tra cứu */
+  color: white; /* Màu chữ cho nút tra cứu */
+  border: none; /* Không có viền */
+  border-radius: 3px; /* Bo góc cho nút tra cứu */
+  cursor: pointer; /* Con trỏ chuột hiển thị như con trỏ có thể nhấp */
+}
+
+.pagination {
+  position: relative;
+  margin-left: 130px;
+}
+
+.link-xem {
+  font-weight: bold; /* In đậm */
+  color: rgb(19, 19, 20); /* Màu chữ */
+  text-decoration: none; /* Bỏ gạch chân mặc định */
+  margin-left: 10px;
+}
+
+.link-xem:hover {
+  text-decoration: underline; /* Gạch chân khi di chuột */
+}
+
+.dropdown-time {
+  position: relative; /* Định vị tương đối cho dropdown trigger */
+}
+
+.dropdown-menuTime {
+  display: none; /* Mặc định không hiển thị */
+  position: absolute; /* Để dropdown hiển thị ở vị trí tuyệt đối */
+  top: 100%; /* Xuất hiện ngay dưới nút trigger */
+  left: -610%; /* Định vị bên trái */
+  background-color: white; /* Màu nền cho dropdown */
+  border: 0px solid #151515; /* Đường viền */
+  z-index: 10; /* Đảm bảo nằm trên các phần tử khác */
+  width: auto; /* Để chiều rộng tự động điều chỉnh theo nội dung */
+  min-width: 190px; /* Đặt chiều rộng tối thiểu để đảm bảo nó không quá nhỏ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho dropdown */
+  margin-top: 7px;
+}
+
+.dropdown-menuTime.show {
+  display: block; /* Hiển thị khi có class "show" */
+}
+
+.dropdown-itemTime {
+  background: none;
+  border: none;
+  color: #333;
+  padding: 12px 20px; /* Tăng padding để tạo không gian */
+  width: 100%; /* Giữ nguyên chiều rộng 100% */
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-itemTime:hover {
+  background-color: #f0f0f0;
+  color: #22668e; /* Tạo điểm nhấn khi hover */
+}
+
+/*Tra cuu*/
+.info-container {
+  width: 549.6px;
+  height: 315px;
+  position: fixed; /* Changed to fixed to position relative to the viewport */
+  top: 50%; /* Position from the top */
+  left: 55%; /* Position from the left */
+  transform: translate(-50%, -50%); /* Center the element */
+  z-index: 1000; /* Ensure it overlays other content */
+  display: flex; /* Use flex to center content inside */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.info-card {
+  width: 100%; /* Full width of the container */
+  height: 100%; /* Full height of the container */
+  background: white;
+  border-radius: 20px;
+  border: 1px solid black;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for depth */
+}
+
+.info-header {
+  width: 100%; /* Full width of the card */
+  height: 86.02px;
+  background: #22668e;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-title {
+  color: white;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  line-height: 30px;
+  word-wrap: break-word;
+}
+
+.search-section {
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Stack items vertically */
+  gap: 10px; /* Spacing between each search row */
+}
+
+.search-row {
+  display: flex; /* Use flexbox to align label and input */
+  justify-content: space-between; /* Space out label and input */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Full width of the container */
+}
+
+.patient-name,
+.visit-date {
+  color: black;
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 1000;
+  margin-left: 20px;
+}
+
+.search-input,
+.date-picker {
+  flex-basis: 60%; /* Input width */
+}
+
+.text-input,
+.date-input {
+  width: 90%; /* Full width of the container */
+  height: 31.63px; /* Match the height of the input */
+  background: white;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 4px 10px; /* Padding for the input */
+  font-size: 14px; /* Font size for input text */
+  font-family: "Roboto", sans-serif;
+  margin-top: 10px;
+}
+
+.button-container {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-around; /* Space buttons evenly */
+  margin-top: 20px; /* Add spacing from content above */
+}
+
+.button {
+  width: 130px;
+  height: 48.33px;
+  background: #22668e;
+  cursor: pointer; /* Con trỏ chuột thành hình bàn tay khi hover */
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 13px;
+  color: white;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  /* Remove margin to ensure even spacing */
+}
+
+.button {
+  margin: 0 10px; /* Adds horizontal spacing around each button */
+}
+
+.pointer {
+  cursor: pointer; /* Con trỏ chuột thành hình bàn tay khi hover */
+}
+
+.search-name {
+  font-weight: bold; /* Đậm chữ cho "Sắp xếp theo:" */
+  color: #0056b3;
+  font-size: 18px;
+}
+
+.report-container-custom {
+  width: 935px;
+  height: 623px;
+  position: relative;
+}
+
+.report-background-custom {
+  width: 920px;
+  height: 623px;
+  left: 15px;
+  top: 0;
+  position: absolute;
+  background: white;
+  border-radius: 10px;
+}
+
+.diagnosis-custom {
+  width: 467px;
+  height: 45px;
+  left: 8px;
+  top: 265px;
+  position: absolute;
+  text-align: center;
+  color: black;
+  font-size: 18px;
+  font-family: "Roboto";
+  font-weight: 1000;
+  line-height: 34.5px;
+  word-wrap: break-word;
+}
+
+.patient-name-custom,
+.age-custom,
+.gender-custom,
+.patient-code-custom,
+.doctor-name-custom,
+.address-custom,
+.medication-title-custom {
+  position: absolute;
+  text-align: center;
+  color: black;
+  font-size: 18px;
+  font-family: "Roboto";
+  font-weight: 1000;
+  line-height: 34.5px;
+  word-wrap: break-word;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.patient-name-custom {
+  width: 330px; /* Keep your width */
+  height: 41px; /* Keep your height */
+  left: 14px; /* Keep your left position */
+  top: 19px; /* Keep your top position */
+}
+
+.age-custom {
+  width: 113px;
+  height: 45px;
+  left: 35px;
+  top: 82px;
+}
+
+.gender-custom {
+  width: 159px;
+  height: 45px;
+  left: 549px;
+  top: 83px;
+}
+
+.patient-code-custom {
+  width: 159px;
+  height: 45px;
+  left: 553px;
+  top: 15px;
+  font-weight: 700;
+}
+
+.doctor-name-custom {
+  width: 190px;
+  height: 38px;
+  left: 60px;
+  top: 202px;
+}
+
+.address-custom {
+  width: 356px;
+  height: 46px;
+  left: 20px;
+  top: 137px;
+}
+
+.medication-title-custom {
+  width: 131px;
+  height: 45px;
+  left: 50px;
+  top: 322px;
+  font-weight: 1000;
+}
+/* Container for the entire medication table */
+.medication-table2 {
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
+}
+.medication-table {
+  width: 90%;
+  border-collapse: collapse;
+  position: relative;
+  top: 360px;
+  left: 50px;
+}
+
+.medication-header th {
+  background-color: #e6e6e6;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.medication-row td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.medication-dosage-row td {
+  padding: 10px;
+  background-color: #f5f5f5;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.schedule {
+  position: relative;
+  margin-left: 100px;
+  padding: 30px;
+}
+/* goi y */
+
+.suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  position: absolute;
+  z-index: 10;
+  width: calc(100% - 20px); /* Ensure suggestions take the full width */
+  max-height: 200px; /* Optional: restrict max height */
+  overflow-y: auto; /* Make the list scrollable */
+}
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
