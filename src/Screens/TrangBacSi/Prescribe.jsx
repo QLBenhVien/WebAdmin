@@ -84,8 +84,6 @@
             LoiDan: benhnhan.LoiDan,
             Thuoc: data.map(row => ({
               MaThuoc: row.mathuoc,
-              TenThuoc: row.name,      // Medication ID
-              DVT: row.unit,        // Unit (e.g., "vien")
               SoLuong: row.quantity, // Quantity
               Cachdung: row.dosage  // Dosage
             })),
@@ -130,7 +128,7 @@
           const newData = thuoc.map((item, index) => ({
             stt: index + 1,
             mathuoc: item.MaThuoc ? item.MaThuoc : "",
-            name: item.TenThuoc,
+            name: item.MaThuoc?.tenthuoc,
             unit: item.DVT || "No unit",
             quantity: item.SoLuong || 0,
             dosage: item.Cachdung || "No dosage",
