@@ -3,17 +3,19 @@ import "./Doctor.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import axiosInstance from "../../Axios/axios";
-import { set } from "date-fns";
 
 const Prescribe = () => {
   const { showNotification } = useNotification();
   const { id } = useParams();
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null); 
 
   const navigate = useNavigate();
   const [status, setStatus] = useState("chưa khám");
   const [data, setData] = useState([
     { stt: 1, name: "", unit: "", quantity: "", dosage: "" },
   ]);
+  const [goiyThuoc, setGoiyThuoc] = useState([]);  // State để lưu danh sách thuốc gợi ý
+
   const [benhnhan, setBenhnhan] = useState({});
   // const [symptoms, setSymptoms] = useState("");
   // const [diagnosis, setDiagnosis] = useState("");
@@ -26,6 +28,41 @@ const Prescribe = () => {
     console.log(data);
   };
 
+  const handleInputChange2 = (index, field, value) => {
+    const updatedData = [...data];
+    updatedData[index][field] = value;
+    setData(updatedData);
+  
+    if (field === "name" && value.length > 0) {
+      // If a row is selected, fetch suggestions
+      if (selectedRowIndex === index) {
+        fetchGoiy(value).then((suggestions) => {
+          setGoiyThuoc(suggestions);
+        });
+      } else {
+        setGoiyThuoc([]);  // Clear suggestions when switching rows
+      }
+    } else {
+      setGoiyThuoc([]);  // Clear suggestions if input is empty
+    }
+  };
+
+  // Set the currently selected row when a row is focused
+  const handleFocus = (index) => {
+    setSelectedRowIndex(index);
+  };
+
+
+  const handleSuggestionClick = (index, suggestion) => {
+    const updatedData = [...data];
+    updatedData[index]["name"] = suggestion.tenthuoc;  // Đặt tên thuốc từ gợi ý vào ô nhập liệu
+    updatedData[index]["unit"] = suggestion.dongia;    // Cập nhật ĐVT
+    updatedData[index]["dosage"] = suggestion.cachdung; // Cập nhật Liều dùng
+    setData(updatedData);  // Cập nhật lại state
+    setGoiyThuoc([]);  // Dọn dẹp danh sách gợi ý
+  };
+  
+
   const handleAddRow = () => {
     const newRow = {
       stt: data.length + 1,
@@ -37,21 +74,51 @@ const Prescribe = () => {
     setData([...data, newRow]);
   };
 
-  const handleSave = () => {
-    const confirmSave = window.confirm(
-      "Bạn có muốn lưu lại những thay đổi không?"
-    );
+  const handleSave = async () => {
+    const confirmSave = window.confirm("Bạn có muốn lưu lại những thay đổi không?");
     if (confirmSave) {
-      console.log("Data saved:", data);
-      alert("Dữ liệu đã được lưu thành công!");
-      // navigate("/Bacsi/examinationForm");
+      try {
+        const dataToSave = {
+          TrieuChung: benhnhan.TrieuChung, // Triệu chứng người dùng nhập
+          ChanDoan: benhnhan.ChanDoan,  // Chuẩn đoán người dùng nhập
+          LoiDan: benhnhan.LoiDan, // Lời dặn bác sĩ
+          Thuoc: data, // Thuốc đã kê
+        };
+  
+        const response = await axiosInstance.put(
+          `/doctor/updatePhieukham/${id}`,
+          dataToSave // Không cần gửi token ở đây vì đã có xác thực ở server
+        );
+  
+        if (response.status === 200) {
+          alert("Dữ liệu đã được lưu thành công!");
+          console.log("Dữ liệu đã được lưu:", response.data);
+          
+          // After saving, call the "endPhieukham" endpoint to change the status
+          const endResponse = await axiosInstance.put(
+            `/doctor/endPhieukham/${id}` 
+          );
+          
+          if (endResponse.status === 200) {
+            alert("Phiếu khám đã được đánh dấu là Đã khám.");
+            console.log("Phiếu khám đã được cập nhật:", endResponse.data);
+          } else {
+            alert("Có lỗi khi cập nhật trạng thái phiếu khám.");
+          }
+        } else {
+          alert("Có lỗi xảy ra khi lưu dữ liệu.");
+        }
+      } catch (error) {
+        console.error("Lỗi khi lưu dữ liệu:", error);
+        alert("Có lỗi xảy ra khi lưu dữ liệu.");
+      }
     }
   };
 
   const fetchData = async () => {
     try {
       const res = await axiosInstance.get(`/doctor/detailPhieukham/${id}`);
-      setBenhnhan(res.data.data.detail); // Updated this line
+      setBenhnhan(res.data.data.detail); 
       console.log("Patient data:", res.data.data.detail);
       if (Array.isArray(res.data.data.detail.Thuoc)) {
         const thuoc = res.data.data.detail.Thuoc;
@@ -77,19 +144,18 @@ const Prescribe = () => {
     fetchData();
   }, []);
 
-  // const [goiy, setGoiy] = useState([]);
-  // const fetchGoiy = async (ten) => {
-  //   try {
-  //     const res = await axiosInstance.get(`doctor/thuoc/${ten}`);
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   fetchGoiy();
-  // }, [data]);
+  const fetchGoiy = async (ten) => {
+    try {
+      const res = await axiosInstance.get(`/doctor/thuoc/${ten}`);
+      console.log("Thuốc gợi ý:", res);
+      return res.data.data;  
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu gợi ý thuốc:", error);
+      return [];  // Return an empty array if there's an error
+    }
+  };
+
 
   return (
     <div className="outer">
@@ -180,63 +246,79 @@ const Prescribe = () => {
         <div style={styles.infoSection}>
           <h2 style={styles.sectionTitle}>Kê thuốc</h2>
           <table className="medication-table2">
-            <thead>
-              <tr className="medication-header">
-                <th>STT</th>
-                <th>Tên thuốc / Hàm lượng</th>
-                <th>ĐVT</th>
-                <th>Số lượng</th>
-                <th>Liều dùng</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr className="medication-row" key={index}>
-                  <td>{item.stt}</td>
-                  <td>
-                    <input
-                      type="text"
-                      value={item.name}
-                      style={{ border: "none", outline: "none" }}
-                      onChange={(e) =>
-                        handleInputChange(index, "name", e.target.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={item.unit}
-                      style={{ border: "none", outline: "none" }}
-                      onChange={(e) =>
-                        handleInputChange(index, "unit", e.target.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={item.quantity}
-                      style={{ border: "none", outline: "none" }}
-                      onChange={(e) =>
-                        handleInputChange(index, "quantity", e.target.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={item.dosage}
-                      style={{ border: "none", outline: "none" }}
-                      onChange={(e) =>
-                        handleInputChange(index, "dosage", e.target.value)
-                      }
-                    />
-                  </td>
-                </tr>
+  <thead>
+    <tr className="medication-header">
+      <th>STT</th>
+      <th>Tên thuốc / Hàm lượng</th>
+      <th>ĐVT</th>
+      <th>Số lượng</th>
+      <th>Liều dùng</th>
+    </tr>
+  </thead>
+  <tbody>
+    {data.map((item, index) => (
+      <tr className="medication-row" key={index}>
+        <td>{item.stt}</td>
+        <td>
+          <input
+            type="text"
+            value={item.name}
+            style={{ border: "none", outline: "none", width: "100%" }}
+            onChange={(e) => handleInputChange2(index, "name", e.target.value)}
+            onFocus={() => handleFocus(index)}
+          />
+           {selectedRowIndex === index && goiyThuoc.length > 0 && (
+            <ul className="suggestions-list" style={styles.suggestionsList}>
+              {goiyThuoc.map((suggestion, i) => (
+                <li
+                  key={i}
+                  className="suggestion-item"
+                  onClick={() => handleSuggestionClick(index, suggestion)}
+                  style={styles.suggestionItem}
+                >
+                  {suggestion.tenthuoc}
+                </li>
               ))}
-            </tbody>
-          </table>
+            </ul>
+          )}
+        </td>
+
+        <td>
+          <input
+            type="text"
+            value={item.unit}
+            style={{ border: "none", outline: "none" }}
+            onChange={(e) => handleInputChange(index, "unit", e.target.value)}
+          />
+        </td>
+
+        <td>
+          <input
+            type="number"
+            value={item.quantity}
+            style={{ border: "none", outline: "none", width: "50px", textAlign: "center" }}
+            min="1"  // Đặt giá trị tối thiểu là 1
+            onChange={(e) => {
+              // Kiểm tra nếu giá trị nhỏ hơn 1, đặt lại giá trị là 1
+              const value = Math.max(1, e.target.value);  
+              handleInputChange(index, "quantity", value);
+            }}
+          />
+        </td>
+
+        <td>
+          <input
+            type="text"
+            value={item.dosage}
+            style={{ border: "none", outline: "none" }}
+            onChange={(e) => handleInputChange(index, "dosage", e.target.value)}
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
           {!benhnhan.TrangThai && (
             <button
               style={{
@@ -271,7 +353,6 @@ const Prescribe = () => {
   );
 };
 
-// Styles
 const styles = {
   InfoContainer: {
     backgroundColor: "#ffffff",
@@ -320,6 +401,23 @@ const styles = {
     outline: "none",
     fontSize: "16px",
     fontFamily: "Roboto",
+  },
+  suggestionsList: {
+    listStyleType: "none",
+    padding: "0",
+    marginTop: "5px",
+    backgroundColor: "#fff",
+    border: "1px solid #ccc",
+    position: "absolute",  
+    zIndex: "999",         
+  },
+  suggestionItem: {
+    padding: "8px",
+    cursor: "pointer",
+    backgroundColor: "#fff",
+  },
+  suggestionItemHover: {
+    backgroundColor: "#f1f1f1", 
   },
 };
 

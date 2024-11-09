@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import logo from "../../images/logo.png";
-import { useNavigate, useLocation } from "react-router-dom";
-import "./Doctor.css";
-
+import React from 'react'
+import "../Doctor.css"
 // InfoCard component
 const InfoCard = ({ title, content, icon }) => {
   return (
@@ -50,14 +47,12 @@ const Schedule = ({ schedule }) => {
     </div>
   );
 };
-
-// DoctorPage component
-const DoctorPage = () => {
+const Home = () => {
   const profile = {
     name: "Nguyễn Văn A",
-    role: "Bác sĩ nội khoa",
+    role: "Kỹ thuật viên",
     gender: "Nam",
-    id: "BS001",
+    id: "KTV001",
   };
 
   const schedule = {
@@ -79,7 +74,7 @@ const DoctorPage = () => {
         <div className="patient-header-title">TRANG CHỦ</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/Bacsi/home">Trang chủ </a> / </strong>
+            <strong><a className="link-xem" href="/KyThuatVien/home">Trang chủ </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">Trang chủ </span>
         </div>
@@ -104,7 +99,7 @@ const DoctorPage = () => {
       </div>
     </div>
   );
-};
+}
 
 // Styles
 const styles = {
@@ -325,4 +320,4 @@ const styles = {
   },
 };
 
-export default DoctorPage;
+export default Home;

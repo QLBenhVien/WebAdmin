@@ -36,51 +36,51 @@ const MedicalRecord = () => {
     fetchData();
   }, []);
 
-  const filteredPatients = patientData;
-  // .filter((patient) =>
-  //   patient.tenBenhNhan.toLowerCase().includes(searchQuery.toLowerCase())
-  // )
-  // .sort((a, b) => {
-  //   if (sortOption === "Ngày khám gần nhất") {
-  //     return new Date(b.ngayKham) - new Date(a.ngayKham);
-  //   } else {
-  //     return new Date(a.ngayKham) - new Date(b.ngayKham);
-  //   }
-  // });
+  const filteredPatients = patientData
+  .filter((patient) =>
+    patient.MaBenhNhan.Ten.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .sort((a, b) => {
+    if (sortOption === "Ngày khám gần nhất") {
+      return new Date(b.ngayKham) - new Date(a.ngayKham);
+    } else {
+      return new Date(a.ngayKham) - new Date(b.ngayKham);
+    }
+  });
 
-  const PatientTable = () => {
-    return (
-      <div className="patient-table">
-        <div className="patient-table-header">
-          <div className="patient-header-cell stt">STT</div>
-          <div className="patient-header-cell ma-hs">Mã HS</div>
-          <div className="patient-header-cell ten-benh-nhan">Tên bệnh nhân</div>
-          <div className="patient-header-cell ngay-kham">Ngày tạo</div>
-          <div className="patient-header-cell chi-tiet">Chi tiết</div>
-        </div>
+    const PatientTable = () => {
+      return (
         <div className="patient-table">
-          {filteredPatients.map((patient, index) => (
-            <div className="patient-table-row" key={patient._id}>
-              <div className="patient-table-cell stt">{index + 1}</div>
-              <div className="patient-table-cell ma-hs">{patient._id}</div>
-              <div className="patient-table-cell ten-benh-nhan">
-                {patient.MaBenhNhan.Ten}
+          <div className="patient-table-header">
+            <div className="patient-header-cell stt">STT</div>
+            <div className="patient-header-cell ma-hs">Mã HS</div>
+            <div className="patient-header-cell ten-benh-nhan">Tên bệnh nhân</div>
+            <div className="patient-header-cell ngay-kham">Ngày tạo</div>
+            <div className="patient-header-cell chi-tiet">Chi tiết</div>
+          </div>
+          <div className="patient-table">
+            {filteredPatients.map((patient, index) => (
+              <div className="patient-table-row" key={patient._id}>
+                <div className="patient-table-cell stt">{index + 1}</div>
+                <div className="patient-table-cell ma-hs">{patient._id}</div>
+                <div className="patient-table-cell ten-benh-nhan">
+                  {patient.MaBenhNhan.Ten}
+                </div>
+                <div className="patient-table-cell ngay-kham">"Chua kham"</div>
+                <div className="patient-table-cell chi-tiet">
+                  <a
+                    href={`/Bacsi/medicalRecord/infoMedicalRecordsDetail/${patient.MaBenhNhan._id}`}
+                    className="link-xem"
+                  >
+                    Xem
+                  </a>
+                </div>
               </div>
-              <div className="patient-table-cell ngay-kham">"Chua kham"</div>
-              <div className="patient-table-cell chi-tiet">
-                <a
-                  href={`/Bacsi/medicalRecord/infoMedicalRecordsDetail/${patient.MaBenhNhan._id}`}
-                  className="link-xem"
-                >
-                  Xem
-                </a>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    );
-  };
+      );
+    };
 
   return (
     <div className="outer">
@@ -89,7 +89,7 @@ const MedicalRecord = () => {
         <div className="patient-header-breadcrumb">
           <span>
             <strong>
-              <a className="link-xem" href="/medicalRecord">
+              <a className="link-xem" href="/Bacsi/medicalRecord">
                 Hồ sơ bệnh án{" "}
               </a>{" "}
               /{" "}

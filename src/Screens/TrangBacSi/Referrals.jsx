@@ -132,7 +132,7 @@ const Referrals = () => {
         <div className="patient-header-title">GỬI YÊU CẦU XÉT NGHIỆM</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/referrals">Gửi yêu cầu xét nghiệm </a> / </strong>
+            <strong><a className="link-xem" href="/Bacsi/referrals">Gửi yêu cầu xét nghiệm </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Gửi yêu cầu xét nghiệm{" "}

@@ -27,14 +27,14 @@ const NavBacSi = () => {
         <li
           style={{
             ...styles.sidebarItem,
-            backgroundColor: activeItem.startsWith("/Bacsi/Bacsi")
+            backgroundColor: activeItem.startsWith("/Bacsi/home")
               ? "#FFFFFF"
               : "#578EAF",
-            color: activeItem.startsWith("/Bacsi/Bacsi")
+            color: activeItem.startsWith("/Bacsi/home")
               ? "#000000"
               : "#FFFFFF",
           }}
-          onClick={() => navigateTo("/Bacsi")}
+          onClick={() => navigateTo("/Bacsi/home")}
         >
           Trang chủ
         </li>

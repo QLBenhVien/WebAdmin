@@ -119,7 +119,7 @@ const ExaminationForm = () => {
         <div className="patient-header-breadcrumb">
           <span>
             <strong>
-              <a className="link-xem" href="/examinationForm">
+              <a className="link-xem" href="/Bacsi/examinationForm">
                 Phiếu khám bệnh{" "}
               </a>{" "}
               /{" "}
