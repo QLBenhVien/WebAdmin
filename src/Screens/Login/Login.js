@@ -67,7 +67,7 @@ const Login = () => {
           console.log(response.data.data.role);
           navigate("/Letan");
         } else if (response.data.data.role === "BS") {
-          navigate("/Bacsi");
+          navigate("/Bacsi/home");
         } else if (response.data.data.role === "IT") {
           navigate("/quantri");
         }

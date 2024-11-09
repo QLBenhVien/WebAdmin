@@ -66,7 +66,7 @@ const DoctorRoles = () => {
             element={<MedicalRecordsDetails2 />}
           />
           <Route
-            path="/medicalRecord/infoMedicalRecordsDetail/:id"
+            path="infoMedicalRecordsDetail"
             element={<InfoMedicalRecords />}
           />
           <Route path="/referrals" element={<Referrals />} />
