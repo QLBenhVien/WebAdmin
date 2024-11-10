@@ -33,6 +33,7 @@ const ExaminationForm = () => {
     try {
       const res = await Axios.get(`doctor/getPhieukham/${null}`);
       const data = res.data?.data?.thongtinphieu || [];
+      console.log(data);
       setPatientData(data);
     } catch (error) {
       console.error(error);
@@ -48,7 +49,7 @@ const ExaminationForm = () => {
 
   const filteredPatients = patientData
     .filter((patient) =>
-      patient.tenBenhNhan.toLowerCase().includes(searchQuery.toLowerCase())
+      patient.tenBenhNhan?.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
       if (sortOption === "Ngày khám gần nhất") {
