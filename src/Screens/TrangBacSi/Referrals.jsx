@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Doctor.css";
 import { useNavigate } from "react-router-dom";
+import search from "../../images/Search copy.png";
+import dropdown from "../../images/Polygon 1.png";
 
 const Referrals = () => {
   const [alertMessage, setAlertMessage] = useState("");
@@ -64,7 +66,7 @@ const Referrals = () => {
       if (tinhTrang === "Chưa yêu cầu") {
         window.alert("Không có xét nghiệm cho bệnh nhân này.");
       } else {
-        navigate("/resultTesting");
+        navigate("/Bacsi/resultTesting");
       }
     };
 
@@ -113,7 +115,7 @@ const Referrals = () => {
               {patient.tinhTrang}
             </div>
             <div className="patient-table-cell chi-tiet">
-              <a href="" className="link-xem" onClick={() => handleViewClick(patient.tinhTrang)}>
+              <a className="link-xem" onClick={() => handleViewClick(patient.tinhTrang)}>
                 Xem
               </a>
             </div>
@@ -130,7 +132,7 @@ const Referrals = () => {
         <div className="patient-header-title">GỬI YÊU CẦU XÉT NGHIỆM</div>
         <div className="patient-header-breadcrumb">
           <span>
-            <strong><a className="link-xem" href="/referrals">Gửi yêu cầu xét nghiệm </a> / </strong>
+            <strong><a className="link-xem" href="/Bacsi/referrals">Gửi yêu cầu xét nghiệm </a> / </strong>
           </span>
           <span className="patient-breadcrumb-secondary">
             Gửi yêu cầu xét nghiệm{" "}
@@ -146,7 +148,7 @@ const Referrals = () => {
               <div className="dropdown-time">
                 <img
                   className={`doctor-arrow ${dropdownOpen ? "open" : ""}`}
-                  src="Polygon 1.png"
+                  src={dropdown}
                   alt="Doctor"
                   onClick={toggleDropdown}
                 />
@@ -170,7 +172,7 @@ const Referrals = () => {
             </div>
             
             <div className="patient-filter-button2">
-              <img src="Search.png" alt="Doctor" />
+              <img src={search} alt="Doctor" />
               <input
                 placeholder="Nhập tên bệnh nhân"
                 style={{ border: "none", outline: "none" }}

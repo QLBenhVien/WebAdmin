@@ -14,8 +14,8 @@ const Sidebar = () => {
   // };
 
   const handleNavigation = (path) => {
-    navigate(path); // Điều hướng đến đường dẫn
-    setShow(!show); // Chuyển đổi trạng thái hiển thị sidebar
+    navigate(path); 
+    setShow(!show); 
   };
 
   const isActive = (path) => location.pathname === path; // Kiểm tra xem đường dẫn hiện tại có trùng với đường dẫn của nút không
@@ -57,7 +57,6 @@ const Sidebar = () => {
         >
           Danh sách bệnh nhân
         </button>
-        {/* <button className="sidebar-button" onClick={handleLogout}>Đăng xuất</button> Nút đăng xuất */}
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ import Prescribe from "../TrangBacSi/Prescribe";
 import NavBacSi from "../../components/NavBacSi";
 import Header from "./Header";
 import Profile from "./Profile";
+import Schedule from "./Schedule";
 // import Login from "../Login/Login";
 const DoctorRoles = () => {
   return (
@@ -43,15 +44,19 @@ const DoctorRoles = () => {
       <div style={{ flexBasis: "80%" }}>
         <Header />
         <Routes>
-          <Route path="/prescribe" element={<Prescribe />} />
+          <Route
+            path="/examinationForm/prescribe/:id"
+            element={<Prescribe />}
+          />
           <Route path="/resultTesting" element={<ResultTesting />} />
           <Route path="/medical-records" element={<MedicalRecords />} />
           <Route path="/prescription" element={<Prescription />} />
-          <Route path="/Bacsi" element={<DoctorPage />} />
+          <Route path="/home" element={<DoctorPage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/patient-info" element={<PatientInfo />} />
+          <Route path="/medicalRecord/patient-info" element={<PatientInfo />} />
           <Route path="/patientList" element={<PatientList />} />
           <Route path="/searchPatient" element={<SearchPatient />} />
+          <Route path="/schedule" element={<Schedule />} />
           <Route
             path="/medicalRecordsDetail"
             element={<MedicalRecordsDetails />}
@@ -61,7 +66,7 @@ const DoctorRoles = () => {
             element={<MedicalRecordsDetails2 />}
           />
           <Route
-            path="/infoMedicalRecordsDetail"
+            path="infoMedicalRecordsDetail"
             element={<InfoMedicalRecords />}
           />
           <Route path="/referrals" element={<Referrals />} />
