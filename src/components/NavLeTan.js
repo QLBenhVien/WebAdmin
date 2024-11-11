@@ -3,7 +3,7 @@ import logo from "../images/logo.png"; // Import đường dẫn logo của bạ
 
 const NavLeTan = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+    const location = useLocation();
 
   return (
     <div style={styles.sidebar}>
