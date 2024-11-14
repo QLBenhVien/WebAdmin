@@ -4,6 +4,7 @@ const receptionistApi = {
   listAppointment: async (dateStart, dateEnd) => {
     const url = `receptionist/listAppointment`;
     const response = await axiosInstance.post(url, { dateStart, dateEnd });
+    console.log(response);
     return response;
   },
   scheduleappointment: async (appointmentData) => {
@@ -20,6 +21,6 @@ const receptionistApi = {
     const url = `receptionist/paymentForExamination/${appointmentId}`;
     const response = await axiosInstance.get(url);
     return response;
-  } 
+  },
 };
 export default receptionistApi;
