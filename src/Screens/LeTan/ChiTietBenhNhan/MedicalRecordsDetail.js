@@ -21,11 +21,14 @@ const ChiTietBenhNhan = () => {
   ];
 
   const [dataphieu, setDataphieu] = useState({});
+  const [thuoc, setThuoc] = useState([]);
 
   const fetchData = async () => {
     try {
       const res = await Axios.get(`/receptionist/chitietphieukham/${id}`);
+      console.log(res);
       setDataphieu(res.data.data.appointment);
+      setThuoc(res.data.data.medicationDetails);
     } catch (error) {
       console.log(error);
     }
@@ -155,19 +158,20 @@ const ChiTietBenhNhan = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => (
-                <React.Fragment key={index}>
-                  <tr style={styles.medicationRow}>
-                    <td>{item.stt}</td>
-                    <td>{item.name}</td>
-                    <td>{item.unit}</td>
-                    <td>{item.quantity}</td>
-                  </tr>
-                  <tr style={styles.dosageRow}>
-                    <td colSpan="4">{item.dosage}</td>
-                  </tr>
-                </React.Fragment>
-              ))}
+              {Array.isArray(thuoc) &&
+                thuoc.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <tr style={styles.medicationRow}>
+                      <td>{index + 1}</td>
+                      <td>{item.tenthuoc}</td>
+                      <td>{item.loaiThuoc}</td>
+                      <td>{item.soluong}</td>
+                    </tr>
+                    <tr style={styles.dosageRow}>
+                      <td colSpan="4">{item.dosage}</td>
+                    </tr>
+                  </React.Fragment>
+                ))}
             </tbody>
           </table>
         </div>

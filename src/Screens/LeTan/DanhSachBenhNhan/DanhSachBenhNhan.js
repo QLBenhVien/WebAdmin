@@ -170,15 +170,17 @@ const DanhSachBenhNhan = () => {
                         >
                           Xem
                         </button>
-                        {xemdatkham.TrangThai && xemdatkham?.MaHoaDon?.TrangThaiThanhToan != "Đã Thanh Toán" && (
-                          <>
-                            <Modal
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              {/* <Box sx={style}>
+                        {xemdatkham.TrangThai &&
+                          xemdatkham?.MaHoaDon?.TrangThaiThanhToan !=
+                            "Đã Thanh Toán" && (
+                            <>
+                              <Modal
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                              >
+                                {/* <Box sx={style}>
                                 <Typography
                                   id="modal-modal-title"
                                   variant="h6"
@@ -194,35 +196,37 @@ const DanhSachBenhNhan = () => {
                                   porttitor ligula.
                                 </Typography>
                               </Box> */}
-                              <Box
-                                sx={{
-                                  ...style,
-                                  width: 600,
-                                  maxHeight: "90vh",
-                                  overflowY: "auto",
-                                }}
-                              >
-                                <Typography
-                                  id="modal-modal-title"
-                                  variant="h6"
-                                  component="h2"
+                                <Box
+                                  sx={{
+                                    ...style,
+                                    width: 600,
+                                    maxHeight: "90vh",
+                                    overflowY: "auto",
+                                  }}
                                 >
-                                  Thanh toán
-                                </Typography>
-                                <PaymentPage
-                                  appointmentId={selectedAppointmentId}
-                                  totalAmountUSD={totalUSD}
-                                />
-                              </Box>
-                            </Modal>
-                            <button
-                              style={styles.actionButton}
-                              onClick={() => handlePaymentOpen(xemdatkham._id)}
-                            >
-                              Thanh toán
-                            </button>
-                          </>
-                        )}
+                                  <Typography
+                                    id="modal-modal-title"
+                                    variant="h6"
+                                    component="h2"
+                                  >
+                                    Thanh toán
+                                  </Typography>
+                                  <PaymentPage
+                                    appointmentId={selectedAppointmentId}
+                                    totalAmountUSD={totalUSD}
+                                  />
+                                </Box>
+                              </Modal>
+                              <button
+                                style={styles.actionButton}
+                                onClick={() =>
+                                  handlePaymentOpen(xemdatkham._id)
+                                }
+                              >
+                                Thanh toán
+                              </button>
+                            </>
+                          )}
                       </td>
                     </tr>
                   ))}
