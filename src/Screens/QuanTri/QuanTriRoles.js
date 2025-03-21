@@ -20,7 +20,7 @@ const DoctorRoles = () => {
         backgroundColor: "#f0f8ff",
       }}
     >
-      <div style={{ flexBasis: "20%" }}>
+      <div style={{ flexBasis: "15%" }}>
         <SlideMenu />
       </div>
 
