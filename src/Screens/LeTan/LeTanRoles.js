@@ -18,11 +18,11 @@ const LeTanRoles = () => {
         maxHeight: "100vh",
       }}
     >
-      <div style={{ flexBasis: "20%" }}>
+      <div style={{ flexBasis: "15%" }}>
         <NavLeTan />
       </div>
 
-      <div style={{ flexBasis: "80%", marginLeft: "0.5%" }}>
+      <div style={{ flexBasis: "85%", marginLeft: "0.5%" }}>
         <Header />
         <Routes>
           <Route path="danhsachhoadon" element={<DanhSachHoaDon />} />
