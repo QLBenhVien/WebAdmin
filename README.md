@@ -1,71 +1,84 @@
-# Getting Started with Create React App
+# Medical Appointment Booking System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Giới Thiệu
 
-## Available Scripts
+Phần mềm đặt khám bệnh giúp bệnh nhân dễ dàng đặt lịch hẹn với bác sĩ, quản lý hồ sơ bệnh án và nhận thông báo nhắc lịch khám.
 
-In the project directory, you can run:
+## Công Nghệ Sử Dụng
 
-### `npm start`
+- **Frontend**: ReactJS
+- **Backend**: Node.js, Express.js
+- **Cơ sở dữ liệu**: MongoDB
+- **Xác thực**: JSON Web Token (JWT)
+- **Thông báo**: Chưa update
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Cài Đặt
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Yêu Cầu Hệ Thống
+- Node.js >= 16.x
+- MongoDB >= 6.x
 
-### `npm test`
+### Cách Cài Đặt
+1. Clone repository:
+   ```bash
+   git clone https://github.com/Duypham14063003/bookinghealth_user
+   cd bookinghealth_user
+   ```
+2. Cài đặt các dependencies:
+   ```bash
+   npm install
+   ```
+3. Cấu hình môi trường:
+   - Tạo file `.env` trong thư mục gốc và thiết lập các biến môi trường cần thiết:
+     ```env
+     MONGO_URI=mongodb://localhost:27017/medical_booking
+     JWT_SECRET=your_secret_key
+     PORT=5000
+     ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Chạy Ứng Dụng
 
-### `npm run build`
+### Chạy Backend
+```bash
+npm run server
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Chạy Frontend
+```bash
+npm start
+```
+Mở [http://localhost:3000](http://localhost:3000) để xem giao diện web.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tính Năng Chính
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Đặt lịch khám bệnh trực tuyến
+- Quản lý hồ sơ bệnh nhân
+- Tạo phiếu khám bệnh dưới dạng PDF
+- Quét mã QR để xem thông tin lịch hẹn
 
-### `npm run eject`
+## Triển Khai
+### Build ứng dụng
+```bash
+npm run build
+```
+### Deploy lên server
+- Dùng Docker:
+  ```bash
+  docker-compose up -d
+  ```
+- Deploy lên Vercel hoặc Netlify cho frontend, và Render hoặc Heroku cho backend.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Hướng Dẫn API
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Xem tài liệu API chi tiết tại [Postman Collection](https://documenter.getpostman.com/view/your-api-docs)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Đóng Góp
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Fork repository
+2. Tạo branch mới: `git checkout -b feature/new-feature`
+3. Commit thay đổi: `git commit -m 'Thêm tính năng mới'`
+4. Push lên branch: `git push origin feature/new-feature`
+5. Mở pull request
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# WebAdmin
+## Giấy Phép
+MIT License
